@@ -1,474 +1,467 @@
 import { ChevronRight } from "lucide-react";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Leaf, Plus } from "lucide-react";
 import { Cereals, Dairy, Fruits, Vegetables } from "../assets";
+import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
+import axios from "axios";
+import CarousalProductCard from "../components/CarousalProductCard";
 const Home = () => {
-  const productData = {
-    _id: "674599bf5ec47a891494a3eb",
-    itemName: "Apple",
-    stockQty: 90,
-    weight: {
-      value: 1,
-      unit: "kg",
-    },
-    img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRh3qX_zDSAKIXTauZyxqnNAX3P7Bzk3ydu2Ksag7yGQ8sq9tSVpY4hxSxiZNDoEf6pjj4&usqp=CAU",
-    price: 120,
-    category: "Recently Added",
-    description: "Fresh apple direct from farm. Produced by orgaic farming.",
-    farmerId: "6744c75250486827b4e06d55",
+  const [category, setCategory] = useState(null);
+  const [products, setProducts] = useState(null);
+  const [bestSeller, setBestSeller] = useState(null);
+  const [farms, setFarms] = useState(null);
+  const [farmFresh, setFarmFresh] = useState(null);
+  const [recentlyAdded, setRecentlyAdded] = useState(null);
+  const [freshFruits, setFreshFruits] = useState();
+  const [vegetables, setVegetables] = useState(null);
+  const [cereals, setCereals] = useState(null);
+  const [dairyProduct, setDairyProduct] = useState(null);
+  const getUserHomeData = async () => {
+    try {
+      const res = await axios.get(
+        `${process.env.REACT_APP_SERVER_URL}/home-page`,
+        {
+          withCredentials: true,
+        }
+      );
+      console.log(res);
+      setCategory(res?.data?.data[0]);
+      setProducts(res?.data?.data[1]);
+      setBestSeller(res?.data?.data[2]);
+      setFarms(res?.data?.data[3]);
+      setFarmFresh(res?.data?.data[4]);
 
-    addedAt: {
-      $date: "2024-11-26T09:49:51.403Z",
-    },
-    createdAt: {
-      $date: "2024-11-26T09:49:51.420Z",
-    },
-    updatedAt: {
-      $date: "2024-12-07T16:50:29.304Z",
-    },
-    __v: 0,
+      // Here the bug of not setting state
+      // console.log(res?.data?.data[1]?.data[0]);
+      // setFreshFruits(res?.data?.data[1]?.data[0]);
+      // console.log(freshFruits);
+    } catch (err) {
+      console.log(err);
+      toast.error(err?.response?.data?.message);
+    }
   };
+
+  useEffect(() => {
+    getUserHomeData();
+  }, []);
   return (
     <>
       {/* {Category} */}
-      <div className="p-2">
-        <p className="font-medium text-lg">Find by Category</p>
-        <div className="grid grid-flow-row grid-cols-3 gap-2 sm:grid-cols-8">
-          <div className="p-2 bg-slate-100 rounded-md">
-            <div className="w-full h-20 rounded-xl">
-              <img
-                src={Fruits}
-                alt=""
-                loading="lazy"
-                className="w-full h-full object-cover rounded-xl"
-              />
-            </div>
-            <p className="text-center text-sm font-medium">Fresh Fruits</p>
-          </div>
-
-          <div className="p-2 bg-slate-100 rounded-md">
-            <div className="w-full h-20 rounded-xl">
-              <img
-                src={Vegetables}
-                alt=""
-                loading="lazy"
-                className="w-full h-full object-cover rounded-xl"
-              />
-            </div>
-            <p className="text-center text-sm font-medium">Vegetables</p>
-          </div>
-          <div className="p-2 bg-slate-100 rounded-md">
-            <div className="w-full h-20 rounded-xl">
-              <img
-                src={Cereals}
-                alt=""
-                loading="lazy"
-                className="w-full h-full object-cover rounded-xl"
-              />
-            </div>
-            <p className="text-center text-sm font-medium">Cereals</p>
-          </div>
-          <div className="p-2 bg-slate-100 rounded-md">
-            <div className="w-full h-20 rounded-xl">
-              <img
-                src={Dairy}
-                alt=""
-                loading="lazy"
-                className="w-full h-full object-cover rounded-xl"
-              />
-            </div>
-            <p className="text-center text-sm font-medium">Dairy Product</p>
+      {category && (
+        <div className="p-2">
+          <p className="font-medium text-lg">Find by Category</p>
+          <div className="grid grid-flow-row grid-cols-3 gap-2 sm:grid-cols-5 md:grid-cols-6 lg:grid-cols-10">
+            {category?.categories?.map((cat, index) => (
+              <Link key={index} to={"/category/Fresh-Fruits"}>
+                <div className="p-2 rounded-md">
+                  <div className="w-full h-20 rounded-xl">
+                    <img
+                      src={cat?.img}
+                      alt=""
+                      loading="lazy"
+                      className="w-full h-full object-cover rounded-xl"
+                    />
+                  </div>
+                  <p className="text-center text-sm font-medium">
+                    {cat?.categoryName}
+                  </p>
+                </div>
+              </Link>
+            ))}
           </div>
         </div>
-      </div>
+      )}
+      {/* {Recently Added} */}
+      {products?.data[0] && (
+        <div className="p-2">
+          <div className="w-full inline-flex justify-between">
+            <p className="font-medium text-lg">{products?.data[0]?.category}</p>
+            <button>
+              <ChevronRight />
+            </button>
+          </div>
+          <div className="overflow-x-auto">
+            <div
+              className="w-fit grid grid-rows-1 grid-flow-col gap-4 py-4"
+              style={{
+                scrollSnapType: "x mandatory",
+                scrollBehavior: "smooth",
+              }}
+            >
+              {products?.data[0]?.products?.map((pro) => (
+                <CarousalProductCard key={pro._id} product={pro} />
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
+      {/* {single row carousal} */}
+      {/* {products?.data[0] && (
+        <div className="p-2 pt-2 pb-6">
+          <div className="w-full inline-flex justify-between">
+            <p className="font-medium text-lg">Recently added</p>
+            <button>
+              <ChevronRight />
+            </button>
+          </div>
+          <div className="overflow-x-auto">
+            <div
+              className="grid grid-rows-1 grid-flow-col gap-4 py-4"
+              style={{
+                scrollSnapType: "x mandatory",
+                scrollBehavior: "smooth",
+              }}
+            >
+              {products?.data[0]?.products?.map((product) => (
+                <div className="w-32 h-fit rounded-lg">
+                  <div className="w-full h-24 bg-slate-100 rounded-lg border">
+                    <img
+                      loading="lazy"
+                      src={product?.img}
+                      alt=""
+                      className="w-full h-full rounded-lg object-cover"
+                    />
+                  </div>
+                  <div className="px-2">
+                    <p className="font-medium truncate">{product?.itemName}</p>
+                    <p className="text-xs text-gray-600 truncate">
+                      {product?.weight?.value} {product?.weight?.unit}
+                    </p>
+                  </div>
+                  <div className="px-2 flex justify-between">
+                    <p className="font-medium">₹{product?.price}</p>
+                    <button className="px-2 text-sm uppercase border border-rose-600 text-rose-600 rounded-md">
+                      Add
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      )} */}
       {/* {Fresh Fruits} */}
-      <div className="p-2 pt-2 pb-6 bg-gradient-to-b from-rose-50 via-rose-100 to-rose-300">
+      {products?.data[1] && (
+        <div className="p-2 pt-2 pb-6">
+          <div className="w-full inline-flex justify-between">
+            <p className="font-medium text-lg">{products?.data[1]?.category}</p>
+            <button>
+              <ChevronRight />
+            </button>
+          </div>
+          <div className="overflow-x-auto">
+            <div
+              className="grid grid-rows-2 grid-flow-col gap-4 py-4"
+              style={{
+                scrollSnapType: "x mandatory",
+                scrollBehavior: "smooth",
+              }}
+            >
+              {products?.data[1]?.products?.map((product) => (
+                <CarousalProductCard key={product._id} product={product} />
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
+      {/* {Vegetables} */}
+      {products?.data[2] && (
+        <div className="p-2 pt-2 pb-6">
+          <div className="w-full inline-flex justify-between">
+            <p className="font-medium text-lg">{products?.data[2]?.category}</p>
+            <button>
+              <ChevronRight />
+            </button>
+          </div>
+          <div className="overflow-x-auto">
+            <div
+              className="grid grid-rows-2 grid-flow-col gap-4 py-4"
+              style={{
+                scrollSnapType: "x mandatory",
+                scrollBehavior: "smooth",
+              }}
+            >
+              {products?.data[2]?.products?.map((product) => (
+                <div className="w-40 h-44 rounded-sm">
+                  <div className="w-full h-24 bg-slate-100 rounded-lg border">
+                    <img
+                      loading="lazy"
+                      src={product?.img}
+                      alt=""
+                      className="w-full h-full rounded-lg object-cover"
+                    />
+                  </div>
+                  <div className="px-2">
+                    <p className="text-lg font-medium truncate">
+                      {product?.itemName}
+                    </p>
+                    <p className="text-sm text-gray-600 truncate">
+                      {product?.weight?.value} {product?.weight?.unit}
+                    </p>
+                  </div>
+                  <div className="px-2 flex justify-between">
+                    <p className="text-xl font-medium">₹{product?.price}</p>
+                    <button className="px-2 uppercase border border-rose-600 text-rose-600 rounded-md">
+                      Add
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
+      {/* {Cereals} */}
+      {products?.data[3] && (
+        <div className="p-2 pt-2 pb-6">
+          <div className="w-full inline-flex justify-between">
+            <p className="font-medium text-lg">{products?.data[3]?.category}</p>
+            <button>
+              <ChevronRight />
+            </button>
+          </div>
+          <div className="overflow-x-auto">
+            <div
+              className="grid grid-rows-2 grid-flow-col gap-4 py-4"
+              style={{
+                scrollSnapType: "x mandatory",
+                scrollBehavior: "smooth",
+              }}
+            >
+              {products?.data[3]?.products?.map((product) => (
+                <div className="w-40 h-44 rounded-sm">
+                  <div className="w-full h-24 bg-slate-100 rounded-lg border">
+                    <img
+                      loading="lazy"
+                      src={product?.img}
+                      alt=""
+                      className="w-full h-full rounded-lg object-cover"
+                    />
+                  </div>
+                  <div className="px-2">
+                    <p className="text-lg font-medium truncate">
+                      {product?.itemName}
+                    </p>
+                    <p className="text-sm text-gray-600 truncate">
+                      {product?.weight?.value} {product?.weight?.unit}
+                    </p>
+                  </div>
+                  <div className="px-2 flex justify-between">
+                    <p className="text-xl font-medium">₹{product?.price}</p>
+                    <button className="px-2 uppercase border border-rose-600 text-rose-600 rounded-md">
+                      Add
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
+      {/* {Dairy Products} */}
+      {products?.data[4] && (
+        <div className="p-2 pt-2 pb-6">
+          <div className="w-full inline-flex justify-between">
+            <p className="font-medium text-lg">{products?.data[4]?.category}</p>
+            <button>
+              <ChevronRight />
+            </button>
+          </div>
+          <div className="overflow-x-auto">
+            <div
+              className="grid grid-rows-2 grid-flow-col gap-4 py-4"
+              style={{
+                scrollSnapType: "x mandatory",
+                scrollBehavior: "smooth",
+              }}
+            >
+              {products?.data[4]?.products?.map((product) => (
+                <div className="w-40 h-44 rounded-sm">
+                  <div className="w-full h-24 bg-slate-100 rounded-lg border">
+                    <img
+                      loading="lazy"
+                      src={product?.img}
+                      alt=""
+                      className="w-full h-full rounded-lg object-cover"
+                    />
+                  </div>
+                  <div className="px-2">
+                    <p className="text-lg font-medium truncate">
+                      {product?.itemName}
+                    </p>
+                    <p className="text-sm text-gray-600 truncate">
+                      {product?.weight?.value} {product?.weight?.unit}
+                    </p>
+                  </div>
+                  <div className="px-2 flex justify-between">
+                    <p className="text-xl font-medium">₹{product?.price}</p>
+                    <button className="px-2 uppercase border border-rose-600 text-rose-600 rounded-md">
+                      Add
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* {Fresh Fruits Carousal} */}
+      <div className="p-2 bg-[#fff4e9]">
         <div className="w-full inline-flex justify-between">
-          <p className="text-rose-600 font-medium text-lg">Fresh Fruits</p>
+          <p className="text-orange-600 font-medium text-lg">
+            {products?.data[0]?.category}
+          </p>
           <button>
             <ChevronRight />
           </button>
         </div>
-        <div className="flex gap-x-2 overflow-y-scroll no-scrollbar">
-          <div className="w-60 shrink-0 p-1 bg-white rounded-md shadow-xl">
-            <div
-              id="product-img-container"
-              className="w-full h-32 rounded-md border border-white bg-gray-200"
-            >
-              <img
-                loading="lazy"
-                className="w-full h-full object-cover rounded-md"
-                src={productData.img}
-                alt="product-img"
-              />
-            </div>
-            <p className="text-lg truncate">{productData.itemName}</p>
-            <p className="text-xs h-9 line-clamp-2">
-              {productData.description}
-            </p>
-            <div className="flex flex-col gap-y-1 text-sm">
-              <div className="inline-flex items-center gap-x-2">
-                <span className="p-1 bg-yellow-100 rounded-full">
-                  <Leaf className="size-4" />
-                </span>
-                <span className="line-clamp-1">Farm Name</span>
+        <div className="py-4 flex gap-x-2 overflow-y-scroll no-scrollbar">
+          {products?.data[0]?.products?.map((product) => (
+            <div className="w-60 shrink-0 p-2 bg-white rounded-md shadow-md">
+              <div
+                id="product-img-container"
+                className="w-full h-32 rounded-md border border-white bg-gray-200"
+              >
+                <img
+                  loading="lazy"
+                  className="w-full h-full object-cover rounded-md"
+                  src={product?.img}
+                  alt="product-img"
+                />
               </div>
-            </div>
-            <div className="flex items-center justify-between font-medium">
-              <p className="text-xl truncate">
-                <span className="font-bold">₹{productData.price}/</span>
-                <span className="text-xs">
-                  {productData.weight?.value} {productData.weight.unit}
-                </span>
+              <p className="text-lg font-medium truncate">
+                {product?.itemName}
               </p>
-              <div className="text-sm">
-                <button className="inline-flex items-center px-2 py-1 border border-green-600 text-green-600 uppercase rounded-lg">
-                  <Plus />
-                  Add
-                </button>
+              <p className="text-xs h-9 line-clamp-2">{product?.description}</p>
+              <div className="flex flex-col gap-y-1 text-sm">
+                <div className="inline-flex items-center gap-x-2">
+                  <span className="p-1 bg-yellow-100 rounded-full">
+                    <Leaf className="size-4" />
+                  </span>
+                  <span className="line-clamp-1">Farm Name</span>
+                </div>
+              </div>
+              <div className="flex items-center justify-between font-medium">
+                <p className="text-xl truncate">
+                  <span className="font-bold">₹{product?.price}/</span>
+                  <span className="text-xs">
+                    {product?.weight?.value} {product?.weight.unit}
+                  </span>
+                </p>
+                <div className="text-sm">
+                  <button className="inline-flex items-center px-2 py-1 border border-green-600 text-green-600 uppercase rounded-lg">
+                    <Plus />
+                    Add
+                  </button>
+                </div>
               </div>
             </div>
-          </div>
-          <div className="w-60 shrink-0 p-1 bg-white rounded-md shadow-xl">
-            <div
-              id="product-img-container"
-              className="w-full h-32 rounded-md border border-white bg-gray-200"
-            >
-              <img
-                loading="lazy"
-                className="w-full h-full object-cover rounded-md"
-                src={productData.img}
-                alt="product-img"
-              />
-            </div>
-            <p className="text-lg truncate">{productData.itemName}</p>
-            <p className="text-xs h-9 line-clamp-2">
-              {productData.description}
-            </p>
-            <div className="flex flex-col gap-y-1 text-sm">
-              <div className="inline-flex items-center gap-x-2">
-                <span className="p-1 bg-yellow-100 rounded-full">
-                  <Leaf className="size-4" />
-                </span>
-                <span className="line-clamp-1">Farm Name</span>
-              </div>
-            </div>
-            <div className="flex items-center justify-between font-medium">
-              <p className="text-xl truncate">
-                <span className="font-bold">₹{productData.price}/</span>
-                <span className="text-xs">
-                  {productData.weight?.value} {productData.weight.unit}
-                </span>
-              </p>
-              <div className="text-sm">
-                <button className="inline-flex items-center px-2 py-1 border border-green-600 text-green-600 uppercase rounded-lg">
-                  <Plus />
-                  Add
-                </button>
-              </div>
-            </div>
-          </div>
-          <div className="w-60 shrink-0 p-1 bg-white rounded-md shadow-xl">
-            <div
-              id="product-img-container"
-              className="w-full h-32 rounded-md border border-white bg-gray-200"
-            >
-              <img
-                loading="lazy"
-                className="w-full h-full object-cover rounded-md"
-                src={productData.img}
-                alt="product-img"
-              />
-            </div>
-            <p className="text-lg truncate">{productData.itemName}</p>
-            <p className="text-xs h-9 line-clamp-2">
-              {productData.description}
-            </p>
-            <div className="flex flex-col gap-y-1 text-sm">
-              <div className="inline-flex items-center gap-x-2">
-                <span className="p-1 bg-yellow-100 rounded-full">
-                  <Leaf className="size-4" />
-                </span>
-                <span className="line-clamp-1">Farm Name</span>
-              </div>
-            </div>
-            <div className="flex items-center justify-between font-medium">
-              <p className="text-xl truncate">
-                <span className="font-bold">₹{productData.price}/</span>
-                <span className="text-xs">
-                  {productData.weight?.value} {productData.weight.unit}
-                </span>
-              </p>
-              <div className="text-sm">
-                <button className="inline-flex items-center px-2 py-1 border border-green-600 text-green-600 uppercase rounded-lg">
-                  <Plus />
-                  Add
-                </button>
-              </div>
-            </div>
-          </div>
+          ))}
         </div>
       </div>
+
       {/* {Best Seller} */}
       <div className="p-2">
         <div className="w-full inline-flex justify-between">
-          <p className="font-medium text-lg">Best Seller</p>
+          <p className="font-medium text-lg">{bestSeller?.headLine}</p>
           <button>
             <ChevronRight />
           </button>
         </div>
-        <div className="grid place-items-center grid-flow-row grid-cols-3 gap-2">
-          <div className="p-2">
-            <div className="w-20 h-20 bg-gray-400 rounded-full">
-              <img
-                src=""
-                alt=""
-                loading="lazy"
-                className="w-full h-full object-cover rounded-full"
-              />
+        <div className="grid place-items-center grid-flow-row grid-cols-3 gap-2 md:grid-cols-6">
+          {bestSeller?.data?.map((farmer) => (
+            <div key={farmer?._id} className="p-2">
+              <div className="w-20 h-20 bg-gray-400 rounded-full">
+                <img
+                  src={farmer?.profileImg}
+                  alt=""
+                  loading="lazy"
+                  className="w-full h-full object-cover rounded-full"
+                />
+              </div>
+              <p className="text-center line-clamp-1 text-sm font-medium">{`${farmer?.firstName} ${farmer?.lastName}`}</p>
             </div>
-            <p className="text-center text-sm font-medium">Farm Name</p>
-          </div>
-          <div className="p-2">
-            <div className="w-20 h-20 bg-gray-400 rounded-full">
-              <img
-                src=""
-                alt=""
-                loading="lazy"
-                className="w-full h-full object-cover rounded-full"
-              />
-            </div>
-            <p className="text-center text-sm font-medium">Farm Name</p>
-          </div>
-          <div className="p-2">
-            <div className="w-20 h-20 bg-gray-400 rounded-full">
-              <img
-                src=""
-                alt=""
-                loading="lazy"
-                className="w-full h-full object-cover rounded-full"
-              />
-            </div>
-            <p className="text-center text-sm font-medium">Farm Name</p>
-          </div>
-          <div className="p-2">
-            <div className="w-20 h-20 bg-gray-400 rounded-full">
-              <img
-                src=""
-                alt=""
-                loading="lazy"
-                className="w-full h-full object-cover rounded-full"
-              />
-            </div>
-            <p className="text-center text-sm font-medium">Farm Name</p>
-          </div>
-          <div className="p-2">
-            <div className="w-20 h-20 bg-gray-400 rounded-full">
-              <img
-                src=""
-                alt=""
-                loading="lazy"
-                className="w-full h-full object-cover rounded-full"
-              />
-            </div>
-            <p className="text-center text-sm font-medium">Farm Name</p>
-          </div>
+          ))}
         </div>
       </div>
       {/* {Shop by Farm} */}
       <div className="p-2 py-5 bg-gradient-to-b from-orange-50 to-orange-200">
         <div className="w-full inline-flex justify-between">
           <p className="font-medium text-orange-700 text-lg">
-            Shop by Farm Name
+            {farms?.headLine}
           </p>
           <button>
             <ChevronRight />
           </button>
         </div>
         <div className="flex gap-x-4 overflow-y-scroll">
-          <div className="p-2">
-            <div className="w-20 h-20 bg-gray-400 rounded-full">
-              <img
-                src=""
-                alt=""
-                loading="lazy"
-                className="w-full h-full object-cover rounded-full"
-              />
+          {farms?.data?.map((farm) => (
+            <div key={farm?._id} className="p-2">
+              <div className="w-20 h-20 bg-gray-400 rounded-full">
+                <img
+                  src={farm?.userId?.profileImg}
+                  alt={farm?.farmName}
+                  loading="lazy"
+                  className="w-full h-full object-cover rounded-full"
+                />
+              </div>
+              <p className="text-center text-sm font-medium">
+                {farm?.farmName}
+              </p>
             </div>
-            <p className="text-center text-sm font-medium">Farm Name</p>
-          </div>
-          <div className="p-2">
-            <div className="w-20 h-20 bg-gray-400 rounded-full">
-              <img
-                src=""
-                alt=""
-                loading="lazy"
-                className="w-full h-full object-cover rounded-full"
-              />
-            </div>
-            <p className="text-center text-sm font-medium">Farm Name</p>
-          </div>
-          <div className="p-2">
-            <div className="w-20 h-20 bg-gray-400 rounded-full">
-              <img
-                src=""
-                alt=""
-                loading="lazy"
-                className="w-full h-full object-cover rounded-full"
-              />
-            </div>
-            <p className="text-center text-sm font-medium">Farm Name</p>
-          </div>
-          <div className="p-2">
-            <div className="w-20 h-20 bg-gray-400 rounded-full">
-              <img
-                src=""
-                alt=""
-                loading="lazy"
-                className="w-full h-full object-cover rounded-full"
-              />
-            </div>
-            <p className="text-center text-sm font-medium">Farm Name</p>
-          </div>
-          <div className="p-2">
-            <div className="w-20 h-20 bg-gray-400 rounded-full">
-              <img
-                src=""
-                alt=""
-                loading="lazy"
-                className="w-full h-full object-cover rounded-full"
-              />
-            </div>
-            <p className="text-center text-sm font-medium">Farm Name</p>
-          </div>
+          ))}
         </div>
       </div>
       {/* {Product Carousal} */}
       <div className="p-2 py-5">
         <div className="w-full inline-flex justify-between">
-          <p className="font-medium text-lg">Products</p>
+          <p className="font-medium text-lg">{farmFresh?.headLine}</p>
           <button>
             <ChevronRight />
           </button>
         </div>
         <div className="py-5 flex gap-x-2 overflow-y-scroll">
-          <div className="w-60 shrink-0 p-1 rounded-md shadow-xl">
-            <div
-              id="product-img-container"
-              className="w-full h-32 rounded-md border border-white bg-gray-200"
-            >
-              <img
-                loading="lazy"
-                className="w-full h-full object-cover rounded-md"
-                src={productData.img}
-                alt="product-img"
-              />
-            </div>
-            <p className="text-lg truncate">{productData.itemName}</p>
-            <p className="text-xs h-9 line-clamp-2">
-              {productData.description}
-            </p>
-            <div className="flex flex-col gap-y-1 text-sm">
-              <div className="inline-flex items-center gap-x-2">
-                <span className="p-1 bg-yellow-100 rounded-full">
-                  <Leaf className="size-4" />
-                </span>
-                <span className="line-clamp-1">Farm Name</span>
+          {farmFresh?.data?.map((product) => (
+            <div className="w-60 shrink-0 p-1 rounded-md shadow-xl">
+              <div
+                id="product-img-container"
+                className="w-full h-32 rounded-md border border-white bg-gray-200"
+              >
+                <img
+                  loading="lazy"
+                  className="w-full h-full object-cover rounded-md"
+                  src={product.img}
+                  alt="product-img"
+                />
+              </div>
+              <p className="text-lg truncate">{product.itemName}</p>
+              <p className="text-xs h-9 line-clamp-2">{product.description}</p>
+              <div className="flex flex-col gap-y-1 text-sm">
+                <div className="inline-flex items-center gap-x-2">
+                  <span className="p-1 bg-yellow-100 rounded-full">
+                    <Leaf className="size-4" />
+                  </span>
+                  <span className="line-clamp-1">{`${product?.farmerId?.firstName} ${product?.farmerId?.lastName}`}</span>
+                </div>
+              </div>
+              <div className="flex items-center justify-between font-medium">
+                <p className="text-xl truncate">
+                  <span className="font-bold">₹{product.price}/</span>
+                  <span className="text-xs">
+                    {product.weight?.value} {product.weight.unit}
+                  </span>
+                </p>
+                <div className="text-sm">
+                  <button className="inline-flex items-center px-2 py-1 border border-green-600 text-green-600 uppercase rounded-lg">
+                    <Plus />
+                    Add
+                  </button>
+                </div>
               </div>
             </div>
-            <div className="flex items-center justify-between font-medium">
-              <p className="text-xl truncate">
-                <span className="font-bold">₹{productData.price}/</span>
-                <span className="text-xs">
-                  {productData.weight?.value} {productData.weight.unit}
-                </span>
-              </p>
-              <div className="text-sm">
-                <button className="inline-flex items-center px-2 py-1 border border-green-600 text-green-600 uppercase rounded-lg">
-                  <Plus />
-                  Add
-                </button>
-              </div>
-            </div>
-          </div>
-          <div className="w-60 shrink-0 p-1 rounded-md shadow-xl">
-            <div
-              id="product-img-container"
-              className="w-full h-32 rounded-md border border-white bg-gray-200"
-            >
-              <img
-                loading="lazy"
-                className="w-full h-full object-cover rounded-md"
-                src={productData.img}
-                alt="product-img"
-              />
-            </div>
-            <p className="text-lg truncate">{productData.itemName}</p>
-            <p className="text-xs h-9 line-clamp-2">
-              {productData.description}
-            </p>
-            <div className="flex flex-col gap-y-1 text-sm">
-              <div className="inline-flex items-center gap-x-2">
-                <span className="p-1 bg-yellow-100 rounded-full">
-                  <Leaf className="size-4" />
-                </span>
-                <span className="line-clamp-1">Farm Name</span>
-              </div>
-            </div>
-            <div className="flex items-center justify-between font-medium">
-              <p className="text-xl truncate">
-                <span className="font-bold">₹{productData.price}/</span>
-                <span className="text-xs">
-                  {productData.weight?.value} {productData.weight.unit}
-                </span>
-              </p>
-              <div className="text-sm">
-                <button className="inline-flex items-center px-2 py-1 border border-green-600 text-green-600 uppercase rounded-lg">
-                  <Plus />
-                  Add
-                </button>
-              </div>
-            </div>
-          </div>
-          <div className="w-60 shrink-0 p-1 rounded-md shadow-xl">
-            <div
-              id="product-img-container"
-              className="w-full h-32 rounded-md border border-white bg-gray-200"
-            >
-              <img
-                loading="lazy"
-                className="w-full h-full object-cover rounded-md"
-                src={productData.img}
-                alt="product-img"
-              />
-            </div>
-            <p className="text-lg truncate">{productData.itemName}</p>
-            <p className="text-xs h-9 line-clamp-2">
-              {productData.description}
-            </p>
-            <div className="flex flex-col gap-y-1 text-sm">
-              <div className="inline-flex items-center gap-x-2">
-                <span className="p-1 bg-yellow-100 rounded-full">
-                  <Leaf className="size-4" />
-                </span>
-                <span className="line-clamp-1">Farm Name</span>
-              </div>
-            </div>
-            <div className="flex items-center justify-between font-medium">
-              <p className="text-xl truncate">
-                <span className="font-bold">₹{productData.price}/</span>
-                <span className="text-xs">
-                  {productData.weight?.value} {productData.weight.unit}
-                </span>
-              </p>
-              <div className="text-sm">
-                <button className="inline-flex items-center px-2 py-1 border border-green-600 text-green-600 uppercase rounded-lg">
-                  <Plus />
-                  Add
-                </button>
-              </div>
-            </div>
-          </div>
+          ))}
         </div>
       </div>
     </>
