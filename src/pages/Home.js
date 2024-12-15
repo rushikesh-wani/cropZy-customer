@@ -1,4 +1,4 @@
-import { ChevronRight } from "lucide-react";
+import { Car, ChevronRight } from "lucide-react";
 import React, { useEffect, useState } from "react";
 import { Leaf, Plus } from "lucide-react";
 import { Cereals, Dairy, Fruits, Vegetables } from "../assets";
@@ -76,7 +76,9 @@ const Home = () => {
       {products?.data[0] && (
         <div className="p-2">
           <div className="w-full inline-flex justify-between">
-            <p className="font-medium text-lg">{products?.data[0]?.category}</p>
+            <p className="font-montserrat font-medium text-lg">
+              {products?.data[0]?.category}
+            </p>
             <button>
               <ChevronRight />
             </button>
@@ -96,63 +98,20 @@ const Home = () => {
           </div>
         </div>
       )}
-      {/* {single row carousal} */}
-      {/* {products?.data[0] && (
-        <div className="p-2 pt-2 pb-6">
-          <div className="w-full inline-flex justify-between">
-            <p className="font-medium text-lg">Recently added</p>
-            <button>
-              <ChevronRight />
-            </button>
-          </div>
-          <div className="overflow-x-auto">
-            <div
-              className="grid grid-rows-1 grid-flow-col gap-4 py-4"
-              style={{
-                scrollSnapType: "x mandatory",
-                scrollBehavior: "smooth",
-              }}
-            >
-              {products?.data[0]?.products?.map((product) => (
-                <div className="w-32 h-fit rounded-lg">
-                  <div className="w-full h-24 bg-slate-100 rounded-lg border">
-                    <img
-                      loading="lazy"
-                      src={product?.img}
-                      alt=""
-                      className="w-full h-full rounded-lg object-cover"
-                    />
-                  </div>
-                  <div className="px-2">
-                    <p className="font-medium truncate">{product?.itemName}</p>
-                    <p className="text-xs text-gray-600 truncate">
-                      {product?.weight?.value} {product?.weight?.unit}
-                    </p>
-                  </div>
-                  <div className="px-2 flex justify-between">
-                    <p className="font-medium">₹{product?.price}</p>
-                    <button className="px-2 text-sm uppercase border border-rose-600 text-rose-600 rounded-md">
-                      Add
-                    </button>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      )} */}
       {/* {Fresh Fruits} */}
       {products?.data[1] && (
-        <div className="p-2 pt-2 pb-6">
+        <div className="p-2">
           <div className="w-full inline-flex justify-between">
-            <p className="font-medium text-lg">{products?.data[1]?.category}</p>
+            <p className="font-montserrat font-medium text-lg">
+              {products?.data[1]?.category}
+            </p>
             <button>
               <ChevronRight />
             </button>
           </div>
           <div className="overflow-x-auto">
             <div
-              className="grid grid-rows-2 grid-flow-col gap-4 py-4"
+              className="w-fit grid grid-rows-1 grid-flow-col gap-4 py-4"
               style={{
                 scrollSnapType: "x mandatory",
                 scrollBehavior: "smooth",
@@ -167,46 +126,25 @@ const Home = () => {
       )}
       {/* {Vegetables} */}
       {products?.data[2] && (
-        <div className="p-2 pt-2 pb-6">
+        <div className="p-2">
           <div className="w-full inline-flex justify-between">
-            <p className="font-medium text-lg">{products?.data[2]?.category}</p>
+            <p className="font-montserrat font-medium text-lg">
+              {products?.data[2]?.category}
+            </p>
             <button>
               <ChevronRight />
             </button>
           </div>
           <div className="overflow-x-auto">
             <div
-              className="grid grid-rows-2 grid-flow-col gap-4 py-4"
+              className="w-fit grid grid-rows-2 grid-flow-col gap-4 py-4"
               style={{
                 scrollSnapType: "x mandatory",
                 scrollBehavior: "smooth",
               }}
             >
               {products?.data[2]?.products?.map((product) => (
-                <div className="w-40 h-44 rounded-sm">
-                  <div className="w-full h-24 bg-slate-100 rounded-lg border">
-                    <img
-                      loading="lazy"
-                      src={product?.img}
-                      alt=""
-                      className="w-full h-full rounded-lg object-cover"
-                    />
-                  </div>
-                  <div className="px-2">
-                    <p className="text-lg font-medium truncate">
-                      {product?.itemName}
-                    </p>
-                    <p className="text-sm text-gray-600 truncate">
-                      {product?.weight?.value} {product?.weight?.unit}
-                    </p>
-                  </div>
-                  <div className="px-2 flex justify-between">
-                    <p className="text-xl font-medium">₹{product?.price}</p>
-                    <button className="px-2 uppercase border border-rose-600 text-rose-600 rounded-md">
-                      Add
-                    </button>
-                  </div>
-                </div>
+                <CarousalProductCard product={product} />
               ))}
             </div>
           </div>
@@ -214,46 +152,25 @@ const Home = () => {
       )}
       {/* {Cereals} */}
       {products?.data[3] && (
-        <div className="p-2 pt-2 pb-6">
+        <div className="p-2">
           <div className="w-full inline-flex justify-between">
-            <p className="font-medium text-lg">{products?.data[3]?.category}</p>
+            <p className="font-montserrat font-medium text-lg">
+              {products?.data[3]?.category}
+            </p>
             <button>
               <ChevronRight />
             </button>
           </div>
           <div className="overflow-x-auto">
             <div
-              className="grid grid-rows-2 grid-flow-col gap-4 py-4"
+              className="w-fit grid grid-rows-1 grid-flow-col gap-4 py-4"
               style={{
                 scrollSnapType: "x mandatory",
                 scrollBehavior: "smooth",
               }}
             >
               {products?.data[3]?.products?.map((product) => (
-                <div className="w-40 h-44 rounded-sm">
-                  <div className="w-full h-24 bg-slate-100 rounded-lg border">
-                    <img
-                      loading="lazy"
-                      src={product?.img}
-                      alt=""
-                      className="w-full h-full rounded-lg object-cover"
-                    />
-                  </div>
-                  <div className="px-2">
-                    <p className="text-lg font-medium truncate">
-                      {product?.itemName}
-                    </p>
-                    <p className="text-sm text-gray-600 truncate">
-                      {product?.weight?.value} {product?.weight?.unit}
-                    </p>
-                  </div>
-                  <div className="px-2 flex justify-between">
-                    <p className="text-xl font-medium">₹{product?.price}</p>
-                    <button className="px-2 uppercase border border-rose-600 text-rose-600 rounded-md">
-                      Add
-                    </button>
-                  </div>
-                </div>
+                <CarousalProductCard product={product} />
               ))}
             </div>
           </div>
@@ -263,44 +180,23 @@ const Home = () => {
       {products?.data[4] && (
         <div className="p-2 pt-2 pb-6">
           <div className="w-full inline-flex justify-between">
-            <p className="font-medium text-lg">{products?.data[4]?.category}</p>
+            <p className="font-montserrat font-medium text-lg">
+              {products?.data[4]?.category}
+            </p>
             <button>
               <ChevronRight />
             </button>
           </div>
           <div className="overflow-x-auto">
             <div
-              className="grid grid-rows-2 grid-flow-col gap-4 py-4"
+              className="w-fit grid grid-rows-2 grid-flow-col gap-4 py-4"
               style={{
                 scrollSnapType: "x mandatory",
                 scrollBehavior: "smooth",
               }}
             >
               {products?.data[4]?.products?.map((product) => (
-                <div className="w-40 h-44 rounded-sm">
-                  <div className="w-full h-24 bg-slate-100 rounded-lg border">
-                    <img
-                      loading="lazy"
-                      src={product?.img}
-                      alt=""
-                      className="w-full h-full rounded-lg object-cover"
-                    />
-                  </div>
-                  <div className="px-2">
-                    <p className="text-lg font-medium truncate">
-                      {product?.itemName}
-                    </p>
-                    <p className="text-sm text-gray-600 truncate">
-                      {product?.weight?.value} {product?.weight?.unit}
-                    </p>
-                  </div>
-                  <div className="px-2 flex justify-between">
-                    <p className="text-xl font-medium">₹{product?.price}</p>
-                    <button className="px-2 uppercase border border-rose-600 text-rose-600 rounded-md">
-                      Add
-                    </button>
-                  </div>
-                </div>
+                <CarousalProductCard product={product} />
               ))}
             </div>
           </div>
@@ -387,7 +283,7 @@ const Home = () => {
         </div>
       </div>
       {/* {Shop by Farm} */}
-      <div className="p-2 py-5 bg-gradient-to-b from-orange-50 to-orange-200">
+      <div className="p-2 py-5 bg-[#fff4e9]">
         <div className="w-full inline-flex justify-between">
           <p className="font-medium text-orange-700 text-lg">
             {farms?.headLine}

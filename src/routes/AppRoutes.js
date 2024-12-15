@@ -8,6 +8,7 @@ import Categories from "../pages/Categories";
 import ProtectedRoute from "./ProtectedRoute";
 import Profile from "../pages/Profile";
 import Cart from "../pages/Cart";
+import Product from "../pages/Product";
 const AppRoutes = () => {
   return (
     <Router>
@@ -15,6 +16,7 @@ const AppRoutes = () => {
         {/* {Public Routes} */}
         <Route path="/login" element={<Login />} />
 
+        <Route path="/:itemId" element={<Product />} />
         {/* {Protected Routes} */}
         <Route path="/" element={<UserLayout />}>
           <Route index element={<Home />} />
