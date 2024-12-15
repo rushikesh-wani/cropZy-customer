@@ -39,7 +39,7 @@ const Navbar = () => {
           Search for "Aloo"
         </div>
       </div>
-      <div className="fixed w-full bottom-0 p-2 bg-white grid grid-flow-col grid-rows-1 gap-2 text-sm font-medium">
+      <div className="z-50 fixed w-full bottom-0 p-2 bg-white grid grid-flow-col grid-rows-1 gap-2 text-sm font-medium">
         <Link onClick={() => onClickHandler("home")} to={"/"}>
           <div
             className={
