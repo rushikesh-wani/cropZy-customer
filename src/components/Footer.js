@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 const Footer = () => {
   return (
-    <footer className="bg-black text-white">
+    <footer className="font-montserrat bg-black text-white">
       <div className="container mx-auto px-4 py-10">
         {/* Top Section */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
@@ -22,24 +22,18 @@ const Footer = () => {
             <h3 className="text-lg font-semibold mb-4">Quick Links</h3>
             <ul className="text-sm text-gray-400 space-y-2">
               <li>
-                <a href="#!" className="hover:text-white">
+                <Link to={"/"} className="hover:text-white">
                   Home
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#!" className="hover:text-white">
-                  Shop
-                </a>
+                <Link className="hover:text-white">Categories</Link>
               </li>
               <li>
-                <a href="#!" className="hover:text-white">
-                  Offers
-                </a>
+                <Link className="hover:text-white">Offers</Link>
               </li>
               <li>
-                <a href="#!" className="hover:text-white">
-                  Contact Us
-                </a>
+                <Link className="hover:text-white">Contact Us</Link>
               </li>
             </ul>
           </div>

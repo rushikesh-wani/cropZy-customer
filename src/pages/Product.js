@@ -1,5 +1,5 @@
-import { ArrowLeft, ChevronLeft, Share } from "lucide-react";
-import React, { lazy, useEffect, useState } from "react";
+import { ChevronLeft } from "lucide-react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Link, useParams } from "react-router-dom";
 import CarousalProductCard from "../components/CarousalProductCard";
@@ -70,7 +70,9 @@ const Product = () => {
             <div className="my-2 flex flex-col gap-y-4 text-sm">
               <div className="flex gap-3">
                 <h2 className="w-[30%] font-medium">Farm Name</h2>
-                <p className="w-[70%] text-gray-600">Vastav's Farm</p>
+                <p className="w-[70%] text-gray-600">
+                  {productData?.farmDetails?.farmName}
+                </p>
               </div>
               <div className="flex gap-3">
                 <h2 className="w-[30%] font-medium">Farmer Name</h2>
@@ -84,7 +86,9 @@ const Product = () => {
               </div>
               <div className="flex gap-3">
                 <h2 className="w-[30%] font-medium">Farm Location</h2>
-                <p className="w-[70%] text-gray-600">lorem Ipsum 200 </p>
+                <p className="w-[70%] text-gray-600">
+                  {productData?.farmDetails?.farmLocation}
+                </p>
               </div>
             </div>
           </div>

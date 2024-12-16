@@ -1,7 +1,6 @@
 import { Car, ChevronRight } from "lucide-react";
 import React, { useEffect, useState } from "react";
 import { Leaf, Plus } from "lucide-react";
-import { Cereals, Dairy, Fruits, Vegetables } from "../assets";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import axios from "axios";
@@ -13,6 +12,7 @@ const Home = () => {
   const [bestSeller, setBestSeller] = useState(null);
   const [farms, setFarms] = useState(null);
   const [farmFresh, setFarmFresh] = useState(null);
+
   const getUserHomeData = async () => {
     try {
       const res = await axios.get(
@@ -273,17 +273,19 @@ const Home = () => {
           </div>
           <div className="grid place-items-center grid-flow-row grid-cols-3 gap-2 md:grid-cols-6">
             {bestSeller?.data?.map((farmer) => (
-              <div key={farmer?._id} className="p-2">
-                <div className="w-20 h-20 bg-gray-400 rounded-full">
-                  <img
-                    src={farmer?.profileImg}
-                    alt=""
-                    loading="lazy"
-                    className="w-full h-full object-cover rounded-full"
-                  />
+              <Link to={`/farmer/${farmer._id}`}>
+                <div key={farmer?._id} className="p-2">
+                  <div className="w-20 h-20 bg-gray-400 rounded-full">
+                    <img
+                      src={farmer?.profileImg}
+                      alt=""
+                      loading="lazy"
+                      className="w-full h-full object-cover rounded-full"
+                    />
+                  </div>
+                  <p className="text-center line-clamp-1 text-sm font-medium">{`${farmer?.firstName} ${farmer?.lastName}`}</p>
                 </div>
-                <p className="text-center line-clamp-1 text-sm font-medium">{`${farmer?.firstName} ${farmer?.lastName}`}</p>
-              </div>
+              </Link>
             ))}
           </div>
         </div>

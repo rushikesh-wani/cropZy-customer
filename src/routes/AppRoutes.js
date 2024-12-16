@@ -9,13 +9,14 @@ import ProtectedRoute from "./ProtectedRoute";
 import Profile from "../pages/Profile";
 import Cart from "../pages/Cart";
 import Product from "../pages/Product";
+import Farmer from "../pages/Farmer";
 const AppRoutes = () => {
   return (
     <Router>
       <Routes>
         {/* {Public Routes} */}
         <Route path="/login" element={<Login />} />
-
+        <Route path="/farmer/:id" element={<Farmer />} />
         <Route path="/:itemId" element={<Product />} />
         {/* {Protected Routes} */}
         <Route path="/" element={<UserLayout />}>
