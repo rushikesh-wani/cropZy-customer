@@ -10,6 +10,7 @@ import Profile from "../pages/Profile";
 import Cart from "../pages/Cart";
 import Product from "../pages/Product";
 import Farmer from "../pages/Farmer";
+import Items from "../pages/Items";
 const AppRoutes = () => {
   return (
     <Router>
@@ -30,7 +31,8 @@ const AppRoutes = () => {
               </ProtectedRoute>
             }
           />
-          <Route path="category/:category" element={<ProductsPage />} />
+          {/* <Route path="category/:category" element={<ProductsPage />} /> */}
+          <Route path="category/:category" element={<Items />} />
           <Route
             path="/profile"
             element={

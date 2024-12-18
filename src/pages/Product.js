@@ -1,28 +1,19 @@
 import { ChevronLeft } from "lucide-react";
-import React, { useEffect, useState } from "react";
-import axios from "axios";
+import React, { useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import CarousalProductCard from "../components/CarousalProductCard";
-
+import { useQuery } from "@tanstack/react-query";
+import { getItemDetails } from "../services/HomeServices";
+import ProductDetails from "../components/skeleton/ProductDetails";
 const Product = () => {
   const { itemId } = useParams();
   const [productData, setProductData] = useState(null);
-  useEffect(() => {
-    const getItemDetails = async () => {
-      try {
-        const res = await axios.get(
-          `${process.env.REACT_APP_SERVER_URL}/getProduct/${itemId}`,
-          { withCredentials: true }
-        );
-        console.log(res);
-        setProductData(res?.data?.data);
-      } catch (err) {
-        console.log(err);
-      }
-    };
-    getItemDetails();
-  }, []);
-  console.log(productData);
+  const { isError, isPending, error } = useQuery({
+    queryKey: ["productData"],
+    queryFn: () => getItemDetails(setProductData, itemId),
+  });
+  if (isPending) return <ProductDetails />;
+  if (isError) return <p>Error: {error || "Something went wrong!"}</p>;
   return (
     <>
       <div className="z-50 font-montserrat sticky top-0 w-full inline-flex items-center gap-x-2 p-2 bg-white shadow-md">

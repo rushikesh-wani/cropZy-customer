@@ -1,57 +1,31 @@
-import { Car, ChevronRight } from "lucide-react";
-import React, { useEffect, useState } from "react";
+import { ChevronRight } from "lucide-react";
+import React from "react";
 import { Leaf, Plus } from "lucide-react";
 import { Link } from "react-router-dom";
-import { toast } from "react-toastify";
-import axios from "axios";
 import CarousalProductCard from "../components/CarousalProductCard";
 import ProductCard from "../components/skeleton/ProductCard";
+import { useQuery } from "@tanstack/react-query";
+import { getUserHomeData } from "../services/HomeServices";
+
 const Home = () => {
-  const [category, setCategory] = useState(null);
-  const [products, setProducts] = useState(null);
-  const [bestSeller, setBestSeller] = useState(null);
-  const [farms, setFarms] = useState(null);
-  const [farmFresh, setFarmFresh] = useState(null);
-
-  const getUserHomeData = async () => {
-    try {
-      const res = await axios.get(
-        `${process.env.REACT_APP_SERVER_URL}/home-page`,
-        {
-          withCredentials: true,
-        }
-      );
-      console.log(res);
-      setCategory(res?.data?.data[0]);
-      setProducts(res?.data?.data[1]);
-      setBestSeller(res?.data?.data[2]);
-      setFarms(res?.data?.data[3]);
-      setFarmFresh(res?.data?.data[4]);
-
-      // Here the bug of not setting state
-      // console.log(res?.data?.data[1]?.data[0]);
-      // setFreshFruits(res?.data?.data[1]?.data[0]);
-      // console.log(freshFruits);
-    } catch (err) {
-      console.log(err);
-      toast.error(err?.response?.data?.message);
-    }
-  };
-
-  useEffect(() => {
-    getUserHomeData();
-  }, []);
+  const { data, isError, error, isPending } = useQuery({
+    queryKey: ["HomeData"],
+    queryFn: () => getUserHomeData(),
+    staleTime: 30 * 60 * 1000, // 30 mins*1000
+  });
+  if (isPending) return <ProductCard />;
+  if (isError) return <p>Error: {error.message || "Something went wrong"}</p>;
   return (
     <>
       {/* {Category} */}
-      {category ? (
+      {data?.data[0] && (
         <div className="p-2">
           <p className="font-montserrat font-medium text-lg">
             Find by Category
           </p>
           <div className="grid grid-flow-row grid-cols-3 gap-2 sm:grid-cols-5 md:grid-cols-6 lg:grid-cols-10">
-            {category?.categories?.map((cat, index) => (
-              <Link key={index} to={"/category/Fresh-Fruits"}>
+            {data?.data[0]?.categories?.map((cat, index) => (
+              <Link key={cat?.categoryName} to={"/category/Fresh-Fruits"}>
                 <div className="p-2 rounded-md">
                   <div className="w-full h-20 rounded-xl">
                     <img
@@ -69,15 +43,13 @@ const Home = () => {
             ))}
           </div>
         </div>
-      ) : (
-        <ProductCard />
       )}
       {/* {Recently Added} */}
-      {products?.data[0] && (
+      {data?.data[1] && (
         <div className="p-2">
           <div className="w-full inline-flex justify-between">
             <p className="font-montserrat font-medium text-lg">
-              {products?.data[0]?.category}
+              {data?.data[1]?.data[0]?.category}
             </p>
             <button>
               <ChevronRight />
@@ -91,7 +63,7 @@ const Home = () => {
                 scrollBehavior: "smooth",
               }}
             >
-              {products?.data[0]?.products?.map((pro) => (
+              {data?.data[1]?.data[0]?.products?.map((pro) => (
                 <CarousalProductCard key={pro._id} product={pro} />
               ))}
             </div>
@@ -99,11 +71,11 @@ const Home = () => {
         </div>
       )}
       {/* {Fresh Fruits} */}
-      {products?.data[1] && (
+      {data?.data[1]?.data[1] && (
         <div className="p-2">
           <div className="w-full inline-flex justify-between">
             <p className="font-montserrat font-medium text-lg">
-              {products?.data[1]?.category}
+              {data?.data[1]?.data[1]?.category}
             </p>
             <button>
               <ChevronRight />
@@ -117,7 +89,7 @@ const Home = () => {
                 scrollBehavior: "smooth",
               }}
             >
-              {products?.data[1]?.products?.map((product) => (
+              {data?.data[1]?.data[1]?.products?.map((product) => (
                 <CarousalProductCard key={product._id} product={product} />
               ))}
             </div>
@@ -125,11 +97,11 @@ const Home = () => {
         </div>
       )}
       {/* {Vegetables} */}
-      {products?.data[2] && (
+      {data?.data[1]?.data[2] && (
         <div className="p-2">
           <div className="w-full inline-flex justify-between">
             <p className="font-montserrat font-medium text-lg">
-              {products?.data[2]?.category}
+              {data?.data[1]?.data[2]?.category}
             </p>
             <button>
               <ChevronRight />
@@ -143,7 +115,7 @@ const Home = () => {
                 scrollBehavior: "smooth",
               }}
             >
-              {products?.data[2]?.products?.map((product) => (
+              {data?.data[1]?.data[2]?.products?.map((product) => (
                 <CarousalProductCard product={product} />
               ))}
             </div>
@@ -151,11 +123,11 @@ const Home = () => {
         </div>
       )}
       {/* {Cereals} */}
-      {products?.data[3] && (
+      {data?.data[1]?.data[3] && (
         <div className="p-2">
           <div className="w-full inline-flex justify-between">
             <p className="font-montserrat font-medium text-lg">
-              {products?.data[3]?.category}
+              {data?.data[1]?.data[3]?.category}
             </p>
             <button>
               <ChevronRight />
@@ -169,7 +141,7 @@ const Home = () => {
                 scrollBehavior: "smooth",
               }}
             >
-              {products?.data[3]?.products?.map((product) => (
+              {data?.data[1]?.data[3]?.products?.map((product) => (
                 <CarousalProductCard product={product} />
               ))}
             </div>
@@ -177,11 +149,11 @@ const Home = () => {
         </div>
       )}
       {/* {Dairy Products} */}
-      {products?.data[4] && (
+      {data?.data[1]?.data[4] && (
         <div className="p-2 pt-2 pb-6">
           <div className="w-full inline-flex justify-between">
             <p className="font-montserrat font-medium text-lg">
-              {products?.data[4]?.category}
+              {data?.data[1]?.data[4]?.category}
             </p>
             <button>
               <ChevronRight />
@@ -195,7 +167,7 @@ const Home = () => {
                 scrollBehavior: "smooth",
               }}
             >
-              {products?.data[4]?.products?.map((product) => (
+              {data?.data[1]?.data[4]?.products?.map((product) => (
                 <CarousalProductCard product={product} />
               ))}
             </div>
@@ -204,18 +176,18 @@ const Home = () => {
       )}
 
       {/* {Fresh Fruits Carousal} */}
-      {products?.data[0] && (
+      {data?.data[1]?.data[0] && (
         <div className="p-2 bg-[#fff4e9]">
           <div className="w-full inline-flex justify-between">
             <p className="text-orange-600 font-medium text-lg">
-              {products?.data[0]?.category}
+              {data?.data[1]?.data[0]?.category}
             </p>
             <button>
               <ChevronRight />
             </button>
           </div>
           <div className="py-4 flex gap-x-2 overflow-y-scroll no-scrollbar">
-            {products?.data[0]?.products?.map((product) => (
+            {data?.data[1]?.data[0]?.products?.map((product) => (
               <div className="w-60 shrink-0 p-2 bg-white rounded-md shadow-md">
                 <div
                   id="product-img-container"
@@ -263,16 +235,16 @@ const Home = () => {
       )}
 
       {/* {Best Seller} */}
-      {bestSeller && (
+      {data?.data[2] && (
         <div className="p-2">
           <div className="w-full inline-flex justify-between">
-            <p className="font-medium text-lg">{bestSeller?.headLine}</p>
+            <p className="font-medium text-lg">{data?.data[2]?.headLine}</p>
             <button>
               <ChevronRight />
             </button>
           </div>
           <div className="grid place-items-center grid-flow-row grid-cols-3 gap-2 md:grid-cols-6">
-            {bestSeller?.data?.map((farmer) => (
+            {data?.data[2]?.data?.map((farmer) => (
               <Link to={`/farmer/${farmer._id}`}>
                 <div key={farmer?._id} className="p-2">
                   <div className="w-20 h-20 bg-gray-400 rounded-full">
@@ -291,18 +263,18 @@ const Home = () => {
         </div>
       )}
       {/* {Shop by Farm} */}
-      {farms && (
+      {data?.data[3] && (
         <div className="p-2 py-5 bg-[#fff4e9]">
           <div className="w-full inline-flex justify-between">
             <p className="font-medium text-orange-700 text-lg">
-              {farms?.headLine}
+              {data?.data[3]?.headLine}
             </p>
             <button>
               <ChevronRight />
             </button>
           </div>
           <div className="flex gap-x-4 overflow-y-scroll">
-            {farms?.data?.map((farm) => (
+            {data?.data[3]?.data?.map((farm) => (
               <div key={farm?._id} className="p-2">
                 <div className="w-20 h-20 bg-gray-400 rounded-full">
                   <img
@@ -322,16 +294,16 @@ const Home = () => {
       )}
 
       {/* {Product Carousal} */}
-      {farmFresh && (
+      {data?.data[4] && (
         <div className="p-2 py-5">
           <div className="w-full inline-flex justify-between">
-            <p className="font-medium text-lg">{farmFresh?.headLine}</p>
+            <p className="font-medium text-lg">{data?.data[4]?.headLine}</p>
             <button>
               <ChevronRight />
             </button>
           </div>
           <div className="py-5 flex gap-x-2 overflow-y-scroll">
-            {farmFresh?.data?.map((product) => (
+            {data?.data[4]?.data?.map((product) => (
               <div className="w-60 shrink-0 p-1 rounded-md shadow-xl">
                 <div
                   id="product-img-container"

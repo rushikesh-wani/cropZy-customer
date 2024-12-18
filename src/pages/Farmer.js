@@ -1,28 +1,22 @@
-import React, { useEffect, useState } from "react";
-import CarousalProductCard from "../components/CarousalProductCard";
+import React, { useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { ChevronLeft, Star } from "lucide-react";
 import Accordion from "../components/Accordion";
-import axios from "axios";
+import { useQuery } from "@tanstack/react-query";
+import { getFarmerData } from "../services/HomeServices";
+import ProductDetails from "../components/skeleton/ProductDetails";
 
 const Farmer = () => {
   const { id } = useParams();
   const [farmerData, setFarmerData] = useState(null);
   const [categoryData, setCategoryData] = useState(null);
-  useEffect(() => {
-    const getData = async () => {
-      const res = await axios.get(
-        `${process.env.REACT_APP_SERVER_URL}/getFarmer/${id}`,
-        { withCredentials: true }
-      );
-      console.log(res);
-      setFarmerData(res?.data?.data?.farmerData);
-      setCategoryData(res?.data?.data?.product);
-    };
-    getData();
-  }, []);
-  console.log(farmerData);
-  console.log(categoryData);
+
+  const { isPending, isError, error } = useQuery({
+    queryKey: ["farmerData"],
+    queryFn: () => getFarmerData(id, setFarmerData, setCategoryData),
+  });
+  if (isPending) return <ProductDetails />;
+  if (isError) return <p>Error: {error || "Something went wrong!"}</p>;
   return (
     <>
       <div className="z-50 font-montserrat sticky top-0 flex items-center gap-x-2 p-2 bg-white shadow-md md:mx-20 lg:mx-52">

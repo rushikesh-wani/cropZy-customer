@@ -11,7 +11,7 @@ const ProductCard = () => {
         </div>
         <div className="grid grid-flow-row grid-cols-3 gap-2 sm:grid-cols-5 md:grid-cols-6 lg:grid-cols-10">
           {[1, 2, 3, 4, 5].map((num, index) => (
-            <div className="p-2">
+            <div key={num + 2 * index + index} className="p-2">
               <div className="w-full h-20 rounded-xl bg-slate-100 animate-pulse"></div>
               <p className="h-3 my-2 bg-slate-100 rounded-lg animate-pulse"></p>
               <p className="w-10 h-3 my-2 bg-slate-100 rounded-lg animate-pulse"></p>
@@ -40,7 +40,7 @@ const ProductCard = () => {
                   </div>
                 </div>
               ))}
-            </div>{" "}
+            </div>
           </div>
         </div>
       ))}
