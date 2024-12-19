@@ -14,21 +14,49 @@ export const getUserHomeData = async () => {
   }
 };
 
-export const getItemDetails = async (setProductData, itemId) => {
+export const getItemDetails = async (
+  setProductData,
+  itemId,
+  setIsLoading,
+  setIsError,
+  setError
+) => {
   try {
     const res = await api.get(`/getProduct/${itemId}`, {
       withCredentials: true,
     });
-    setProductData(res?.data?.data);
-    return res?.data;
+    if (res.status === 200) {
+      setProductData(res?.data?.data);
+      setIsLoading(false);
+      return;
+    }
   } catch (err) {
+    setIsError(true);
+    setIsLoading(false);
+    setError(err?.response?.data?.message);
     console.log(err);
   }
 };
 
-export const getFarmerData = async (id, setFarmerData, setCategoryData) => {
-  const res = await api.get(`/getFarmer/${id}`, { withCredentials: true });
-  setFarmerData(res?.data?.data?.farmerData);
-  setCategoryData(res?.data?.data?.product);
-  return res?.data;
+export const getFarmerData = async (
+  id,
+  setFarmerData,
+  setCategoryData,
+  setIsLoading,
+  setIsError,
+  setError
+) => {
+  try {
+    const res = await api.get(`/getFarmer/${id}`, { withCredentials: true });
+    if (res.status === 200) {
+      setFarmerData(res?.data?.data?.farmerData);
+      setCategoryData(res?.data?.data?.product);
+      setIsLoading(false);
+      return;
+    }
+  } catch (err) {
+    setIsError(true);
+    setIsLoading(false);
+    setError(err?.response?.data?.message);
+  }
 };

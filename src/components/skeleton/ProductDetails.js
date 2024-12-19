@@ -5,8 +5,8 @@ import ItemCard from "./ItemCard";
 
 const ProductDetails = () => {
   return (
-    <>
-      <div className="z-50 font-montserrat sticky top-0 w-full inline-flex items-center gap-x-2 p-2 bg-white shadow-md">
+    <div className="md:mx-20 lg:mx-52">
+      <div className="z-50 font-montserrat sticky top-0 w-full inline-flex items-center gap-x-2 p-2 py-3 bg-white shadow-md">
         <Link to={"/"} className="">
           <div className="">
             <ChevronLeft />
@@ -15,7 +15,7 @@ const ProductDetails = () => {
         <p className="w-36 h-6 rounded-lg bg-slate-100 animate-pulse"></p>
       </div>
       <div className="p-3 pb-20 bg-[#f0f4f9]">
-        <div className="flex flex-col gap-3">
+        <div className="flex flex-col gap-3 mx-auto md:max-w-3xl">
           <div className="relative w-full h-56 rounded-xl bg-slate-200 animate-pulse"></div>
           <div className="bg-white p-4 rounded-xl">
             <p className="w-[70%] h-4 my-1 rounded-lg bg-slate-100 animate-pulse"></p>
@@ -67,7 +67,7 @@ const ProductDetails = () => {
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

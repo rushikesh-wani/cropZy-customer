@@ -1,8 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { ChevronLeft, Star } from "lucide-react";
 import Accordion from "../components/Accordion";
-import { useQuery } from "@tanstack/react-query";
 import { getFarmerData } from "../services/HomeServices";
 import ProductDetails from "../components/skeleton/ProductDetails";
 
@@ -10,12 +9,21 @@ const Farmer = () => {
   const { id } = useParams();
   const [farmerData, setFarmerData] = useState(null);
   const [categoryData, setCategoryData] = useState(null);
-
-  const { isPending, isError, error } = useQuery({
-    queryKey: ["farmerData"],
-    queryFn: () => getFarmerData(id, setFarmerData, setCategoryData),
-  });
-  if (isPending) return <ProductDetails />;
+  const [isLoading, setIsLoading] = useState(true);
+  const [isError, setIsError] = useState(false);
+  const [error, setError] = useState("");
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    getFarmerData(
+      id,
+      setFarmerData,
+      setCategoryData,
+      setIsLoading,
+      setIsError,
+      setError
+    );
+  }, [id]);
+  if (isLoading) return <ProductDetails />;
   if (isError) return <p>Error: {error || "Something went wrong!"}</p>;
   return (
     <>
@@ -29,7 +37,7 @@ const Farmer = () => {
       </div>
 
       <div className="p-3 pb-20 bg-[#f0f4f9] md:mx-20 lg:mx-52">
-        <div className="flex flex-col gap-3">
+        <div className="flex flex-col gap-3 md:mx-auto md:max-w-3xl">
           <div className="mx-auto w-28 h-28 rounded-full bg-slate-200">
             <img
               loading="lazy"

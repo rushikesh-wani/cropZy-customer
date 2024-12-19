@@ -31,8 +31,8 @@ const AppRoutes = () => {
               </ProtectedRoute>
             }
           />
-          {/* <Route path="category/:category" element={<ProductsPage />} /> */}
-          <Route path="category/:category" element={<Items />} />
+          <Route path="category/:category" element={<Categories />} />
+          {/* <Route path="category/:category" element={<Items />} /> */}
           <Route
             path="/profile"
             element={
