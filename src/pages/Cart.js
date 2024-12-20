@@ -9,6 +9,7 @@ import {
   Plus,
   Receipt,
 } from "lucide-react";
+import OrderPlaced from "../components/OrderPlaced";
 const Cart = () => {
   const [cartData, setCartData] = useState(null);
   useEffect(() => {
@@ -25,7 +26,7 @@ const Cart = () => {
           </Link>
           <p className="text-lg font-medium">My Cart</p>
         </div>
-        <div className="p-3 pb-20 bg-[#f0f4f9]">
+        <div className="p-3 pb-20 bg-[#f0f4f9] min-h-screen">
           <div className="mx-auto flex flex-col gap-3 md:max-w-3xl">
             {/* {[...Array(5)].map((_, index) => (
                 <div key={index} className="bg-white p-2 rounded-xl flex gap-2">
@@ -96,9 +97,9 @@ const Cart = () => {
                           key={index}
                           className="flex gap-2 py-2 hover:bg-slate-50"
                         >
-                          <div className="w-[25%] h-20 bg-slate-200 rounded-md">
+                          <div className="w-[25%] h-16 bg-slate-200 rounded-md">
                             <img
-                              src=""
+                              src="https://res.cloudinary.com/rushikeshwani/image/upload/v1734159025/cropZy/products/ghxvsynuozopqplvouyp.webp"
                               alt="item-img"
                               className="w-full h-full object-cover rounded-md"
                             />
@@ -162,9 +163,17 @@ const Cart = () => {
                         <p className="text-xs">Total</p>
                         <p>₹245</p>
                       </div>
-                      <span className="w-[10%]">
+                      <button
+                        onClick={() => {
+                          window.scrollTo({
+                            top: 500,
+                            behavior: "smooth",
+                          });
+                        }}
+                        className="w-[10%]"
+                      >
                         <ChevronRight />
-                      </span>
+                      </button>
                     </div>
                     <div className="flex items-center gap-3">
                       <span className="w-[10%]">
@@ -189,7 +198,6 @@ const Cart = () => {
                     <hr className="w-full border-gray-300" />
                   </div>
                   <div className="space-y-4">
-                    {/* Company Info */}
                     <div className="flex justify-between">
                       <div>
                         <p className="font-montserrat font-semibold text-gray-700">
@@ -209,8 +217,6 @@ const Cart = () => {
                         <p className="text-sm text-gray-500">Receipt #123456</p>
                       </div>
                     </div>
-
-                    {/* Items Table */}
                     <div className="overflow-x-auto">
                       <table className="w-full text-sm text-left text-gray-700">
                         <thead className="font-montserrat text-xs uppercase text-rose-800 bg-rose-50">
@@ -257,8 +263,6 @@ const Cart = () => {
                         </tfoot>
                       </table>
                     </div>
-
-                    {/* Footer */}
                     <div className="text-center text-xs text-gray-500 mt-6">
                       <p>Thank you for your purchase!</p>
                       <p>
@@ -267,6 +271,7 @@ const Cart = () => {
                     </div>
                   </div>
                 </div>
+                <OrderPlaced />
               </>
             ) : (
               <div className="bg-white p-4 rounded-xl">
