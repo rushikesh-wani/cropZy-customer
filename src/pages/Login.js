@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { ChevronLeft, ChevronLeftCircle, ChevronRight } from "lucide-react";
 import { toast } from "react-toastify";
+import { api } from "../services/api";
 const Login = () => {
   const [formData, setFormData] = useState({ email: "", password: "" });
   const navigate = useNavigate();
@@ -13,13 +14,9 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post(
-        `${process.env.REACT_APP_SERVER_URL}/login`,
-        formData,
-        {
-          withCredentials: true, // Important for sending and receiving cookies
-        }
-      );
+      const res = await api.post(`/login`, formData, {
+        withCredentials: true, // Important for sending and receiving cookies
+      });
       console.log(res);
       if (res.status === 200 && res.data?.data?.role === "customer") {
         toast.success(`${res?.data?.message}`);

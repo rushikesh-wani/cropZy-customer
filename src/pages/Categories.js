@@ -30,7 +30,6 @@ const Categories = () => {
         </button>
         <p className="text-lg font-medium ">{category}</p>
       </div>
-
       <div className="sticky top-14 z-10 bg-white p-2 border shadow">
         <div className="flex gap-x-4 overflow-y-scroll text-sm text-nowrap">
           <div className="px-3 py-1 rounded-xl bg-slate-100 inline-flex items-center justify-center gap-x-1">
