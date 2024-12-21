@@ -1,7 +1,10 @@
 import React from "react";
+import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
+import { addItem } from "../store/CartSlice";
 
 const CarousalProductCard = ({ product }) => {
+  const dispatch = useDispatch();
   return (
     <Link to={`/${product?._id}`}>
       <div className="w-32 h-fit rounded-lg">
@@ -23,7 +26,14 @@ const CarousalProductCard = ({ product }) => {
         </div>
         <div className="px-2 flex justify-between">
           <p className="font-medium">₹{product?.price}</p>
-          <button className="px-2 text-sm uppercase border border-rose-600 text-rose-600 rounded-md">
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              e.preventDefault();
+              dispatch(addItem(product));
+            }}
+            className="px-2 text-sm uppercase border border-rose-600 text-rose-600 rounded-md"
+          >
             Add
           </button>
         </div>

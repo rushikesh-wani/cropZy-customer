@@ -7,11 +7,15 @@ import {
   UserCircle,
 } from "lucide-react";
 import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
 const Navbar = () => {
   const navColor = "#b6e5c7";
   const [tab, setTab] = useState("home");
+  const cartItems = useSelector((store) => {
+    return store.cart.items;
+  });
   const onClickHandler = (value) => {
     setTab(value);
   };
@@ -67,9 +71,15 @@ const Navbar = () => {
           <div
             className={
               (tab === "account" ? "text-violet-700" : "") +
-              " flex flex-col items-center justify-center"
+              " relative flex flex-col items-center justify-center"
             }
           >
+            {cartItems.length > 0 ? (
+              <p className="px-2 text-xs text-white bg-violet-700 absolute -top-1 right-[25%] rounded-xl">
+                {cartItems.length}
+              </p>
+            ) : null}
+
             <ShoppingCart />
             <p>Cart</p>
           </div>

@@ -11,6 +11,8 @@ import Cart from "../pages/Cart";
 import Product from "../pages/Product";
 import Farmer from "../pages/Farmer";
 import Items from "../pages/Items";
+import DetailsLayout from "../layout/DetailsLayout";
+import MyOrders from "../pages/MyOrders";
 const AppRoutes = () => {
   return (
     <Router>
@@ -19,22 +21,40 @@ const AppRoutes = () => {
         <Route path="/login" element={<Login />} />
         <Route path="/farmer/:id" element={<Farmer />} />
         <Route path="/:itemId" element={<Product />} />
-        <Route path="cart" element={<Cart />} />
+        {/* <Route path="cart" element={<Cart />} /> */}
         {/* {Protected Routes} */}
         <Route path="/" element={<UserLayout />}>
           <Route index element={<Home />} />
           <Route path="category" element={<Categories />} />
           <Route path="category/:category" element={<Categories />} />
           {/* <Route path="category/:category" element={<Items />} /> */}
-          <Route
-            path="/profile"
-            element={
+        </Route>
+        <Route
+          path="/profile"
+          element={
+            <DetailsLayout nav={"Profile"}>
               <ProtectedRoute>
                 <Profile />
               </ProtectedRoute>
-            }
-          />
-        </Route>
+            </DetailsLayout>
+          }
+        />
+        <Route
+          path="/cart"
+          element={
+            <DetailsLayout nav={"My Cart"}>
+              <Cart />
+            </DetailsLayout>
+          }
+        />
+        <Route
+          path="/orders"
+          element={
+            <DetailsLayout nav={"My Orders"}>
+              <MyOrders />
+            </DetailsLayout>
+          }
+        />
       </Routes>
     </Router>
   );

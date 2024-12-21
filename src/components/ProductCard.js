@@ -1,5 +1,7 @@
 import { Crop, Leaf, Plus, Star, User } from "lucide-react";
 import React from "react";
+import { addItem } from "../store/CartSlice";
+import { useDispatch } from "react-redux";
 
 const ProductCard = ({ data }) => {
   const {
@@ -12,6 +14,11 @@ const ProductCard = ({ data }) => {
     description,
     img,
   } = data;
+
+  const dispatch = useDispatch();
+  const handler = (data) => {
+    dispatch(addItem(data));
+  };
   return (
     <div className="relative p-1 border border-gray-400 rounded-md shadow-sm">
       <div className="absolute top-2 right-2 w-fit p-2 rounded-full backdrop-filter backdrop-blur-sm bg-slate-300/50">
@@ -60,7 +67,12 @@ const ProductCard = ({ data }) => {
           </span>
         </p>
         <div className="text-sm">
-          <button className="inline-flex items-center px-2 py-1 border border-green-600 text-green-600 uppercase rounded-lg">
+          <button
+            onClick={() => {
+              handler(data);
+            }}
+            className="inline-flex items-center px-2 py-1 border border-green-600 text-green-600 uppercase rounded-lg"
+          >
             <Plus />
             Add
           </button>

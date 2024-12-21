@@ -6,13 +6,17 @@ import CarousalProductCard from "../components/CarousalProductCard";
 import ProductCard from "../components/skeleton/ProductCard";
 import { useQuery } from "@tanstack/react-query";
 import { getUserHomeData } from "../services/HomeServices";
+import { useDispatch } from "react-redux";
+import { addData } from "../store/HomeDataSlice";
 
 const Home = () => {
+  const dispatch = useDispatch();
   const { data, isError, error, isPending } = useQuery({
     queryKey: ["HomeData"],
-    queryFn: () => getUserHomeData(),
+    queryFn: () => getUserHomeData(dispatch),
     staleTime: 30 * 60 * 1000, // 30 mins*1000
   });
+  // dispatch(addData(data));
   if (isPending) return <ProductCard />;
   if (isError) return <p>Error: {error.message || "Something went wrong"}</p>;
   return (

@@ -1,12 +1,14 @@
 import { toast } from "react-toastify";
 import { api } from "./api";
+import { addData } from "../store/HomeDataSlice";
 
-export const getUserHomeData = async () => {
+export const getUserHomeData = async (dispatch) => {
   try {
     const res = await api.get(`/home-page`, {
       withCredentials: true,
     });
     console.log(res);
+    dispatch(addData(res?.data));
     return res?.data;
   } catch (err) {
     console.log(err);
