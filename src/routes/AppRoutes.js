@@ -19,14 +19,27 @@ const AppRoutes = () => {
       <Routes>
         {/* {Public Routes} */}
         <Route path="/login" element={<Login />} />
-        <Route path="/farmer/:id" element={<Farmer />} />
+        <Route
+          path="/farmer/:id"
+          element={
+            <DetailsLayout nav={"Farmer"}>
+              <Farmer />
+            </DetailsLayout>
+          }
+        />
         <Route path="/:itemId" element={<Product />} />
         {/* <Route path="cart" element={<Cart />} /> */}
         {/* {Protected Routes} */}
+        <Route
+          path="category"
+          element={
+            <DetailsLayout nav={"Category"}>
+              <Categories />
+            </DetailsLayout>
+          }
+        />
         <Route path="/" element={<UserLayout />}>
           <Route index element={<Home />} />
-          <Route path="category" element={<Categories />} />
-          <Route path="category/:category" element={<Categories />} />
           {/* <Route path="category/:category" element={<Items />} /> */}
         </Route>
         <Route
@@ -36,6 +49,14 @@ const AppRoutes = () => {
               <ProtectedRoute>
                 <Profile />
               </ProtectedRoute>
+            </DetailsLayout>
+          }
+        />
+        <Route
+          path="category/:category"
+          element={
+            <DetailsLayout nav={"Category"}>
+              <Categories />
             </DetailsLayout>
           }
         />

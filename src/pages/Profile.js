@@ -35,46 +35,46 @@ const Profile = () => {
       </div>
 
       <div className="font-palanquin bg-white p-4 rounded-xl">
-        <div className="my-2 inline-flex items-center gap-2">
+        <div className="px-1 py-2 w-full inline-flex items-center gap-2 hover:bg-violet-50 hover:text-violet-800">
           <UserCircle />
           <Link to={"/"}>My Profile</Link>
         </div>
         <hr />
-        <div className="my-2 inline-flex items-center gap-2">
+        <div className="px-1 py-2 w-full inline-flex items-center gap-2 hover:bg-violet-50 hover:text-violet-800">
           <SunMoon />
           <Link to={"/"}>Theme</Link>
         </div>
         <hr />
-        <div className="my-2 inline-flex items-center gap-2">
+        <div className="px-1 py-2 w-full inline-flex items-center gap-2 hover:bg-violet-50 hover:text-violet-800">
           <Settings />
           <Link to={"/"}>Settings</Link>
         </div>
         <hr />
       </div>
       <div className="font-palanquin bg-white p-4 rounded-xl">
-        <div className="my-2 inline-flex items-center gap-2">
+        <div className="px-1 py-2 w-full inline-flex items-center gap-2 hover:bg-violet-50 hover:text-violet-800">
           <ShoppingBag />
           <Link to={"/orders"}>My orders</Link>
         </div>
         <hr />
-        <div className="my-2 inline-flex items-center gap-2">
+        <div className="px-1 py-2 w-full inline-flex items-center gap-2 hover:bg-violet-50 hover:text-violet-800">
           <History />
           <Link to={"/"}>Orders History</Link>
         </div>
         <hr />
-        <div className="my-2 inline-flex items-center gap-2">
+        <div className="px-1 py-2 w-full inline-flex items-center gap-2 hover:bg-violet-50 hover:text-violet-800">
           <CircleOff />
           <Link to={"/"}>Cancelled orders</Link>
         </div>
         <hr />
       </div>
       <div className="font-palanquin bg-white p-4 rounded-xl">
-        <div className="my-2 inline-flex items-center gap-2">
+        <div className="px-1 py-2 w-full inline-flex items-center gap-2 hover:bg-violet-50 hover:text-violet-800">
           <Trash />
           <Link to={"/"}>Delete account</Link>
         </div>
         <hr />
-        <div className="my-2 inline-flex items-center gap-2">
+        <div className="px-1 py-2 w-full inline-flex items-center gap-2 hover:bg-violet-50 hover:text-violet-800">
           <LogOut />
           <Link to={"/"} className="text-red-600">
             Logout

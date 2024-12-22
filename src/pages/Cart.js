@@ -162,7 +162,7 @@ const Cart = () => {
                 <button
                   onClick={() => {
                     window.scrollTo({
-                      top: 500,
+                      top: 350,
                       behavior: "smooth",
                     });
                   }}
@@ -267,8 +267,8 @@ const Cart = () => {
             <p className="font-medium text-nowrap">Items (0)</p>
             <hr className="w-full text-gray-900" />
           </div>
-          <div className="px-4 py-14">
-            <div className="w-full h-full">
+          <div className="px-4">
+            <div className="mx-auto w-60 h-full">
               <img
                 className="w-full h-full object-cover"
                 loading="lazy"

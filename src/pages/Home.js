@@ -6,17 +6,13 @@ import CarousalProductCard from "../components/CarousalProductCard";
 import ProductCard from "../components/skeleton/ProductCard";
 import { useQuery } from "@tanstack/react-query";
 import { getUserHomeData } from "../services/HomeServices";
-import { useDispatch } from "react-redux";
-import { addData } from "../store/HomeDataSlice";
 
 const Home = () => {
-  const dispatch = useDispatch();
   const { data, isError, error, isPending } = useQuery({
     queryKey: ["HomeData"],
-    queryFn: () => getUserHomeData(dispatch),
+    queryFn: () => getUserHomeData(),
     staleTime: 30 * 60 * 1000, // 30 mins*1000
   });
-  // dispatch(addData(data));
   if (isPending) return <ProductCard />;
   if (isError) return <p>Error: {error.message || "Something went wrong"}</p>;
   return (
@@ -29,7 +25,10 @@ const Home = () => {
           </p>
           <div className="grid grid-flow-row grid-cols-3 gap-2 sm:grid-cols-5 md:grid-cols-6 lg:grid-cols-10">
             {data?.data[0]?.categories?.map((cat, index) => (
-              <Link key={cat?.categoryName} to={"/category/Fresh-Fruits"}>
+              <Link
+                key={cat?.categoryName}
+                to={`/category/${cat?.categoryName}`}
+              >
                 <div className="p-2 rounded-md">
                   <div className="w-full h-20 rounded-xl">
                     <img

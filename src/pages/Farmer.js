@@ -27,16 +27,16 @@ const Farmer = () => {
   if (isError) return <p>Error: {error || "Something went wrong!"}</p>;
   return (
     <>
-      <div className="z-50 font-montserrat sticky top-0 flex items-center gap-x-2 p-2 bg-white shadow-md md:mx-20 lg:mx-52">
+      {/* <div className="z-50 font-montserrat sticky top-0 flex items-center gap-x-2 p-2 bg-white shadow-md md:mx-20 lg:mx-52">
         <Link to={"/"} className="">
           <div className="p-1 rounded-full bg-white">
             <ChevronLeft />
           </div>
         </Link>
         <p className="text-lg font-medium">{farmerData?.farmName}</p>
-      </div>
+      </div> */}
 
-      <div className="p-3 pb-20 bg-[#f0f4f9] md:mx-20 lg:mx-52">
+      <div className="pb-20 bg-[#f0f4f9] md:mx-20 lg:mx-52">
         <div className="flex flex-col gap-3 md:mx-auto md:max-w-3xl">
           <div className="mx-auto w-28 h-28 rounded-full bg-slate-200">
             <img
