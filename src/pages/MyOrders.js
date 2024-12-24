@@ -1,36 +1,72 @@
 import { Minus, Plus, X } from "lucide-react";
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { api } from "../services/api";
+import Details from "../components/skeleton/Details";
 
 const MyOrders = () => {
+  const [orderData, setOrderData] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [isError, setIsError] = useState(false);
+  const [error, setError] = useState("");
+
+  const getAllOrders = async () => {
+    try {
+      const res = await api.get("/my-orders");
+      if (res?.status === 200) {
+        console.log(res?.data);
+        setIsLoading(false);
+        setOrderData(res?.data?.data);
+      }
+    } catch (err) {
+      setIsError(true);
+      setError(err?.response?.data?.message);
+    }
+  };
+  useEffect(() => {
+    getAllOrders();
+  }, []);
+  if (isLoading) return <Details />;
+  if (isError) return <p>{error || "Something went wrong!"}</p>;
   return (
     <>
       <div className="font-palanquin bg-white p-4 rounded-xl">
         <div className="font-montserrat inline-flex items-center gap-x-2 w-full">
-          <p className="font-medium text-nowrap">Order (1)</p>
+          <p className="font-medium text-nowrap">
+            Order {`(${orderData?.length})`}
+          </p>
           <hr className="w-full text-gray-900" />
         </div>
         <div className="mt-4 flex flex-col">
-          {[...Array(3)].map((_, index) => (
+          {orderData?.map((order, index) => (
             <>
-              <div key={index} className="flex gap-2 py-2 hover:bg-slate-50">
+              <div
+                key={order?._id}
+                className="flex gap-2 py-2 hover:bg-slate-50"
+              >
                 <div className="w-[25%] h-16 bg-slate-200 rounded-md">
                   <img
-                    src="https://res.cloudinary.com/rushikeshwani/image/upload/v1734159025/cropZy/products/ghxvsynuozopqplvouyp.webp"
+                    src={order?.item?.img}
                     alt="item-img"
                     className="w-full h-full object-cover rounded-md"
                   />
                 </div>
                 <div className="w-[75%]">
-                  <p className="font-bold truncate">Tomato</p>
+                  <p className="font-bold truncate">#{order?._id}</p>
                   <div className="text-sm font-bold truncate">
-                    ₹ 75{" "}
+                    ₹ {order?.item?.price}{" "}
                     <span className="text-xs font-medium text-slate-700">
-                      / 1 kg
+                      /{" "}
+                      {`${order?.item?.weight?.value} ${order?.item?.weight?.unit}`}
                     </span>
                   </div>
+                  <span className="">
+                    Qty :{" "}
+                    <span className="font-medium">{`${order?.weight?.value} ${order?.weight?.unit}`}</span>
+                  </span>
                   <div className="w-full inline-flex items-center justify-between">
                     <span className="">
-                      Total : <span className="font-medium">5</span>
+                      Total :{" "}
+                      <span className="font-medium">₹ {order?.price}</span>
                     </span>
                     {/* <div className="min-w-16 max-w-20 text-sm flex justify-between items-center bg-rose-50 border border-rose-300 rounded-md text-rose-500">
                       <button
@@ -53,7 +89,7 @@ const MyOrders = () => {
                     </div> */}
                     <button className="inline-flex gap-1 items-center px-2 py-1 bg-gray-100 text-gray-900 rounded-md">
                       <X />
-                      Cancel
+                      {order?.status}
                     </button>
                   </div>
                 </div>

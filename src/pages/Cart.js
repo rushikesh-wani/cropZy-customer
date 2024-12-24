@@ -1,18 +1,18 @@
 import React, { useEffect, useState } from "react";
 import cart from "../assets/cart.avif";
-import { Link } from "react-router-dom";
 import {
   AlertTriangle,
-  ChevronLeft,
   ChevronRight,
   Minus,
   Plus,
   Receipt,
 } from "lucide-react";
 import OrderPlaced from "../components/OrderPlaced";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { decrementItem, incrementItem } from "../store/CartSlice";
 const Cart = () => {
   const [cartData, setCartData] = useState(null);
+  const dispatch = useDispatch();
   const cartItems = useSelector((store) => {
     return store.cart.items;
   });
@@ -110,22 +110,25 @@ const Cart = () => {
                       </div>
                       <div className="w-full inline-flex items-center justify-between">
                         <span className="">
-                          Total : <span className="font-medium">5</span>
+                          Total :{" "}
+                          <span className="font-medium">{item?.quantity}</span>
                         </span>
                         <div className="min-w-16 max-w-20 text-sm flex justify-between items-center bg-rose-50 border border-rose-300 rounded-md text-rose-500">
                           <button
                             className="p-1"
                             onClick={() => {
                               console.log("Add btn-clicked");
+                              dispatch(incrementItem(item?._id));
                             }}
                           >
                             <Plus className="size-4" />
                           </button>
-                          <span>1</span>
+                          <span>{item?.quantity}</span>
                           <button
                             className="p-1"
                             onClick={(e) => {
                               console.log("Minus btn-clicked");
+                              dispatch(decrementItem(item?._id));
                             }}
                           >
                             <Minus className="size-4" />
@@ -218,18 +221,18 @@ const Cart = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    <tr className="border-b">
-                      <td className="px-4 py-2">Product A</td>
-                      <td className="px-4 py-2 text-right">2</td>
-                      <td className="px-4 py-2 text-right">$10.00</td>
-                      <td className="px-4 py-2 text-right">$20.00</td>
-                    </tr>
-                    <tr className="border-b">
-                      <td className="px-4 py-2">Product B</td>
-                      <td className="px-4 py-2 text-right">1</td>
-                      <td className="px-4 py-2 text-right">$15.00</td>
-                      <td className="px-4 py-2 text-right">$15.00</td>
-                    </tr>
+                    {cartItems?.map((item) => (
+                      <tr key={item?._id} className="border-b">
+                        <td className="px-4 py-2">{item?.itemName}</td>
+                        <td className="px-4 py-2 text-right">
+                          {item?.quantity}
+                        </td>
+                        <td className="px-4 py-2 text-right">{item?.price}</td>
+                        <td className="px-4 py-2 text-right">
+                          ₹ {item?.quantity * item?.price}
+                        </td>
+                      </tr>
+                    ))}
                   </tbody>
                   <tfoot className="text-sm font-semibold text-gray-700">
                     <tr>

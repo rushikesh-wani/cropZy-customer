@@ -1,11 +1,19 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
-import { ChevronLeft, ChevronLeftCircle, ChevronRight } from "lucide-react";
+import {
+  ChevronLeft,
+  ChevronLeftCircle,
+  ChevronRight,
+  CircleAlert,
+} from "lucide-react";
 import { toast } from "react-toastify";
 import { api } from "../services/api";
 const Login = () => {
   const [formData, setFormData] = useState({ email: "", password: "" });
+  const [isLoading, setIsLoading] = useState(true);
+  const [isError, setIsError] = useState(false);
+  const [error, setError] = useState("");
   const navigate = useNavigate();
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -15,16 +23,20 @@ const Login = () => {
     e.preventDefault();
     try {
       const res = await api.post(`/login`, formData, {
-        withCredentials: true, // Important for sending and receiving cookies
+        withCredentials: true,
       });
       console.log(res);
       if (res.status === 200 && res.data?.data?.role === "customer") {
+        setIsLoading(false);
+        localStorage.setItem("isAuthenticated", "true");
         toast.success(`${res?.data?.message}`);
         navigate("/");
       }
     } catch (err) {
-      alert(`${err?.response?.data?.message}`);
-      console.error(err.message);
+      setIsError(true);
+      setError(err?.response?.data?.message);
+      // alert(`${err?.response?.data?.message}`);
+      console.error(err);
     }
   };
   return (
@@ -39,7 +51,7 @@ const Login = () => {
             </div>
           </Link>
 
-          <p className="p-2 font-bold text-transparent bg-clip-text bg-gradient-to-br from-orange-200 via-orange-500 to-orange-700 text-5xl">
+          <p className="p-2 font-palanquin font-bold text-transparent bg-clip-text bg-gradient-to-br from-orange-200 via-orange-500 to-orange-700 text-5xl">
             cropZY
           </p>
         </div>
@@ -54,6 +66,12 @@ const Login = () => {
             Farmers
           </p>
         </div>
+        {error && (
+          <div className="mx-auto w-fit flex gap-2 justify-center items-center text-center text-sm px-4 py-1 rounded-lg text-red-800 bg-rose-300/50 font-montserrat font-medium">
+            <CircleAlert className="size-4" />
+            <p>{error}</p>
+          </div>
+        )}
         <div>
           <form onSubmit={handleSubmit}>
             <div className="flex flex-col gap-y-4">
@@ -83,7 +101,7 @@ const Login = () => {
                 />
               </div>
               <div className="mx-auto">
-                <button className="px-5 py-1 rounded-lg font-medium bg-orange-600 text-white hover:bg-orange-500">
+                <button className="font-montserrat px-5 py-1 rounded-lg font-medium bg-orange-600 text-white hover:bg-orange-500">
                   Login
                 </button>
               </div>

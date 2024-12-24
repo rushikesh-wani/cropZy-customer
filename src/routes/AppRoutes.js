@@ -17,7 +17,6 @@ const AppRoutes = () => {
   return (
     <Router>
       <Routes>
-        {/* {Public Routes} */}
         <Route path="/login" element={<Login />} />
         <Route
           path="/farmer/:id"
@@ -28,8 +27,6 @@ const AppRoutes = () => {
           }
         />
         <Route path="/:itemId" element={<Product />} />
-        {/* <Route path="cart" element={<Cart />} /> */}
-        {/* {Protected Routes} */}
         <Route
           path="category"
           element={
@@ -71,9 +68,11 @@ const AppRoutes = () => {
         <Route
           path="/orders"
           element={
-            <DetailsLayout nav={"My Orders"}>
-              <MyOrders />
-            </DetailsLayout>
+            <ProtectedRoute>
+              <DetailsLayout nav={"My Orders"}>
+                <MyOrders />
+              </DetailsLayout>
+            </ProtectedRoute>
           }
         />
       </Routes>

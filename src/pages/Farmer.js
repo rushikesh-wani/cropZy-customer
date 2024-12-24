@@ -3,7 +3,7 @@ import { Link, useParams } from "react-router-dom";
 import { ChevronLeft, Star } from "lucide-react";
 import Accordion from "../components/Accordion";
 import { getFarmerData } from "../services/HomeServices";
-import ProductDetails from "../components/skeleton/ProductDetails";
+import Details from "../components/skeleton/Details";
 
 const Farmer = () => {
   const { id } = useParams();
@@ -23,7 +23,7 @@ const Farmer = () => {
       setError
     );
   }, [id]);
-  if (isLoading) return <ProductDetails />;
+  if (isLoading) return <Details />;
   if (isError) return <p>Error: {error || "Something went wrong!"}</p>;
   return (
     <>
