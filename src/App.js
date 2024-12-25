@@ -1,13 +1,17 @@
-import React from "react";
+import React, { useEffect } from "react";
 import AppRoutes from "./routes/AppRoutes";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Provider } from "react-redux";
 import AppStore from "./store/AppStore";
+import { initializeDarkMode } from "./utils/DarkMode";
 
 const App = () => {
   const queryClient = new QueryClient();
+  useEffect(() => {
+    initializeDarkMode();
+  }, []);
   return (
     <Provider store={AppStore}>
       <QueryClientProvider client={queryClient}>

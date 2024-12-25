@@ -21,7 +21,7 @@ const Navbar = () => {
   };
   return (
     <>
-      <div className="relative p-2 bg-[#fff4e9]">
+      <div className="relative p-2 bg-[#fff4e9] dark:bg-[#131518] dark:text-white">
         <div className="px-2 flex justify-between items-center">
           <Link to={"/"}>
             <p className="text-xl font-bold">cropZy</p>
@@ -32,19 +32,19 @@ const Navbar = () => {
             </div>
           </Link>
         </div>
-        <div className="px-2 flex gap-x-1 items-center text-slate-700">
+        <div className="px-2 flex gap-x-1 items-center text-slate-700 dark:text-gray-400">
           <p className="text-sm">Jalgaon, Maharashtra</p>
           <ChevronDown className="size-4" />
         </div>
       </div>
-      <div className="z-50 sticky top-0 p-2 bg-[#fff4e9] text-gray-600">
-        <Search className="size-5 absolute left-4 top-5" />
-        <div className="p-2 pl-8 bg-white border border-[#e5e7eb] rounded-lg">
+      <div className="z-50 sticky top-0 p-2 bg-[#fff4e9] text-gray-600 dark:bg-[#131518] dark:text-white">
+        <Search className="size-5 absolute left-4 top-5 dark:text-gray-500" />
+        <div className="p-2 pl-8 bg-white border border-[#e5e7eb] rounded-lg dark:bg-black dark:text-gray-500">
           Search for "Aloo"
         </div>
       </div>
 
-      <div className="z-50 w-full fixed bottom-0 p-2 bg-white grid grid-flow-col grid-rows-1 gap-2 text-sm font-medium">
+      <div className="z-50 w-full fixed bottom-0 p-2 bg-white grid grid-flow-col grid-rows-1 gap-2 text-sm font-medium dark:bg-[#131518] dark:text-white">
         <Link onClick={() => onClickHandler("home")} to={"/"}>
           <div
             className={

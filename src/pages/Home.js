@@ -19,7 +19,7 @@ const Home = () => {
     <>
       {/* {Category} */}
       {data?.data[0] && (
-        <div className="p-2">
+        <div className="p-2 dark:bg-black dark:text-white">
           <p className="font-montserrat font-medium text-lg">
             Find by Category
           </p>
@@ -49,7 +49,7 @@ const Home = () => {
       )}
       {/* {Recently Added} */}
       {data?.data[1] && (
-        <div className="p-2">
+        <div className="p-2 dark:bg-black dark:text-white">
           <div className="w-full inline-flex justify-between">
             <p className="font-montserrat font-medium text-lg">
               {data?.data[1]?.data[0]?.category}
@@ -75,7 +75,7 @@ const Home = () => {
       )}
       {/* {Fresh Fruits} */}
       {data?.data[1]?.data[1] && (
-        <div className="p-2">
+        <div className="p-2 dark:bg-black dark:text-white">
           <div className="w-full inline-flex justify-between">
             <p className="font-montserrat font-medium text-lg">
               {data?.data[1]?.data[1]?.category}
@@ -101,7 +101,7 @@ const Home = () => {
       )}
       {/* {Vegetables} */}
       {data?.data[1]?.data[2] && (
-        <div className="p-2">
+        <div className="p-2 dark:bg-black dark:text-white">
           <div className="w-full inline-flex justify-between">
             <p className="font-montserrat font-medium text-lg">
               {data?.data[1]?.data[2]?.category}
@@ -127,7 +127,7 @@ const Home = () => {
       )}
       {/* {Cereals} */}
       {data?.data[1]?.data[3] && (
-        <div className="p-2">
+        <div className="p-2 dark:bg-black dark:text-white">
           <div className="w-full inline-flex justify-between">
             <p className="font-montserrat font-medium text-lg">
               {data?.data[1]?.data[3]?.category}
@@ -153,7 +153,7 @@ const Home = () => {
       )}
       {/* {Dairy Products} */}
       {data?.data[1]?.data[4] && (
-        <div className="p-2 pt-2 pb-6">
+        <div className="p-2 pt-2 pb-6 dark:bg-black dark:text-white">
           <div className="w-full inline-flex justify-between">
             <p className="font-montserrat font-medium text-lg">
               {data?.data[1]?.data[4]?.category}
@@ -180,7 +180,7 @@ const Home = () => {
 
       {/* {Fresh Fruits Carousal} */}
       {data?.data[1]?.data[0] && (
-        <div className="p-2 bg-[#fff4e9]">
+        <div className="p-2 bg-[#fff4e9] dark:bg-black dark:text-white">
           <div className="w-full inline-flex justify-between">
             <p className="text-orange-600 font-medium text-lg">
               {data?.data[1]?.data[0]?.category}
@@ -239,7 +239,7 @@ const Home = () => {
 
       {/* {Best Seller} */}
       {data?.data[2] && (
-        <div className="p-2">
+        <div className="p-2 dark:bg-black dark:text-white">
           <div className="w-full inline-flex justify-between">
             <p className="font-medium text-lg">{data?.data[2]?.headLine}</p>
             <button>
@@ -267,7 +267,7 @@ const Home = () => {
       )}
       {/* {Shop by Farm} */}
       {data?.data[3] && (
-        <div className="p-2 py-5 bg-[#fff4e9]">
+        <div className="p-2 py-5 bg-[#fff4e9] dark:bg-black dark:text-white">
           <div className="w-full inline-flex justify-between">
             <p className="font-medium text-orange-700 text-lg">
               {data?.data[3]?.headLine}
@@ -298,7 +298,7 @@ const Home = () => {
 
       {/* {Product Carousal} */}
       {data?.data[4] && (
-        <div className="p-2 py-5">
+        <div className="p-2 py-5 dark:bg-black dark:text-white">
           <div className="w-full inline-flex justify-between">
             <p className="font-medium text-lg">{data?.data[4]?.headLine}</p>
             <button>

@@ -13,6 +13,7 @@ import Farmer from "../pages/Farmer";
 import Items from "../pages/Items";
 import DetailsLayout from "../layout/DetailsLayout";
 import MyOrders from "../pages/MyOrders";
+import Theme from "../components/Theme";
 const AppRoutes = () => {
   return (
     <Router>
@@ -42,13 +43,25 @@ const AppRoutes = () => {
         <Route
           path="/profile"
           element={
-            <DetailsLayout nav={"Profile"}>
-              <ProtectedRoute>
+            <ProtectedRoute>
+              <DetailsLayout nav={"Profile"}>
                 <Profile />
-              </ProtectedRoute>
-            </DetailsLayout>
+              </DetailsLayout>
+            </ProtectedRoute>
           }
         />
+
+        <Route
+          path="/profile/theme"
+          element={
+            <ProtectedRoute>
+              <DetailsLayout nav={"Theme"}>
+                <Theme />
+              </DetailsLayout>
+            </ProtectedRoute>
+          }
+        />
+
         <Route
           path="category/:category"
           element={
