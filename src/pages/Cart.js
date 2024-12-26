@@ -6,17 +6,50 @@ import {
   Minus,
   Plus,
   Receipt,
+  Sparkles,
 } from "lucide-react";
 import OrderPlaced from "../components/OrderPlaced";
 import { useDispatch, useSelector } from "react-redux";
 import { decrementItem, incrementItem } from "../store/CartSlice";
+import { useNavigate } from "react-router-dom";
+import { api } from "../services/api";
+import Recipe from "./Recipe";
 const Cart = () => {
   const [cartData, setCartData] = useState(null);
+  const [recipeLoading, setRecipeLoading] = useState(true);
+  const [recipeIsError, setRecipeIsError] = useState(false);
+  const [recipeError, setRecipeError] = useState("");
+  const [recipe, setRecipe] = useState("");
+  const [isBtnClicked, setIsBtnClicked] = useState(false);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const cartItems = useSelector((store) => {
     return store.cart.items;
   });
 
+  const ingredients = cartItems.map((item) => item?.itemName);
+  console.log(ingredients);
+
+  const getRecipeHandler = async (ingredients) => {
+    setIsBtnClicked(true);
+    try {
+      const res = await api.post(
+        "/get-recipe",
+        { ingredients: ingredients },
+        { withCredentials: true }
+      );
+      if (res.status === 200) {
+        setRecipe(res?.data?.recipeText);
+        setRecipeLoading(false);
+      }
+    } catch (err) {
+      setRecipeLoading(false);
+      console.log(err);
+      setRecipe(err?.response?.data?.message);
+      setRecipeIsError(true);
+      setRecipeError(err?.response?.data?.message);
+    }
+  };
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -142,6 +175,47 @@ const Cart = () => {
               ))}
             </div>
           </div>
+          <div className="font-palanquin bg-white p-4 rounded-xl">
+            <div className="font-montserrat inline-flex items-center gap-x-2 w-full">
+              <p className="font-medium text-nowrap">Get AI Recipe</p>
+              <hr className="w-full text-gray-900" />
+            </div>
+            <div className="flex justify-between items-center gap-3">
+              <div className="w-[60%] text-sm text-slate-800">
+                <p>
+                  Get AI Generated recipe from the ingredients added in your
+                  carts!
+                </p>
+              </div>
+              <div className="w-[40%] text-center">
+                <div className="relative group cursor-pointer">
+                  <div className="absolute inset-0 bg-gradient-to-r from-rose-800 via-orange-500 to-violet-600 rounded-lg blur opacity-70 group-hover:opacity-100 bg-[length:200%_200%] animate-rotate-gradient"></div>
+                  <div className="relative px-2 py-3 bg-white ring-1 ring-gray-900/5 rounded-lg leading-none flex items-top justify-center">
+                    <button
+                      onClick={() => {
+                        getRecipeHandler(ingredients);
+                        window.scrollTo({
+                          top: 300,
+                          behavior: "smooth",
+                        });
+                      }}
+                      className="text-slate-800 flex items-center gap-1"
+                    >
+                      <Sparkles className="size-4" /> Get Recipe
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          {isBtnClicked && (
+            <Recipe
+              isLoading={recipeLoading}
+              isError={recipeIsError}
+              error={recipeError}
+              text={recipe}
+            />
+          )}
           <div className="font-palanquin bg-white p-4 rounded-xl">
             <div className="font-montserrat inline-flex items-center gap-x-2 w-full">
               <p className="font-medium">Details</p>

@@ -14,6 +14,7 @@ import Items from "../pages/Items";
 import DetailsLayout from "../layout/DetailsLayout";
 import MyOrders from "../pages/MyOrders";
 import Theme from "../components/Theme";
+import Recipe from "../pages/Recipe";
 const AppRoutes = () => {
   return (
     <Router>
@@ -57,6 +58,16 @@ const AppRoutes = () => {
             <ProtectedRoute>
               <DetailsLayout nav={"Theme"}>
                 <Theme />
+              </DetailsLayout>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/recipe"
+          element={
+            <ProtectedRoute>
+              <DetailsLayout nav={"Recipe"}>
+                <Recipe />
               </DetailsLayout>
             </ProtectedRoute>
           }
