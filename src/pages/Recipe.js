@@ -7,22 +7,20 @@ const Recipe = ({ isLoading, isError, error, text }) => {
   console.log("isError", isError);
   console.log("err", error);
   console.log("text", text);
-  const raw = text;
-  const htmlContent = marked(raw);
   if (isLoading)
     return (
       <>
-        <div className="font-palanquin bg-white p-4 rounded-xl">
-          <div className="w-[100%] h-4 my-1 rounded-lg bg-slate-100 animate-pulse"></div>
-          <div className="w-[75%] h-4 my-1 rounded-lg bg-slate-100 animate-pulse"></div>
-          <div className="w-[35%] h-4 my-1 rounded-lg bg-slate-100 animate-pulse"></div>
+        <div className="font-palanquin bg-white p-4 rounded-xl dark:bg-darkCard">
+          <div className="my-1 w-[100%] rounded-lg h-3 bg-AI-Shimmer shimmer"></div>
+          <div className="my-1 w-[75%] rounded-lg h-3 bg-AI-Shimmer shimmer"></div>
+          <div className="my-1 w-[40%] rounded-lg h-3 bg-AI-Shimmer shimmer"></div>
         </div>
       </>
     );
   if (isError)
     return (
       <>
-        <div className="font-palanquin bg-white p-4 rounded-xl">
+        <div className="font-palanquin bg-white p-4 rounded-xl dark:bg-darkCard">
           <p className="text-red-600 text-center text-sm font-medium">
             AI Recipes feature is limited to registered users only! Register to
             get access to AI Recipes...
@@ -32,10 +30,13 @@ const Recipe = ({ isLoading, isError, error, text }) => {
     );
   return (
     <>
-      <div className="font-palanquin bg-white p-4 rounded-xl">
-        <p>{parse(htmlContent)}</p>
+      <div className="bg-AI-Shimmer rounded-xl p-0.5 bg-[length:200%_200%] animate-rotate-gradient">
+        <div className="font-palanquin bg-white/50 backdrop-filter backdrop-blur-sm p-4 rounded-xl ring-4 ring-black/10 dark:bg-darkCard/40 dark:text-white dark:ring-0">
+          <p>{parse(marked(text))}</p>
+        </div>
       </div>
-      <p className="text-center text-slate-600 text-xs">
+
+      <p className="text-center text-slate-600 text-xs dark:text-darkText">
         This is AI generated recipe please do not rely on them follow standard
         and best traditional practices!
       </p>

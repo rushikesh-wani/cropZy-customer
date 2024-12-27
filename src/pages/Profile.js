@@ -38,16 +38,16 @@ const Profile = () => {
   return (
     <>
       <div className="font-palanquin font-medium text-xl dark:text-white">
-        Welcome back,
+        <span> Welcome back,</span>
         <span className="text-violet-800">{` ${data?.data?.firstName} ${data?.data?.lastName}!`}</span>
       </div>
-      <div className="font-palanquin bg-white p-4 rounded-xl dark:bg-[#131518] dark:text-white">
+      <div className="font-palanquin bg-white p-4 rounded-xl dark:bg-darkCard dark:text-white">
         <div className="w-full inline-flex items-center gap-2">
-          <div className="w-[20%] h-16 bg-slate-200 rounded-lg">
+          <div className="w-[20%] h-16 bg-slate-200 rounded-full">
             <img
               src={data?.data?.profileImg}
               alt={`${data?.data?.firstName} ${data?.data?.lastName}`}
-              className="w-full h-full object-cover"
+              className="w-full h-full rounded-full object-cover"
             />
           </div>
           <div className="w-[60%]">
@@ -70,7 +70,7 @@ const Profile = () => {
         </div>
       </div>
 
-      <div className="font-palanquin bg-white p-4 rounded-xl dark:bg-[#131518] dark:text-white">
+      <div className="font-palanquin bg-white p-4 rounded-xl dark:bg-darkCard dark:text-white">
         <div className="px-1 py-2 w-full inline-flex items-center gap-2 hover:bg-violet-50 hover:text-violet-800">
           <UserCircle />
           <Link to={"/"}>My Profile</Link>
@@ -87,7 +87,7 @@ const Profile = () => {
         </div>
         <hr />
       </div>
-      <div className="font-palanquin bg-white p-4 rounded-xl dark:bg-[#131518] dark:text-white">
+      <div className="font-palanquin bg-white p-4 rounded-xl dark:bg-darkCard dark:text-white">
         <div className="px-1 py-2 w-full inline-flex items-center gap-2 hover:bg-violet-50 hover:text-violet-800">
           <ShoppingBag />
           <Link to={"/orders"}>My orders</Link>
@@ -104,7 +104,7 @@ const Profile = () => {
         </div>
         <hr />
       </div>
-      <div className="font-palanquin bg-white p-4 rounded-xl dark:bg-[#131518] dark:text-white">
+      <div className="font-palanquin bg-white p-4 rounded-xl dark:bg-darkCard dark:text-white">
         <div className="px-1 py-2 w-full inline-flex items-center gap-2 hover:bg-violet-50 hover:text-violet-800">
           <Trash />
           <Link to={"/"}>Delete account</Link>

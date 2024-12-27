@@ -112,12 +112,12 @@ const Cart = () => {
               ))} */}
       {cartItems?.length > 0 ? (
         <>
-          <div className="font-palanquin bg-white p-4 rounded-xl">
+          <div className="font-palanquin bg-white p-4 rounded-xl dark:bg-[#121212] dark:text-white">
             <div className="font-montserrat inline-flex items-center gap-x-2 w-full">
               <p className="font-medium text-nowrap">
                 Items {`(${cartItems?.length})`}
               </p>
-              <hr className="w-full text-gray-900" />
+              <hr className="w-full dark:border-darkDivider" />
             </div>
             <div className="mt-4 flex flex-col">
               {cartItems.map((item, index) => (
@@ -137,7 +137,7 @@ const Cart = () => {
                       <p className="font-bold truncate">{item?.itemName}</p>
                       <div className="text-sm font-bold truncate">
                         ₹ {item?.price}{" "}
-                        <span className="text-xs font-medium text-slate-700">
+                        <span className="text-xs font-medium text-slate-700 dark:text-darkText">
                           / {`${item?.weight?.value} ${item?.weight?.unit}`}
                         </span>
                       </div>
@@ -146,7 +146,7 @@ const Cart = () => {
                           Total :{" "}
                           <span className="font-medium">{item?.quantity}</span>
                         </span>
-                        <div className="min-w-16 max-w-20 text-sm flex justify-between items-center bg-rose-50 border border-rose-300 rounded-md text-rose-500">
+                        <div className="min-w-16 max-w-20 text-sm flex justify-between items-center bg-rose-50 border border-rose-300 rounded-md text-rose-500 dark:bg-darkAddBtn">
                           <button
                             className="p-1"
                             onClick={() => {
@@ -170,18 +170,18 @@ const Cart = () => {
                       </div>
                     </div>
                   </div>
-                  <hr />
+                  <hr className="dark:border-darkDivider" />
                 </>
               ))}
             </div>
           </div>
-          <div className="font-palanquin bg-white p-4 rounded-xl">
+          <div className="font-palanquin bg-white p-4 rounded-xl dark:bg-[#121212] dark:text-white">
             <div className="font-montserrat inline-flex items-center gap-x-2 w-full">
               <p className="font-medium text-nowrap">Get AI Recipe</p>
-              <hr className="w-full text-gray-900" />
+              <hr className="w-full dark:border-darkDivider" />
             </div>
             <div className="flex justify-between items-center gap-3">
-              <div className="w-[60%] text-sm text-slate-800">
+              <div className="w-[60%] text-sm text-slate-800 dark:text-darkText">
                 <p>
                   Get AI Generated recipe from the ingredients added in your
                   carts!
@@ -190,7 +190,7 @@ const Cart = () => {
               <div className="w-[40%] text-center">
                 <div className="relative group cursor-pointer">
                   <div className="absolute inset-0 bg-gradient-to-r from-rose-800 via-orange-500 to-violet-600 rounded-lg blur opacity-70 group-hover:opacity-100 bg-[length:200%_200%] animate-rotate-gradient"></div>
-                  <div className="relative px-2 py-3 bg-white ring-1 ring-gray-900/5 rounded-lg leading-none flex items-top justify-center">
+                  <div className="relative px-2 py-3 bg-white text-slate-800 ring-1 ring-gray-900/5 rounded-lg leading-none flex items-top justify-center dark:bg-darkCard dark:text-white">
                     <button
                       onClick={() => {
                         getRecipeHandler(ingredients);
@@ -199,7 +199,7 @@ const Cart = () => {
                           behavior: "smooth",
                         });
                       }}
-                      className="text-slate-800 flex items-center gap-1"
+                      className="flex items-center gap-1"
                     >
                       <Sparkles className="size-4" /> Get Recipe
                     </button>
@@ -216,10 +216,10 @@ const Cart = () => {
               text={recipe}
             />
           )}
-          <div className="font-palanquin bg-white p-4 rounded-xl">
+          <div className="font-palanquin bg-white p-4 rounded-xl dark:bg-darkCard dark:text-white">
             <div className="font-montserrat inline-flex items-center gap-x-2 w-full">
               <p className="font-medium">Details</p>
-              <hr className="w-full text-gray-900" />
+              <hr className="w-full dark:border-darkDivider" />
             </div>
             <div className="my-2 flex flex-col gap-y-4 text-sm">
               <div className="flex items-center gap-3">
@@ -265,28 +265,36 @@ const Cart = () => {
               </div>
             </div>
           </div>
-          <div className="font-palanquin bg-white p-4 rounded-xl">
+          <div className="font-palanquin bg-white p-4 rounded-xl dark:bg-darkCard dark:text-white">
             <div className="inline-flex items-center gap-x-2 w-full mb-4">
               <p className="font-montserrat font-medium">Receipt</p>
-              <hr className="w-full border-gray-300" />
+              <hr className="w-full dark:border-darkDivider" />
             </div>
             <div className="space-y-4">
               <div className="flex justify-between">
                 <div>
-                  <p className="font-montserrat font-semibold text-gray-700">
+                  <p className="font-montserrat font-semibold text-gray-700 dark:text-darkText">
                     Farmer Name
                   </p>
-                  <p className="text-sm text-gray-500">123 Business Street</p>
-                  <p className="text-sm text-gray-500">City, Country, 12345</p>
+                  <p className="text-sm text-gray-500 dark:text-darkText">
+                    123 Business Street
+                  </p>
+                  <p className="text-sm text-gray-500 dark:text-darkText">
+                    City, Country, 12345
+                  </p>
                 </div>
                 <div className="text-right">
-                  <p className="text-sm text-gray-500">Date: 20th Dec 2024</p>
-                  <p className="text-sm text-gray-500">Receipt #123456</p>
+                  <p className="text-sm text-gray-500 dark:text-darkText">
+                    Date: 20th Dec 2024
+                  </p>
+                  <p className="text-sm text-gray-500 dark:text-darkText">
+                    Receipt #123456
+                  </p>
                 </div>
               </div>
               <div className="overflow-x-auto">
-                <table className="w-full text-sm text-left text-gray-700">
-                  <thead className="font-montserrat text-xs uppercase text-rose-800 bg-rose-50">
+                <table className="w-full text-sm text-left text-gray-700 dark:text-darkText">
+                  <thead className="font-montserrat text-xs uppercase text-rose-800 bg-rose-50 dark:bg-[#2a2121] dark:text-[#fc8999]">
                     <tr>
                       <th className="px-4 py-2">Item</th>
                       <th className="px-4 py-2 text-right">Quantity</th>
@@ -296,7 +304,10 @@ const Cart = () => {
                   </thead>
                   <tbody>
                     {cartItems?.map((item) => (
-                      <tr key={item?._id} className="border-b">
+                      <tr
+                        key={item?._id}
+                        className="border-b dark:border-[#fc8999]"
+                      >
                         <td className="px-4 py-2">{item?.itemName}</td>
                         <td className="px-4 py-2 text-right">
                           {item?.quantity}
@@ -308,7 +319,7 @@ const Cart = () => {
                       </tr>
                     ))}
                   </tbody>
-                  <tfoot className="text-sm font-semibold text-gray-700">
+                  <tfoot className="text-sm font-semibold text-gray-700 dark:text-darkText">
                     <tr>
                       <td className="px-4 py-2 text-right" colSpan="3">
                         Subtotal
@@ -339,7 +350,7 @@ const Cart = () => {
           <OrderPlaced />
         </>
       ) : (
-        <div className="bg-white p-4 rounded-xl">
+        <div className="bg-white p-4 rounded-xl dark:bg-darkCard dark:text-white">
           <div className="inline-flex items-center gap-x-2 w-full">
             <p className="font-medium text-nowrap">Items (0)</p>
             <hr className="w-full text-gray-900" />

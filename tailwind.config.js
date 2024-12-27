@@ -21,6 +21,16 @@ module.exports = {
       animation: {
         "rotate-gradient": "rotate-gradient 2s linear infinite",
       },
+      backgroundImage: {
+        "AI-Shimmer":
+          "linear-gradient(90deg, rgba(255, 27, 97, 0.79) 13%, rgba(238, 140, 12, 0.82) 61%, rgba(148, 107, 243, 0.78) 91%)",
+      },
+      colors: {
+        darkDivider: "#414143",
+        darkCard: "#121212",
+        darkText: "#e2e0d1",
+        darkAddBtn: "#2a2121",
+      },
     },
   },
   plugins: [],
