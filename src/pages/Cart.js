@@ -189,7 +189,7 @@ const Cart = () => {
               </div>
               <div className="w-[40%] text-center">
                 <div className="relative group cursor-pointer">
-                  <div className="absolute inset-0 bg-gradient-to-r from-rose-800 via-orange-500 to-violet-600 rounded-lg blur opacity-70 group-hover:opacity-100 bg-[length:200%_200%] animate-rotate-gradient"></div>
+                  <div className="absolute inset-0 bg-radiant rounded-lg blur opacity-70 group-hover:opacity-100 bg-[length:200%_200%] animate-rotate-gradient"></div>
                   <div className="relative px-2 py-3 bg-white text-slate-800 ring-1 ring-gray-900/5 rounded-lg leading-none flex items-top justify-center dark:bg-darkCard dark:text-white">
                     <button
                       onClick={() => {
@@ -350,31 +350,28 @@ const Cart = () => {
           <OrderPlaced />
         </>
       ) : (
-        <div className="bg-white p-4 rounded-xl dark:bg-darkCard dark:text-white">
-          <div className="inline-flex items-center gap-x-2 w-full">
-            <p className="font-medium text-nowrap">Items (0)</p>
-            <hr className="w-full text-gray-900" />
-          </div>
-          <div className="px-4">
-            <div className="mx-auto w-60 h-full">
-              <img
-                className="w-full h-full object-cover"
-                loading="lazy"
-                src={cart}
-                alt="empty-cart"
-              />
+        <>
+          <div className="bg-white p-4 rounded-xl dark:bg-darkCard dark:text-white">
+            <div className="inline-flex items-center gap-x-2 w-full">
+              <p className="font-medium text-nowrap">Items (0)</p>
+              <hr className="w-full text-gray-900" />
             </div>
-            <p className="my-2 text-sm text-gray-700 text-center">
-              Nothing to show right now! Add item to cart to see here. Continue
-              shopping...
-            </p>
-            {/* <Link to={"/"}>
-                      <div className="inline-flex items-center justify-center w-full px-4 py-1 bg-violet-600 text-lg text-white font-medium rounded-lg">
-                        Continue Shopping <ArrowRight />
-                      </div>
-                    </Link> */}
+            <div className="px-4">
+              <div className="mx-auto w-60 h-full">
+                <img
+                  className="w-full h-full object-cover"
+                  loading="lazy"
+                  src={cart}
+                  alt="empty-cart"
+                />
+              </div>
+              <p className="my-2 text-sm text-gray-700 text-center">
+                Nothing to show right now! Add item to cart to see here.
+                Continue shopping...
+              </p>
+            </div>
           </div>
-        </div>
+        </>
       )}
 
       <div className="fixed bottom-0 right-0 left-0 text-center px-5 py-2 bg-white md:px-44 md:mx-20 lg:mx-52">

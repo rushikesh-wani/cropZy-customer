@@ -19,11 +19,13 @@ module.exports = {
         },
       },
       animation: {
-        "rotate-gradient": "rotate-gradient 2s linear infinite",
+        "rotate-gradient": "rotate-gradient 4s linear infinite",
       },
       backgroundImage: {
         "AI-Shimmer":
           "linear-gradient(90deg, rgba(255, 27, 97, 0.79) 13%, rgba(238, 140, 12, 0.82) 61%, rgba(148, 107, 243, 0.78) 91%)",
+        radiant:
+          "conic-gradient(#ff4545, #00ff99, #3e00ff, #006aff, #ffac00, #ff0095, #ff4545);",
       },
       colors: {
         darkDivider: "#414143",

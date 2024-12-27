@@ -30,16 +30,18 @@ const Recipe = ({ isLoading, isError, error, text }) => {
     );
   return (
     <>
-      <div className="bg-AI-Shimmer rounded-xl p-0.5 bg-[length:200%_200%] animate-rotate-gradient">
-        <div className="font-palanquin bg-white/50 backdrop-filter backdrop-blur-sm p-4 rounded-xl ring-4 ring-black/10 dark:bg-darkCard/40 dark:text-white dark:ring-0">
-          <p>{parse(marked(text))}</p>
+      <div className="py-5">
+        <div className="relative">
+          <div className="absolute -inset-1 bg-radiant blur-md rounded-xl bg-[length:200%_200%] animate-rotate-gradient"></div>
+          <div className="relative font-palanquin p-4 bg-white/50 ring-4 ring-black/5 text-slate-800 rounded-xl backdrop-filter backdrop-blur-3xl dark:bg-darkCard/50 dark:text-white">
+            <p>{parse(marked(text))}</p>
+          </div>
         </div>
+        <p className="mt-2 text-center text-slate-600 text-xs dark:text-darkText">
+          This is AI generated recipe please do not rely on them follow standard
+          and best traditional practices!
+        </p>
       </div>
-
-      <p className="text-center text-slate-600 text-xs dark:text-darkText">
-        This is AI generated recipe please do not rely on them follow standard
-        and best traditional practices!
-      </p>
     </>
   );
 };
