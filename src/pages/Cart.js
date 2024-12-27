@@ -33,6 +33,10 @@ const Cart = () => {
   const getRecipeHandler = async (ingredients) => {
     setIsBtnClicked(true);
     try {
+      const isUserAuthenticated = localStorage.getItem("isAuthenticated");
+      if (!isUserAuthenticated) {
+        throw new Error("Registered users are only allowed!");
+      }
       const res = await api.post(
         "/get-recipe",
         { ingredients: ingredients },
@@ -47,7 +51,10 @@ const Cart = () => {
       console.log(err);
       setRecipe(err?.response?.data?.message);
       setRecipeIsError(true);
-      setRecipeError(err?.response?.data?.message);
+      setRecipeError(
+        err?.response?.data?.message ||
+          "Only registered users have access for AI Recipes!"
+      );
     }
   };
   useEffect(() => {
