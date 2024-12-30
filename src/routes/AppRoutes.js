@@ -15,11 +15,13 @@ import DetailsLayout from "../layout/DetailsLayout";
 import MyOrders from "../pages/MyOrders";
 import Theme from "../components/Theme";
 import Recipe from "../pages/Recipe";
+import Signup from "../pages/Signup";
 const AppRoutes = () => {
   return (
     <Router>
       <Routes>
         <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<Signup />} />
         <Route
           path="/farmer/:id"
           element={

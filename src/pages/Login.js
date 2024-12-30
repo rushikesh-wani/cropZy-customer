@@ -11,7 +11,7 @@ import { toast } from "react-toastify";
 import { api } from "../services/api";
 const Login = () => {
   const [formData, setFormData] = useState({ email: "", password: "" });
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
   const [error, setError] = useState("");
   const navigate = useNavigate();
@@ -22,6 +22,7 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      setIsLoading(true);
       const res = await api.post(`/login`, formData, {
         withCredentials: true,
       });
@@ -35,13 +36,12 @@ const Login = () => {
     } catch (err) {
       setIsError(true);
       setError(err?.response?.data?.message);
-      // alert(`${err?.response?.data?.message}`);
       console.error(err);
     }
   };
   return (
     <div className="relative md:mx-20 lg:mx-52">
-      <div className="-z-40 absolute top-0 w-full h-screen bg-gradient-to-t from-[#f9c795] to-[#f8f4f0]"></div>
+      <div className="-z-40 absolute top-0 w-full min-h-screen bg-gradient-to-t from-[#f9c795] to-[#f8f4f0]"></div>
 
       <div className="p-5 lg:mx-52">
         <div className="">
@@ -51,7 +51,7 @@ const Login = () => {
             </div>
           </Link>
 
-          <p className="p-2 font-palanquin font-bold text-transparent bg-clip-text bg-gradient-to-br from-orange-200 via-orange-500 to-orange-700 text-5xl">
+          <p className="p-2 font-montserrat font-bold text-transparent bg-clip-text bg-gradient-to-br from-orange-200 via-orange-500 to-orange-700 text-5xl">
             cropZY
           </p>
         </div>

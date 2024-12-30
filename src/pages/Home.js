@@ -2,10 +2,11 @@ import { ChevronRight } from "lucide-react";
 import React from "react";
 import { Leaf, Plus } from "lucide-react";
 import { Link } from "react-router-dom";
-import CarousalProductCard from "../components/CarousalProductCard";
 import ProductCard from "../components/skeleton/ProductCard";
 import { useQuery } from "@tanstack/react-query";
 import { getUserHomeData } from "../services/HomeServices";
+import HomeCarousal from "../components/HomeCarousal";
+import TwoRowCarousal from "../components/TwoRowCarousal";
 
 const Home = () => {
   const { data, isError, error, isPending } = useQuery({
@@ -47,139 +48,43 @@ const Home = () => {
           </div>
         </div>
       )}
-      {/* {Recently Added} */}
-      {data?.data[1] && (
-        <div className="p-2 dark:bg-black dark:text-white">
-          <div className="w-full inline-flex justify-between">
-            <p className="font-montserrat font-medium text-lg">
-              {data?.data[1]?.data[0]?.category}
-            </p>
-            <button>
-              <ChevronRight />
-            </button>
-          </div>
-          <div className="overflow-x-auto">
-            <div
-              className="w-fit grid grid-rows-1 grid-flow-col gap-4 py-4"
-              style={{
-                scrollSnapType: "x mandatory",
-                scrollBehavior: "smooth",
-              }}
-            >
-              {data?.data[1]?.data[0]?.products?.map((pro) => (
-                <CarousalProductCard key={pro._id} product={pro} />
-              ))}
-            </div>
-          </div>
-        </div>
-      )}
-      {/* {Fresh Fruits} */}
-      {data?.data[1]?.data[1] && (
-        <div className="p-2 dark:bg-black dark:text-white">
-          <div className="w-full inline-flex justify-between">
-            <p className="font-montserrat font-medium text-lg">
-              {data?.data[1]?.data[1]?.category}
-            </p>
-            <button>
-              <ChevronRight />
-            </button>
-          </div>
-          <div className="overflow-x-auto">
-            <div
-              className="w-fit grid grid-rows-1 grid-flow-col gap-4 py-4"
-              style={{
-                scrollSnapType: "x mandatory",
-                scrollBehavior: "smooth",
-              }}
-            >
-              {data?.data[1]?.data[1]?.products?.map((product) => (
-                <CarousalProductCard key={product._id} product={product} />
-              ))}
-            </div>
-          </div>
-        </div>
-      )}
-      {/* {Vegetables} */}
-      {data?.data[1]?.data[2] && (
-        <div className="p-2 dark:bg-black dark:text-white">
-          <div className="w-full inline-flex justify-between">
-            <p className="font-montserrat font-medium text-lg">
-              {data?.data[1]?.data[2]?.category}
-            </p>
-            <button>
-              <ChevronRight />
-            </button>
-          </div>
-          <div className="overflow-x-auto">
-            <div
-              className="w-fit grid grid-rows-2 grid-flow-col gap-4 py-4"
-              style={{
-                scrollSnapType: "x mandatory",
-                scrollBehavior: "smooth",
-              }}
-            >
-              {data?.data[1]?.data[2]?.products?.map((product) => (
-                <CarousalProductCard product={product} />
-              ))}
-            </div>
-          </div>
-        </div>
-      )}
       {/* {Cereals} */}
-      {data?.data[1]?.data[3] && (
-        <div className="p-2 dark:bg-black dark:text-white">
-          <div className="w-full inline-flex justify-between">
-            <p className="font-montserrat font-medium text-lg">
-              {data?.data[1]?.data[3]?.category}
-            </p>
-            <button>
-              <ChevronRight />
-            </button>
-          </div>
-          <div className="overflow-x-auto">
-            <div
-              className="w-fit grid grid-rows-1 grid-flow-col gap-4 py-4"
-              style={{
-                scrollSnapType: "x mandatory",
-                scrollBehavior: "smooth",
-              }}
-            >
-              {data?.data[1]?.data[3]?.products?.map((product) => (
-                <CarousalProductCard product={product} />
-              ))}
-            </div>
-          </div>
-        </div>
+      {data?.data[1]?.data[0] && (
+        <HomeCarousal
+          headLine={data?.data[1]?.data[0]?.category}
+          data={data?.data[1]?.data[0]?.products}
+        />
       )}
       {/* {Dairy Products} */}
+      {data?.data[1]?.data[1] && (
+        <HomeCarousal
+          headLine={data?.data[1]?.data[1]?.category}
+          data={data?.data[1]?.data[1]?.products}
+        />
+      )}
+      {/* {Fresh fruits} */}
+      {data?.data[1]?.data[2] && (
+        <TwoRowCarousal
+          headLine={data?.data[1]?.data[2]?.category}
+          data={data?.data[1]?.data[2]?.products}
+        />
+      )}
+      {/* {Recently Added} */}
+      {data?.data[1]?.data[3] && (
+        <HomeCarousal
+          headLine={data?.data[1]?.data[3]?.category}
+          data={data?.data[1]?.data[3]?.products}
+        />
+      )}
+      {/* {Vegetables} */}
       {data?.data[1]?.data[4] && (
-        <div className="p-2 pt-2 pb-6 dark:bg-black dark:text-white">
-          <div className="w-full inline-flex justify-between">
-            <p className="font-montserrat font-medium text-lg">
-              {data?.data[1]?.data[4]?.category}
-            </p>
-            <button>
-              <ChevronRight />
-            </button>
-          </div>
-          <div className="overflow-x-auto">
-            <div
-              className="w-fit grid grid-rows-2 grid-flow-col gap-4 py-4"
-              style={{
-                scrollSnapType: "x mandatory",
-                scrollBehavior: "smooth",
-              }}
-            >
-              {data?.data[1]?.data[4]?.products?.map((product) => (
-                <CarousalProductCard product={product} />
-              ))}
-            </div>
-          </div>
-        </div>
+        <TwoRowCarousal
+          headLine={data?.data[1]?.data[4]?.category}
+          data={data?.data[1]?.data[4]?.products}
+        />
       )}
 
-      {/* {Fresh Fruits Carousal} */}
-      {data?.data[1]?.data[0] && (
+      {/* {data?.data[1]?.data[0] && (
         <div className="p-2 bg-[#fff4e9] dark:bg-black dark:text-white">
           <div className="w-full inline-flex justify-between">
             <p className="text-orange-600 font-medium text-lg">
@@ -235,8 +140,7 @@ const Home = () => {
             ))}
           </div>
         </div>
-      )}
-
+      )} */}
       {/* {Best Seller} */}
       {data?.data[2] && (
         <div className="p-2 dark:bg-black dark:text-white">
@@ -248,8 +152,8 @@ const Home = () => {
           </div>
           <div className="grid place-items-center grid-flow-row grid-cols-3 gap-2 md:grid-cols-6">
             {data?.data[2]?.data?.map((farmer) => (
-              <Link to={`/farmer/${farmer._id}`}>
-                <div key={farmer?._id} className="p-2">
+              <Link key={farmer?._id} to={`/farmer/${farmer._id}`}>
+                <div className="p-2">
                   <div className="w-20 h-20 bg-gray-400 rounded-full">
                     <img
                       src={farmer?.profileImg}
@@ -295,7 +199,6 @@ const Home = () => {
           </div>
         </div>
       )}
-
       {/* {Product Carousal} */}
       {data?.data[4] && (
         <div className="p-2 py-5 dark:bg-black dark:text-white">
@@ -307,7 +210,10 @@ const Home = () => {
           </div>
           <div className="py-5 flex gap-x-2 overflow-y-scroll">
             {data?.data[4]?.data?.map((product) => (
-              <div className="w-60 shrink-0 p-1 rounded-md shadow-xl">
+              <div
+                key={product?._id}
+                className="w-60 shrink-0 p-1 rounded-md shadow-xl"
+              >
                 <div
                   id="product-img-container"
                   className="w-full h-32 rounded-md border border-white bg-gray-200"

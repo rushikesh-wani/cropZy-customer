@@ -4,6 +4,7 @@ import { Link, useParams } from "react-router-dom";
 import CarousalProductCard from "../components/CarousalProductCard";
 import { getItemDetails } from "../services/HomeServices";
 import ProductDetails from "../components/skeleton/ProductDetails";
+import ItemCard from "../components/skeleton/ItemCard";
 const Product = () => {
   const { itemId } = useParams();
   const [productData, setProductData] = useState(null);
@@ -88,86 +89,9 @@ const Product = () => {
             <div className="overflow-x-auto">
               {" "}
               <div className="w-fit grid grid-rows-1 grid-flow-col gap-4">
-                <CarousalProductCard
-                  product={{
-                    addedAt: "2024-11-26T09:56:53.726Z",
-                    category: "Fresh Fruits",
-                    createdAt: "2024-11-26T09:56:53.735Z",
-                    description:
-                      "Fresh Banana direct from farm. Produced by orgaic farming.",
-                    farmerId: "6744c75250486827b4e06d55",
-                    img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQkrRDpJMyN_gPPw_tc32KtFxteUFsYUA8ij0vT-xPA9ZBefz10irGmlZyDd89AIDNG-lU&usqp=CAU",
-                    itemName: "Banana",
-                    price: 30,
-                    stockQty: 60,
-                    updatedAt: "2024-12-07T12:26:16.954Z",
-                    weight: { value: 5, unit: "Piece" },
-                  }}
-                />
-                <CarousalProductCard
-                  product={{
-                    addedAt: "2024-11-26T09:56:53.726Z",
-                    category: "Fresh Fruits",
-                    createdAt: "2024-11-26T09:56:53.735Z",
-                    description:
-                      "Fresh Banana direct from farm. Produced by orgaic farming.",
-                    farmerId: "6744c75250486827b4e06d55",
-                    img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQkrRDpJMyN_gPPw_tc32KtFxteUFsYUA8ij0vT-xPA9ZBefz10irGmlZyDd89AIDNG-lU&usqp=CAU",
-                    itemName: "Banana",
-                    price: 30,
-                    stockQty: 60,
-                    updatedAt: "2024-12-07T12:26:16.954Z",
-                    weight: { value: 5, unit: "Piece" },
-                  }}
-                />
-                <CarousalProductCard
-                  product={{
-                    addedAt: "2024-11-26T09:56:53.726Z",
-                    category: "Fresh Fruits",
-                    createdAt: "2024-11-26T09:56:53.735Z",
-                    description:
-                      "Fresh Banana direct from farm. Produced by orgaic farming.",
-                    farmerId: "6744c75250486827b4e06d55",
-                    img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQkrRDpJMyN_gPPw_tc32KtFxteUFsYUA8ij0vT-xPA9ZBefz10irGmlZyDd89AIDNG-lU&usqp=CAU",
-                    itemName: "Banana",
-                    price: 30,
-                    stockQty: 60,
-                    updatedAt: "2024-12-07T12:26:16.954Z",
-                    weight: { value: 5, unit: "Piece" },
-                  }}
-                />
-                <CarousalProductCard
-                  product={{
-                    addedAt: "2024-11-26T09:56:53.726Z",
-                    category: "Fresh Fruits",
-                    createdAt: "2024-11-26T09:56:53.735Z",
-                    description:
-                      "Fresh Banana direct from farm. Produced by orgaic farming.",
-                    farmerId: "6744c75250486827b4e06d55",
-                    img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQkrRDpJMyN_gPPw_tc32KtFxteUFsYUA8ij0vT-xPA9ZBefz10irGmlZyDd89AIDNG-lU&usqp=CAU",
-                    itemName: "Banana",
-                    price: 30,
-                    stockQty: 60,
-                    updatedAt: "2024-12-07T12:26:16.954Z",
-                    weight: { value: 5, unit: "Piece" },
-                  }}
-                />
-                <CarousalProductCard
-                  product={{
-                    addedAt: "2024-11-26T09:56:53.726Z",
-                    category: "Fresh Fruits",
-                    createdAt: "2024-11-26T09:56:53.735Z",
-                    description:
-                      "Fresh Banana direct from farm. Produced by orgaic farming.",
-                    farmerId: "6744c75250486827b4e06d55",
-                    img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQkrRDpJMyN_gPPw_tc32KtFxteUFsYUA8ij0vT-xPA9ZBefz10irGmlZyDd89AIDNG-lU&usqp=CAU",
-                    itemName: "Banana",
-                    price: 30,
-                    stockQty: 60,
-                    updatedAt: "2024-12-07T12:26:16.954Z",
-                    weight: { value: 5, unit: "Piece" },
-                  }}
-                />
+                {[...Array(5)].map((_, _ind) => (
+                  <ItemCard key={_ind} />
+                ))}
               </div>
             </div>
           </div>
