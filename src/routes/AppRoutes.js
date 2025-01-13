@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { createBrowserRouter } from "react-router-dom";
 import UserLayout from "../layout/UserLayout";
 import Home from "../pages/Home";
 import ProductsPage from "../components/ProductsPage";
@@ -16,94 +16,173 @@ import MyOrders from "../pages/MyOrders";
 import Theme from "../components/Theme";
 import Recipe from "../pages/Recipe";
 import Signup from "../pages/Signup";
-const AppRoutes = () => {
-  return (
-    <Router>
-      <Routes>
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<Signup />} />
-        <Route
-          path="/farmer/:id"
-          element={
-            <DetailsLayout nav={"Farmer"}>
-              <Farmer />
-            </DetailsLayout>
-          }
-        />
-        <Route path="/:itemId" element={<Product />} />
-        <Route
-          path="category"
-          element={
-            <DetailsLayout nav={"Category"}>
-              <Categories />
-            </DetailsLayout>
-          }
-        />
-        <Route path="/" element={<UserLayout />}>
-          <Route index element={<Home />} />
-          {/* <Route path="category/:category" element={<Items />} /> */}
-        </Route>
-        <Route
-          path="/profile"
-          element={
-            <ProtectedRoute>
-              <DetailsLayout nav={"Profile"}>
-                <Profile />
-              </DetailsLayout>
-            </ProtectedRoute>
-          }
-        />
 
-        <Route
-          path="/profile/theme"
-          element={
-            <ProtectedRoute>
-              <DetailsLayout nav={"Theme"}>
-                <Theme />
-              </DetailsLayout>
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/recipe"
-          element={
-            <ProtectedRoute>
-              <DetailsLayout nav={"Recipe"}>
-                <Recipe />
-              </DetailsLayout>
-            </ProtectedRoute>
-          }
-        />
+const appRouter = createBrowserRouter([
+  {
+    path: "/",
+    element: <UserLayout />,
+    children: [
+      {
+        index: true,
+        element: <Home />,
+      },
+    ],
+  },
+  {
+    path: "/login",
+    element: <Login />,
+  },
+  {
+    path: "/signup",
+    element: <Signup />,
+  },
+  {
+    path: "/",
+    element: <DetailsLayout />,
+    children: [
+      {
+        path: "/farmer/:id",
+        element: <Farmer />,
+        handle: { nav: "Farmer" },
+      },
+      {
+        path: "/category",
+        element: <Categories />,
+        handle: { nav: "Category" },
+      },
+      {
+        path: "/category/:category",
+        element: <Categories />,
+        handle: { nav: "Category" },
+      },
 
-        <Route
-          path="category/:category"
-          element={
-            <DetailsLayout nav={"Category"}>
-              <Categories />
-            </DetailsLayout>
-          }
-        />
-        <Route
-          path="/cart"
-          element={
-            <DetailsLayout nav={"My Cart"}>
-              <Cart />
-            </DetailsLayout>
-          }
-        />
-        <Route
-          path="/orders"
-          element={
-            <ProtectedRoute>
-              <DetailsLayout nav={"My Orders"}>
-                <MyOrders />
-              </DetailsLayout>
-            </ProtectedRoute>
-          }
-        />
-      </Routes>
-    </Router>
-  );
-};
+      {
+        path: "/profile",
+        element: (
+          <ProtectedRoute>
+            <Profile />
+          </ProtectedRoute>
+        ),
+        handle: { nav: "Profile" },
+      },
+      {
+        path: "/profile/theme",
+        element: (
+          <ProtectedRoute>
+            <Theme />
+          </ProtectedRoute>
+        ),
+        handle: { nav: "Theme" },
+      },
+      {
+        path: "/cart",
+        element: (
+          <ProtectedRoute>
+            <Cart />
+          </ProtectedRoute>
+        ),
+        handle: { nav: "My Cart" },
+      },
+      {
+        path: "/orders",
+        element: (
+          <ProtectedRoute>
+            <MyOrders />
+          </ProtectedRoute>
+        ),
+        handle: { nav: "My Orders" },
+      },
+      {
+        path: "/recipe",
+        element: (
+          <ProtectedRoute>
+            <Recipe />
+          </ProtectedRoute>
+        ),
+        handle: { nav: "AI Recipe" },
+      },
+    ],
+  },
+  {
+    path: "/:itemId",
+    element: <Product />,
+  },
+  // {
+  //   path: "/farmer/:id",
+  //   element: (
+  //     <DetailsLayout nav={"Farmer"}>
+  //       <Farmer />
+  //     </DetailsLayout>
+  //   ),
+  // },
+  // {
+  //   path: "/:itemId",
+  //   element: <Product />,
+  // },
+  // {
+  //   path: "/category",
+  //   element: (
+  //     <DetailsLayout nav={"Category"}>
+  //       <Categories />
+  //     </DetailsLayout>
+  //   ),
+  // },
+  // {
+  //   path: "/category/:category",
+  //   element: (
+  //     <DetailsLayout nav={"Category"}>
+  //       <Categories />
+  //     </DetailsLayout>
+  //   ),
+  // },
+  // {
+  //   path: "/profile",
+  //   element: (
+  //     <ProtectedRoute>
+  //       <DetailsLayout nav={"Profile"}>
+  //         <Profile />
+  //       </DetailsLayout>
+  //     </ProtectedRoute>
+  //   ),
+  // },
+  // {
+  //   path: "/profile/theme",
+  //   element: (
+  //     <ProtectedRoute>
+  //       <DetailsLayout nav={"Theme"}>
+  //         <Theme />
+  //       </DetailsLayout>
+  //     </ProtectedRoute>
+  //   ),
+  // },
+  // {
+  //   path: "/recipe",
+  //   element: (
+  //     <ProtectedRoute>
+  //       <DetailsLayout nav={"Recipe"}>
+  //         <Recipe />
+  //       </DetailsLayout>
+  //     </ProtectedRoute>
+  //   ),
+  // },
+  // {
+  //   path: "/cart",
+  //   element: (
+  //     <DetailsLayout nav={"My Cart"}>
+  //       <Cart />
+  //     </DetailsLayout>
+  //   ),
+  // },
+  // {
+  //   path: "/orders",
+  //   element: (
+  //     <ProtectedRoute>
+  //       <DetailsLayout nav={"My Orders"}>
+  //         <MyOrders />
+  //       </DetailsLayout>
+  //     </ProtectedRoute>
+  //   ),
+  // },
+]);
 
-export default AppRoutes;
+export default appRouter;

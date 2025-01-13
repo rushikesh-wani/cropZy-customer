@@ -36,7 +36,7 @@ const Farmer = () => {
         <p className="text-lg font-medium">{farmerData?.farmName}</p>
       </div> */}
 
-      <div className="pb-20 bg-[#f0f4f9] md:mx-20 lg:mx-52">
+      <div className="pb-20 bg-[#f0f4f9]">
         <div className="flex flex-col gap-3 md:mx-auto md:max-w-3xl">
           <div className="mx-auto w-28 h-28 rounded-full bg-slate-200">
             <img

@@ -33,7 +33,7 @@ const Recipe = ({ isLoading, isError, error, text }) => {
       <div className="py-5">
         <div className="relative">
           <div className="absolute -inset-1 bg-radiant blur-md rounded-xl bg-[length:200%_200%] animate-rotate-gradient"></div>
-          <div className="relative font-palanquin p-4 bg-white/50 ring-4 ring-black/5 text-slate-800 rounded-xl backdrop-filter backdrop-blur-3xl dark:bg-darkCard/50 dark:text-white">
+          <div className="relative font-palanquin p-4 bg-white/70 ring-4 ring-black/5 text-slate-800 rounded-xl backdrop-filter backdrop-blur-3xl dark:bg-darkCard/50 dark:text-white">
             <p>{parse(marked(text))}</p>
           </div>
         </div>

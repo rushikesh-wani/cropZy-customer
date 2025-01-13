@@ -45,7 +45,7 @@ const MyOrders = () => {
               >
                 <div className="w-[25%] h-16 bg-slate-200 rounded-md">
                   <img
-                    src={order?.item?.img}
+                    src={order?.items.img}
                     alt="item-img"
                     className="w-full h-full object-cover rounded-md"
                   />
@@ -53,7 +53,7 @@ const MyOrders = () => {
                 <div className="w-[75%]">
                   <p className="font-bold truncate">#{order?._id}</p>
                   <div className="text-sm font-bold truncate">
-                    ₹ {order?.item?.price}{" "}
+                    ₹ {order?.totalPrice}{" "}
                     <span className="text-xs font-medium text-slate-700">
                       /{" "}
                       {`${order?.item?.weight?.value} ${order?.item?.weight?.unit}`}
@@ -66,7 +66,7 @@ const MyOrders = () => {
                   <div className="w-full inline-flex items-center justify-between">
                     <span className="">
                       Total :{" "}
-                      <span className="font-medium">₹ {order?.price}</span>
+                      <span className="font-medium">₹ {order?.totalPrice}</span>
                     </span>
                     {/* <div className="min-w-16 max-w-20 text-sm flex justify-between items-center bg-rose-50 border border-rose-300 rounded-md text-rose-500">
                       <button

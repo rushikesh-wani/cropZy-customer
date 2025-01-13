@@ -44,7 +44,7 @@ const Navbar = () => {
         </div>
       </div>
 
-      <div className="z-50 w-full fixed bottom-0 p-2 bg-white grid grid-flow-col grid-rows-1 gap-2 text-sm font-medium dark:bg-[#131518] dark:text-white">
+      <div className="z-50 w-full fixed bottom-0 right-0 left-0 p-2 bg-white grid grid-flow-col grid-rows-1 gap-2 text-sm font-medium dark:bg-[#131518] dark:text-white">
         <Link onClick={() => onClickHandler("home")} to={"/"}>
           <div
             className={

@@ -1,9 +1,11 @@
 import { ChevronLeft } from "lucide-react";
 import React from "react";
-import { Link, Outlet, useNavigate } from "react-router-dom";
+import { Outlet, useMatches, useNavigate } from "react-router-dom";
 
-const DetailsLayout = ({ children, nav }) => {
+const DetailsLayout = () => {
   const navigate = useNavigate();
+  const matches = useMatches();
+  const nav = matches.find((match) => match.handle?.nav)?.handle?.nav || "";
   const goBack = () => {
     navigate(-1);
   };
@@ -20,7 +22,7 @@ const DetailsLayout = ({ children, nav }) => {
           </div>
           <div className="p-3 pt-16 pb-20 bg-[#f0f4f9] min-h-screen dark:bg-[#212428]">
             <div className="mx-auto flex flex-col gap-3 md:max-w-3xl">
-              {children}
+              <Outlet />
             </div>
           </div>
         </div>

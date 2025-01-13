@@ -13,9 +13,12 @@ const Home = () => {
     queryKey: ["HomeData"],
     queryFn: () => getUserHomeData(),
     staleTime: 30 * 60 * 1000, // 30 mins*1000
+    gcTime: 30 * 60 * 1000,
   });
+
   if (isPending) return <ProductCard />;
   if (isError) return <p>Error: {error.message || "Something went wrong"}</p>;
+
   return (
     <>
       {/* {Category} */}
@@ -51,6 +54,7 @@ const Home = () => {
       {/* {Cereals} */}
       {data?.data[1]?.data[0] && (
         <HomeCarousal
+          nav={"Cereals"}
           headLine={data?.data[1]?.data[0]?.category}
           data={data?.data[1]?.data[0]?.products}
         />
@@ -58,6 +62,7 @@ const Home = () => {
       {/* {Dairy Products} */}
       {data?.data[1]?.data[1] && (
         <HomeCarousal
+          nav={"Dairy Product"}
           headLine={data?.data[1]?.data[1]?.category}
           data={data?.data[1]?.data[1]?.products}
         />
@@ -65,6 +70,7 @@ const Home = () => {
       {/* {Fresh fruits} */}
       {data?.data[1]?.data[2] && (
         <TwoRowCarousal
+          nav={"Fresh Fruits"}
           headLine={data?.data[1]?.data[2]?.category}
           data={data?.data[1]?.data[2]?.products}
         />
@@ -72,6 +78,7 @@ const Home = () => {
       {/* {Recently Added} */}
       {data?.data[1]?.data[3] && (
         <HomeCarousal
+          nav={"Recently Added"}
           headLine={data?.data[1]?.data[3]?.category}
           data={data?.data[1]?.data[3]?.products}
         />
@@ -79,6 +86,7 @@ const Home = () => {
       {/* {Vegetables} */}
       {data?.data[1]?.data[4] && (
         <TwoRowCarousal
+          nav={"Vegetables"}
           headLine={data?.data[1]?.data[4]?.category}
           data={data?.data[1]?.data[4]?.products}
         />

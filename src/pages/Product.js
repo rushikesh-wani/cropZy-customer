@@ -5,6 +5,7 @@ import CarousalProductCard from "../components/CarousalProductCard";
 import { getItemDetails } from "../services/HomeServices";
 import ProductDetails from "../components/skeleton/ProductDetails";
 import ItemCard from "../components/skeleton/ItemCard";
+import { addItemToCart } from "../utils/Cart";
 const Product = () => {
   const { itemId } = useParams();
   const [productData, setProductData] = useState(null);
@@ -98,7 +99,12 @@ const Product = () => {
         </div>
       </div>
       <div className="fixed bottom-0 right-0 left-0 text-center px-5 py-2 bg-white md:px-44 md:mx-20 lg:mx-52">
-        <button className="w-full uppercase font-medium py-2 bg-rose-600 text-white rounded-lg">
+        <button
+          onClick={() => {
+            addItemToCart(productData?._id);
+          }}
+          className="w-full uppercase font-medium py-2 bg-rose-600 text-white rounded-lg"
+        >
           ADD
         </button>
       </div>
