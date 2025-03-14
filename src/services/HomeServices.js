@@ -61,3 +61,15 @@ export const getFarmerData = async (
     setError(err?.response?.data?.message);
   }
 };
+
+export const getFreshFruits = async (setFreshFruits) => {
+  try {
+    const res = await api.get("/fresh-fruits");
+    if (res.status === 200) {
+      setFreshFruits(res?.data?.data);
+      console.log(res);
+    }
+  } catch (err) {
+    console.log(err);
+  }
+};

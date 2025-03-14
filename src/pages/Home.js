@@ -1,14 +1,15 @@
 import { ChevronRight } from "lucide-react";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Leaf, Plus } from "lucide-react";
 import { Link } from "react-router-dom";
 import ProductCard from "../components/skeleton/ProductCard";
 import { useQuery } from "@tanstack/react-query";
-import { getUserHomeData } from "../services/HomeServices";
+import { getFreshFruits, getUserHomeData } from "../services/HomeServices";
 import HomeCarousal from "../components/HomeCarousal";
 import TwoRowCarousal from "../components/TwoRowCarousal";
 
 const Home = () => {
+  const [freshFruits, setFreshFruits] = useState([]);
   const { data, isError, error, isPending } = useQuery({
     queryKey: ["HomeData"],
     queryFn: () => getUserHomeData(),
@@ -16,6 +17,9 @@ const Home = () => {
     gcTime: 30 * 60 * 1000,
   });
 
+  useEffect(() => {
+    getFreshFruits(setFreshFruits);
+  }, []);
   if (isPending) return <ProductCard />;
   if (isError) return <p>Error: {error.message || "Something went wrong"}</p>;
 
@@ -51,6 +55,14 @@ const Home = () => {
           </div>
         </div>
       )}
+      {/* {Fresh Fruits Infinite Scroll} */}
+      {/* {
+        <HomeCarousal
+          nav={"Fresh-Fruits"}
+          headLine={"Fresh Fruits"}
+          data={freshFruits ? freshFruits : null}
+        />
+      } */}
       {/* {Cereals} */}
       {data?.data[1]?.data[0] && (
         <HomeCarousal

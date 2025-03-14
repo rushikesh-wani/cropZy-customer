@@ -16,6 +16,7 @@ import MyOrders from "../pages/MyOrders";
 import Theme from "../components/Theme";
 import Recipe from "../pages/Recipe";
 import Signup from "../pages/Signup";
+import OrderDetails from "../pages/OrderDetails";
 
 const appRouter = createBrowserRouter([
   {
@@ -85,11 +86,25 @@ const appRouter = createBrowserRouter([
       },
       {
         path: "/orders",
-        element: (
-          <ProtectedRoute>
-            <MyOrders />
-          </ProtectedRoute>
-        ),
+        children: [
+          {
+            index: true,
+            element: (
+              <ProtectedRoute>
+                <MyOrders />
+              </ProtectedRoute>
+            ),
+          },
+          {
+            path: ":id",
+            element: (
+              <ProtectedRoute>
+                <OrderDetails />
+              </ProtectedRoute>
+            ),
+          },
+        ],
+
         handle: { nav: "My Orders" },
       },
       {
