@@ -71,57 +71,69 @@ const Profile = () => {
       </div>
 
       <div className="font-palanquin bg-white p-4 rounded-xl dark:bg-darkCard dark:text-white">
-        <div className="px-1 py-2 w-full inline-flex items-center gap-2 hover:bg-violet-50 hover:text-violet-800">
-          <UserCircle />
-          <Link to={"/"}>My Profile</Link>
-        </div>
+        <Link to={"/profile"}>
+          <div className="px-1 py-2 w-full inline-flex items-center gap-2 hover:bg-violet-50 hover:text-violet-800">
+            <UserCircle />
+            My Profile
+          </div>
+        </Link>
         <hr />
-        <div className="px-1 py-2 w-full inline-flex items-center gap-2 hover:bg-violet-50 hover:text-violet-800">
-          <SunMoon />
-          <Link to={"/profile/theme"}>Theme</Link>
-        </div>
+        <Link to={"/profile/theme"}>
+          <div className="px-1 py-2 w-full inline-flex items-center gap-2 hover:bg-violet-50 hover:text-violet-800">
+            <SunMoon />
+            Theme
+          </div>
+        </Link>
         <hr />
-        <div className="px-1 py-2 w-full inline-flex items-center gap-2 hover:bg-violet-50 hover:text-violet-800">
-          <Settings />
-          <Link to={"/"}>Settings</Link>
-        </div>
-        <hr />
-      </div>
-      <div className="font-palanquin bg-white p-4 rounded-xl dark:bg-darkCard dark:text-white">
-        <div className="px-1 py-2 w-full inline-flex items-center gap-2 hover:bg-violet-50 hover:text-violet-800">
-          <ShoppingBag />
-          <Link to={"/orders"}>My orders</Link>
-        </div>
-        <hr />
-        <div className="px-1 py-2 w-full inline-flex items-center gap-2 hover:bg-violet-50 hover:text-violet-800">
-          <History />
-          <Link to={"/"}>Orders History</Link>
-        </div>
-        <hr />
-        <div className="px-1 py-2 w-full inline-flex items-center gap-2 hover:bg-violet-50 hover:text-violet-800">
-          <CircleOff />
-          <Link to={"/"}>Cancelled orders</Link>
-        </div>
+        <Link to={"/"}>
+          <div className="px-1 py-2 w-full inline-flex items-center gap-2 hover:bg-violet-50 hover:text-violet-800">
+            <Settings />
+            Settings
+          </div>
+        </Link>
         <hr />
       </div>
       <div className="font-palanquin bg-white p-4 rounded-xl dark:bg-darkCard dark:text-white">
-        <div className="px-1 py-2 w-full inline-flex items-center gap-2 hover:bg-violet-50 hover:text-violet-800">
-          <Trash />
-          <Link to={"/"}>Delete account</Link>
-        </div>
+        <Link to={"/orders"}>
+          <div className="px-1 py-2 w-full inline-flex items-center gap-2 hover:bg-violet-50 hover:text-violet-800">
+            <ShoppingBag />
+            My orders
+          </div>
+        </Link>
         <hr />
-        <div className="px-1 py-2 w-full inline-flex items-center gap-2 hover:bg-violet-50 hover:text-violet-800">
+        <Link to={"/"}>
+          <div className="px-1 py-2 w-full inline-flex items-center gap-2 hover:bg-violet-50 hover:text-violet-800">
+            <History />
+            Orders History
+          </div>
+        </Link>
+        <hr />
+        <Link to={"/"}>
+          <div className="px-1 py-2 w-full inline-flex items-center gap-2 hover:bg-violet-50 hover:text-violet-800">
+            <CircleOff />
+            Cancelled orders
+          </div>
+        </Link>
+        <hr />
+      </div>
+      <div className="font-palanquin bg-white p-4 rounded-xl dark:bg-darkCard dark:text-white">
+        <Link to={"/"}>
+          <div className="px-1 py-2 w-full inline-flex items-center gap-2 hover:bg-violet-50 hover:text-violet-800">
+            <Trash />
+            Delete account
+          </div>
+        </Link>
+        <hr />
+        <button
+          onClick={() => {
+            logout();
+            navigate("/login");
+          }}
+          className="px-1 py-2 w-full inline-flex items-center gap-2 hover:bg-violet-50 hover:text-violet-800"
+        >
           <LogOut />
-          <button
-            onClick={() => {
-              logout();
-              navigate("/login");
-            }}
-            className="text-red-600"
-          >
-            Logout
-          </button>
-        </div>
+          <p className="text-red-600">Logout</p>
+        </button>
         <hr />
       </div>
     </>

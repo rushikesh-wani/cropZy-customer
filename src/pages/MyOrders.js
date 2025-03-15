@@ -1,4 +1,4 @@
-import { CheckCheck, CircleX, Minus, Plus, Truck, X } from "lucide-react";
+import { CheckCheck, CircleX, Truck, X } from "lucide-react";
 import React, { useEffect, useState } from "react";
 import { api } from "../services/api";
 import Details from "../components/skeleton/Details";
@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 
 const MyOrders = () => {
   const [orderData, setOrderData] = useState(null);
+  const [filteredOrder, setFilteredOrder] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isError, setIsError] = useState(false);
   const [error, setError] = useState("");
@@ -17,6 +18,7 @@ const MyOrders = () => {
         console.log(res?.data);
         setIsLoading(false);
         setOrderData(res?.data?.data);
+        setFilteredOrder(res?.data?.data);
       }
     } catch (err) {
       setIsError(true);
@@ -27,19 +29,46 @@ const MyOrders = () => {
   useEffect(() => {
     getAllOrders();
   }, []);
+  console.log(orderData);
+
   if (isLoading) return <Details />;
   if (isError) return <p>{error || "Something went wrong!"}</p>;
   return (
     <>
+      <div className="pt-2 z-50 sticky top-12 w-full backdrop-filter backdrop-blur-sm flex overflow-x-scroll space-x-4">
+        {["All", "Pending", "Approved", "Delivered", "Rejected", "Cancel"].map(
+          (status, idx) => (
+            <button
+              key={status}
+              onClick={() => {
+                const filteredOrder = orderData?.filter((order) => {
+                  return status === "All"
+                    ? orderData
+                    : order.status === status.toLowerCase();
+                });
+                setFilteredOrder(filteredOrder);
+              }}
+              className="px-2 py-1 border border-gray-500 rounded-lg focus:bg-indigo-600 focus:text-white"
+            >
+              {status}
+            </button>
+          )
+        )}
+      </div>
       <div className="font-palanquin bg-white p-4 rounded-xl">
         <div className="font-montserrat inline-flex items-center gap-x-2 w-full">
           <p className="font-medium text-nowrap">
-            Order {`(${orderData?.length})`}
+            Order {`(${filteredOrder?.length})`}
           </p>
           <hr className="w-full text-gray-900" />
         </div>
         <div className="mt-4 flex flex-col divide-y">
-          {orderData?.map((order) => (
+          {filteredOrder?.length === 0 && (
+            <p className="text-center text-gray-500">
+              No order found with status selected!
+            </p>
+          )}
+          {filteredOrder?.map((order) => (
             <Link to={`/orders/${order._id}`}>
               <div
                 key={order?._id}
@@ -119,10 +148,15 @@ const MyOrders = () => {
                             <Truck className="size-4" />
                             {"Delivered"}
                           </>
+                        ) : order?.status === "cancel" ? (
+                          <>
+                            <Truck className="size-4" />
+                            {"Cancelled"}
+                          </>
                         ) : (
                           <>
                             <CircleX className="size-4" />
-                            {"Cancelled"}
+                            {"Rejected"}
                           </>
                         )}
                       </button>
