@@ -35,7 +35,7 @@ const MyOrders = () => {
   if (isError) return <p>{error || "Something went wrong!"}</p>;
   return (
     <>
-      <div className="pt-2 z-50 sticky top-12 w-full backdrop-filter backdrop-blur-sm flex overflow-x-scroll space-x-4">
+      <div className="pt-2 z-50 sticky top-12 w-full backdrop-filter backdrop-blur-sm flex overflow-x-scroll space-x-4 dark:text-white">
         {["All", "Pending", "Approved", "Delivered", "Rejected", "Cancel"].map(
           (status, idx) => (
             <button
@@ -55,7 +55,7 @@ const MyOrders = () => {
           )
         )}
       </div>
-      <div className="font-palanquin bg-white p-4 rounded-xl">
+      <div className="font-palanquin bg-white p-4 rounded-xl dark:bg-darkCard dark:text-white">
         <div className="font-montserrat inline-flex items-center gap-x-2 w-full">
           <p className="font-medium text-nowrap">
             Order {`(${filteredOrder?.length})`}
@@ -72,7 +72,7 @@ const MyOrders = () => {
             <Link to={`/orders/${order._id}`}>
               <div
                 key={order?._id}
-                className="flex gap-2 py-2 hover:bg-slate-50"
+                className="flex gap-2 py-2 hover:bg-slate-50 dark:hover:bg-black/50"
               >
                 <div className="w-4/12 h-32 grid grid-cols-2 grid-rows-2 gap-1">
                   {order?.items?.slice(0, 3).map((item, index) => (
@@ -93,11 +93,11 @@ const MyOrders = () => {
                     }).map((_, index) => (
                       <div
                         key={`empty-${index}`}
-                        className="w-full h-auto bg-slate-200 flex items-center justify-center rounded-md border"
+                        className="w-full h-auto bg-slate-200 flex items-center justify-center rounded-md border dark:bg-gray-700/50"
                       ></div>
                     ))}
                   {order?.items?.length > 4 && (
-                    <div className="flex items-center justify-center bg-gray-200 rounded-md border">
+                    <div className="flex items-center justify-center bg-gray-200 rounded-md border dark:bg-gray-700/50">
                       <span className="text-lg font-bold">
                         +{order?.items?.length - 3}
                       </span>
@@ -120,10 +120,10 @@ const MyOrders = () => {
                       <span className="font-medium">₹ {order?.totalPrice}</span>
                     </span>
 
-                    <div className="w-3/6">
+                    <div className="w-3/6 text-end">
                       <button
                         className={
-                          `inline-flex gap-1 text-sm items-center px-2 py-1 rounded-md truncate` +
+                          `inline-flex gap-1 text-sm items-center px-2 py-1 rounded-md truncate md:mr-5` +
                           (order?.status === "pending"
                             ? " bg-gray-100 text-gray-900"
                             : order?.status === "approved"

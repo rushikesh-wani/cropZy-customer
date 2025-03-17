@@ -21,7 +21,7 @@ const Navbar = () => {
   };
   return (
     <>
-      <div className="relative p-2 bg-[#fff4e9] dark:bg-[#131518] dark:text-white">
+      <div className="relative p-2 bg-[#fff4e9] lg:px-44 dark:bg-[#131518] dark:text-white">
         <div className="px-2 flex justify-between items-center">
           <Link to={"/"}>
             <p className="text-xl font-bold">cropZy</p>
@@ -37,14 +37,14 @@ const Navbar = () => {
           <ChevronDown className="size-4" />
         </div>
       </div>
-      <div className="z-50 sticky top-0 p-2 bg-[#fff4e9] text-gray-600 dark:bg-[#131518] dark:text-white">
-        <Search className="size-5 absolute left-4 top-5 dark:text-gray-500" />
-        <div className="p-2 pl-8 bg-white border border-[#e5e7eb] rounded-lg dark:bg-black dark:text-gray-500">
+      <div className="z-50 sticky top-0 p-2 lg:px-44 bg-[#fff4e9] text-gray-600 dark:bg-[#131518] dark:text-white">
+        <Search className="size-5 absolute left-4 top-5 dark:text-gray-500 lg:left-[11.5rem]" />
+        <div className="p-2 pl-8 bg-white border border-[#e5e7eb] rounded-lg dark:bg-[#1B1B1B] dark:text-gray-500">
           Search for "Aloo"
         </div>
       </div>
 
-      <div className="z-50 w-full fixed bottom-0 right-0 left-0 p-2 bg-white grid grid-flow-col grid-rows-1 gap-2 text-sm font-medium dark:bg-[#131518] dark:text-white">
+      <div className="lg:hidden z-50 w-full fixed bottom-0 right-0 left-0 p-2 bg-white grid grid-flow-col grid-rows-1 gap-2 text-sm font-medium dark:bg-[#131518] dark:text-white">
         <Link onClick={() => onClickHandler("home")} to={"/"}>
           <div
             className={
@@ -82,6 +82,13 @@ const Navbar = () => {
 
             <ShoppingCart />
             <p>Cart</p>
+          </div>
+        </Link>
+      </div>
+      <div className="z-50 hidden lg:block fixed bottom-[4%] right-[15%]">
+        <Link to={"/cart"} className="">
+          <div className="p-3 bg-white rounded-full shadow-2xl hover:scale-110 hover:duration-300">
+            <ShoppingCart className="size-7" />
           </div>
         </Link>
       </div>

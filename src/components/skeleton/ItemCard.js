@@ -2,8 +2,8 @@ import React from "react";
 
 const ItemCard = () => {
   return (
-    <div className="w-32 h-fit rounded-lg">
-      <div className="w-full h-24 bg-slate-300 shimmer rounded-lg"></div>
+    <div className="w-32 h-fit rounded-lg md:w-44">
+      <div className="w-full h-24 bg-slate-300 shimmer rounded-lg md:h-28"></div>
       <div className="">
         <p className="w-full h-4 rounded-lg my-1 bg-slate-300 shimmertruncate"></p>
         <p className="w-24 h-3 rounded-lg my-1 bg-slate-300 shimmer truncate"></p>

@@ -3,7 +3,7 @@ import ItemCard from "./ItemCard";
 
 const Details = () => {
   return (
-    <div className="md:mx-20 lg:mx-52">
+    <div className="">
       <div className="bg-[#f0f4f9]">
         <div className="flex flex-col gap-3 mx-auto md:max-w-3xl">
           <div className="relative w-full h-56 rounded-xl bg-slate-300 shimmer"></div>

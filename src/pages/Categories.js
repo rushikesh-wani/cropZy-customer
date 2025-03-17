@@ -46,7 +46,7 @@ const Categories = () => {
         <p className="text-lg font-medium">{category}</p>
       </div>
       <div className="bg-[#f0f4f9]">
-        <div className="my-2 grid grid-flow-row grid-cols-2 gap-3 items-center place-items-center md:grid-cols-4">
+        <div className="my-2 grid grid-flow-row grid-cols-2 gap-3 items-center place-items-center sm:grid-cols-3 md:grid-cols-4">
           {items?.map((item) => (
             <div className="px-3 py-3 bg-white rounded-lg">
               <CarousalProductCard key={item._id} product={item} />

@@ -96,7 +96,10 @@ const Footer = () => {
             </p>
           </div> */}
           <p className="text-sm text-gray-400">
-            © 2024 CropZy. All rights reserved.
+            <span className="hidden lg:inline-block py-2 w-fit mx-auto text-transparent bg-clip-text bg-gradient-to-br from-white via-gray-400 to-gray-900 text-3xl font-bold">
+              cropZy
+            </span>
+            <br></br>© 2024 CropZy. All rights reserved.
           </p>
           <div className="flex space-x-4 mt-4 md:mt-0">
             <Link className="text-gray-400 hover:text-white text-sm">

@@ -5,8 +5,8 @@ import { addItemToCart } from "../utils/Cart";
 const CarousalProductCard = ({ product }) => {
   return (
     <Link to={`/${product?._id}`}>
-      <div className="w-32 h-fit rounded-lg">
-        <div className="w-full h-24 bg-slate-100 rounded-lg border">
+      <div className="w-32 h-fit rounded-lg md:w-44 md:hover:scale-110 hover:duration-300">
+        <div className="w-full h-24 bg-slate-100 rounded-lg border md:h-28">
           <img
             loading="lazy"
             src={product?.img}
@@ -15,10 +15,10 @@ const CarousalProductCard = ({ product }) => {
           />
         </div>
         <div className="px-2">
-          <p className="font-palanquin font-medium truncate">
+          <p className="font-palanquin font-medium truncate md:text-lg">
             {product?.itemName}
           </p>
-          <p className="font-palanquin text-xs text-gray-600 truncate">
+          <p className="font-palanquin text-xs text-gray-600 truncate md:text-base">
             {product?.weight?.value} {product?.weight?.unit}
           </p>
         </div>

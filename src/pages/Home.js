@@ -27,29 +27,28 @@ const Home = () => {
     <>
       {/* {Category} */}
       {data?.data[0] && (
-        <div className="p-2 dark:bg-black dark:text-white">
+        <div className="p-2 dark:bg-[#252525] dark:text-white">
           <p className="font-montserrat font-medium text-lg">
             Find by Category
           </p>
-          <div className="grid grid-flow-row grid-cols-3 gap-2 sm:grid-cols-5 md:grid-cols-6 lg:grid-cols-10">
+          <div className="grid grid-flow-row grid-cols-3 gap-2 sm:grid-cols-5 md:grid-cols-6">
             {data?.data[0]?.categories?.map((cat, index) => (
               <Link
                 key={cat?.categoryName}
                 to={`/category/${cat?.categoryName}`}
+                className="p-2 rounded-md place-items-center"
               >
-                <div className="p-2 rounded-md">
-                  <div className="w-full h-20 rounded-xl">
-                    <img
-                      src={cat?.img}
-                      alt=""
-                      loading="lazy"
-                      className="w-full h-full object-cover rounded-xl"
-                    />
-                  </div>
-                  <p className="text-center text-sm font-medium">
-                    {cat?.categoryName}
-                  </p>
+                <div className="size-24 rounded-xl dark:bg-darkCard lg:size-28">
+                  <img
+                    src={cat?.img}
+                    alt=""
+                    loading="lazy"
+                    className="w-full h-full object-cover rounded-xl hover:scale-110 hover:duration-300"
+                  />
                 </div>
+                <p className="text-center text-sm font-medium truncate">
+                  {cat?.categoryName}
+                </p>
               </Link>
             ))}
           </div>
@@ -220,7 +219,7 @@ const Home = () => {
         </div>
       )}
       {/* {Product Carousal} */}
-      {data?.data[4] && (
+      {/* {data?.data[4] && (
         <div className="p-2 py-5 dark:bg-black dark:text-white">
           <div className="w-full inline-flex justify-between">
             <p className="font-medium text-lg">{data?.data[4]?.headLine}</p>
@@ -275,7 +274,7 @@ const Home = () => {
             ))}
           </div>
         </div>
-      )}
+      )} */}
     </>
   );
 };

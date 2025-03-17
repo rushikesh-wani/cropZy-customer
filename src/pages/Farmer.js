@@ -4,6 +4,8 @@ import { ChevronLeft, Star } from "lucide-react";
 import Accordion from "../components/Accordion";
 import { getFarmerData } from "../services/HomeServices";
 import Details from "../components/skeleton/Details";
+import ItemCard from "../components/skeleton/ItemCard";
+import CarousalProductCard from "../components/CarousalProductCard";
 
 const Farmer = () => {
   const { id } = useParams();
@@ -25,6 +27,8 @@ const Farmer = () => {
   }, [id]);
   if (isLoading) return <Details />;
   if (isError) return <p>Error: {error || "Something went wrong!"}</p>;
+  console.log(categoryData);
+
   return (
     <>
       {/* <div className="z-50 font-montserrat sticky top-0 flex items-center gap-x-2 p-2 bg-white shadow-md md:mx-20 lg:mx-52">
@@ -36,7 +40,7 @@ const Farmer = () => {
         <p className="text-lg font-medium">{farmerData?.farmName}</p>
       </div> */}
 
-      <div className="pb-20 bg-[#f0f4f9]">
+      <div className="pb-5 bg-[#f0f4f9]">
         <div className="flex flex-col gap-3 md:mx-auto md:max-w-3xl">
           <div className="mx-auto w-28 h-28 rounded-full bg-slate-200">
             <img
@@ -93,6 +97,20 @@ const Farmer = () => {
             </div>
             <Accordion data={categoryData} />
           </div>
+          {categoryData[0] && (
+            <div className="bg-white p-4 rounded-xl">
+              <p className="font-bold font-montserrat text-nowrap mb-2">
+                {categoryData[0]?._id}
+              </p>
+              <div className="overflow-x-auto">
+                <div className="w-fit grid grid-rows-1 grid-flow-col gap-4">
+                  {categoryData[0]?.products?.map((item, _ind) => (
+                    <CarousalProductCard product={item} key={item?._id} />
+                  ))}
+                </div>
+              </div>
+            </div>
+          )}
           <div className="bg-white p-4 rounded-xl">
             <div className="inline-flex items-center gap-x-2 w-full">
               <p className="font-bold font-montserrat text-nowrap">Rate</p>

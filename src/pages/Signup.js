@@ -70,8 +70,9 @@ const Signup = () => {
   };
 
   return (
-    <div className="md:mx-20 lg:mx-52">
-      <div className="p-5 lg:mx-52 w-full min-h-screen max-h-fit bg-gradient-to-t from-purple-500 to-purple-100">
+    <div className="relative md:mx-20 lg:mx-52">
+      <div className="-z-40 absolute top-0 w-full min-h-screen bg-gradient-to-t from-purple-500 to-purple-100"></div>
+      <div className="p-5 lg:mx-52">
         <div>
           <Link to={"/"}>
             <div className="p-1 w-fit rounded-full bg-white">

@@ -16,7 +16,7 @@ const Theme = () => {
   console.log(dark);
   return (
     <>
-      <div className="font-palanquin bg-white p-4 rounded-xl dark:bg-gray-800/50 dark:text-white">
+      <div className="font-palanquin bg-white p-4 rounded-xl dark:bg-darkCard dark:text-white">
         <div className="w-full inline-flex justify-between">
           <p>Theme</p>
           <button className="p-1 rounded-2xl text-white bg-violet-600 duration-500">

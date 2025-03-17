@@ -41,28 +41,29 @@ const Profile = () => {
         <span> Welcome back,</span>
         <span className="text-violet-800">{` ${data?.data?.firstName} ${data?.data?.lastName}!`}</span>
       </div>
-      <div className="font-palanquin bg-white p-4 rounded-xl dark:bg-darkCard dark:text-white">
-        <div className="w-full inline-flex items-center gap-2">
-          <div className="w-[20%] h-16 bg-slate-200 rounded-full">
+      <div className="font-palanquin bg-white px-4 py-2 rounded-xl dark:bg-darkCard dark:text-white">
+        <div className="w-full inline-flex justify-between items-center gap-2">
+          <div className="flex gap-2 justify-center items-center">
             <img
               src={data?.data?.profileImg}
               alt={`${data?.data?.firstName} ${data?.data?.lastName}`}
-              className="w-full h-full rounded-full object-cover"
+              className="size-20 rounded-full object-cover"
             />
+            <div className="">
+              <p className="text-xl font-semibold font-montserrat">
+                {`${data?.data?.firstName} ${data?.data?.lastName}`}
+              </p>
+              <p className="text-sm text-gray-500">{data?.data?.email}</p>
+            </div>
           </div>
-          <div className="w-[60%]">
-            <p className="text-xl font-semibold font-montserrat">
-              {`${data?.data?.firstName} ${data?.data?.lastName}`}
-            </p>
-            <p className="text-sm text-gray-500">{data?.data?.email}</p>
-          </div>
-          <div className="w-[10%]">
+
+          <div className="">
             <button
-              onClick={() => {
-                logout();
+              onClick={async () => {
+                await logout();
                 navigate("/login");
               }}
-              className="text-red-600 bg-rose-100 p-2 rounded-full hover:bg-rose-200"
+              className="text-red-600 bg-rose-100 p-2 rounded-full hover:bg-rose-200 dark:bg-rose-500 dark:text-white"
             >
               <LogOut className="size-5" />
             </button>
@@ -72,21 +73,21 @@ const Profile = () => {
 
       <div className="font-palanquin bg-white p-4 rounded-xl dark:bg-darkCard dark:text-white">
         <Link to={"/profile"}>
-          <div className="px-1 py-2 w-full inline-flex items-center gap-2 hover:bg-violet-50 hover:text-violet-800">
+          <div className="px-1 py-2 w-full inline-flex items-center gap-2 hover:bg-violet-50 hover:text-violet-800 dark:hover:bg-violet-600/20 dark:hover:text-white">
             <UserCircle />
             My Profile
           </div>
         </Link>
         <hr />
         <Link to={"/profile/theme"}>
-          <div className="px-1 py-2 w-full inline-flex items-center gap-2 hover:bg-violet-50 hover:text-violet-800">
+          <div className="px-1 py-2 w-full inline-flex items-center gap-2 hover:bg-violet-50 hover:text-violet-800 dark:hover:bg-violet-600/20 dark:hover:text-white">
             <SunMoon />
             Theme
           </div>
         </Link>
         <hr />
         <Link to={"/"}>
-          <div className="px-1 py-2 w-full inline-flex items-center gap-2 hover:bg-violet-50 hover:text-violet-800">
+          <div className="px-1 py-2 w-full inline-flex items-center gap-2 hover:bg-violet-50 hover:text-violet-800 dark:hover:bg-violet-600/20 dark:hover:text-white">
             <Settings />
             Settings
           </div>
@@ -95,21 +96,21 @@ const Profile = () => {
       </div>
       <div className="font-palanquin bg-white p-4 rounded-xl dark:bg-darkCard dark:text-white">
         <Link to={"/orders"}>
-          <div className="px-1 py-2 w-full inline-flex items-center gap-2 hover:bg-violet-50 hover:text-violet-800">
+          <div className="px-1 py-2 w-full inline-flex items-center gap-2 hover:bg-violet-50 hover:text-violet-800 dark:hover:bg-violet-600/20 dark:hover:text-white">
             <ShoppingBag />
             My orders
           </div>
         </Link>
         <hr />
         <Link to={"/"}>
-          <div className="px-1 py-2 w-full inline-flex items-center gap-2 hover:bg-violet-50 hover:text-violet-800">
+          <div className="px-1 py-2 w-full inline-flex items-center gap-2 hover:bg-violet-50 hover:text-violet-800 dark:hover:bg-violet-600/20 dark:hover:text-white">
             <History />
             Orders History
           </div>
         </Link>
         <hr />
         <Link to={"/"}>
-          <div className="px-1 py-2 w-full inline-flex items-center gap-2 hover:bg-violet-50 hover:text-violet-800">
+          <div className="px-1 py-2 w-full inline-flex items-center gap-2 hover:bg-violet-50 hover:text-violet-800 dark:hover:bg-violet-600/20 dark:hover:text-white">
             <CircleOff />
             Cancelled orders
           </div>
@@ -118,7 +119,7 @@ const Profile = () => {
       </div>
       <div className="font-palanquin bg-white p-4 rounded-xl dark:bg-darkCard dark:text-white">
         <Link to={"/"}>
-          <div className="px-1 py-2 w-full inline-flex items-center gap-2 hover:bg-violet-50 hover:text-violet-800">
+          <div className="px-1 py-2 w-full inline-flex items-center gap-2 hover:bg-violet-50 hover:text-violet-800 dark:hover:bg-violet-600/20 dark:hover:text-white">
             <Trash />
             Delete account
           </div>
@@ -129,7 +130,7 @@ const Profile = () => {
             logout();
             navigate("/login");
           }}
-          className="px-1 py-2 w-full inline-flex items-center gap-2 hover:bg-violet-50 hover:text-violet-800"
+          className="px-1 py-2 w-full inline-flex items-center gap-2 hover:bg-violet-50 hover:text-violet-800 dark:hover:bg-violet-600/20 dark:hover:text-white"
         >
           <LogOut />
           <p className="text-red-600">Logout</p>

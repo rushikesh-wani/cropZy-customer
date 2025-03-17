@@ -1,12 +1,6 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import axios from "axios";
-import {
-  ChevronLeft,
-  ChevronLeftCircle,
-  ChevronRight,
-  CircleAlert,
-} from "lucide-react";
+import { ChevronLeft, CircleAlert, LoaderCircle } from "lucide-react";
 import { toast } from "react-toastify";
 import { api } from "../services/api";
 const Login = () => {
@@ -21,28 +15,30 @@ const Login = () => {
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
+
     try {
-      setIsLoading(true);
       const res = await api.post(`/login`, formData, {
         withCredentials: true,
       });
-      console.log(res);
+
       if (res.status === 200 && res.data?.data?.role === "customer") {
-        setIsLoading(false);
         localStorage.setItem("isAuthenticated", "true");
         toast.success(`${res?.data?.message}`);
         navigate("/");
+        return;
       }
     } catch (err) {
       setIsError(true);
-      setError(err?.response?.data?.message);
+      setError(err?.response?.data?.message || "Something went wrong.");
       console.error(err);
+    } finally {
+      setIsLoading(false);
     }
   };
   return (
     <div className="relative md:mx-20 lg:mx-52">
       <div className="-z-40 absolute top-0 w-full min-h-screen bg-gradient-to-t from-[#f9c795] to-[#f8f4f0]"></div>
-
       <div className="p-5 lg:mx-52">
         <div className="">
           <Link to={"/"}>
@@ -101,8 +97,19 @@ const Login = () => {
                 />
               </div>
               <div className="mx-auto">
-                <button className="font-montserrat px-5 py-1 rounded-lg font-medium bg-orange-600 text-white hover:bg-orange-500">
-                  Login
+                <button
+                  type="submit"
+                  className="font-montserrat px-5 py-1 rounded-lg font-medium bg-orange-600 text-white hover:bg-orange-500 flex items-center gap-2"
+                  disabled={isLoading}
+                >
+                  {isLoading ? (
+                    <>
+                      <LoaderCircle className="size-5 animate-spin" />
+                      Logging in...
+                    </>
+                  ) : (
+                    "Login"
+                  )}
                 </button>
               </div>
               <p className="text-center">

@@ -268,7 +268,7 @@ const Cart = () => {
               </div>
             </div>
           </div>
-          <div className="font-palanquin bg-white p-4 rounded-xl dark:bg-darkCard dark:text-white">
+          <div className="mb-10 font-palanquin bg-white p-4 rounded-xl dark:bg-darkCard dark:text-white">
             <div className="inline-flex items-center gap-x-2 w-full mb-4">
               <p className="font-montserrat font-medium">Receipt</p>
               <hr className="w-full dark:border-darkDivider" />
@@ -352,10 +352,10 @@ const Cart = () => {
               </div>
             </div>
           </div>
-          <div className="fixed bottom-0 right-0 left-0 text-center px-5 py-2 bg-white md:px-44 md:mx-20 lg:mx-52">
+          <div className="fixed bottom-0 right-0 left-0 text-center px-5 py-2 bg-white">
             <button
               onClick={handleOrder}
-              className="w-full uppercase font-medium py-2 bg-rose-500 text-white rounded-lg"
+              className="w-full uppercase font-medium py-2 bg-rose-500 text-white rounded-lg lg:max-w-4xl"
             >
               order
             </button>
@@ -383,12 +383,12 @@ const Cart = () => {
               </p>
             </div>
           </div>
-          <div className="fixed bottom-0 right-0 left-0 text-center px-5 py-2 bg-white md:px-44 md:mx-20 lg:mx-52">
+          <div className="fixed bottom-0 right-0 left-0 text-center px-5 py-2 bg-white dark:bg-darkCard">
             <button
               onClick={() => {
                 navigate("/");
               }}
-              className="w-full uppercase font-medium py-2 bg-green-600 text-white rounded-lg"
+              className="w-full uppercase font-medium py-2 bg-green-600 text-white rounded-lg lg:max-w-4xl dark:bg-green-600/80"
             >
               Continue Shopping
             </button>
