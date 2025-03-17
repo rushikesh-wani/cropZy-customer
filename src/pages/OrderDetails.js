@@ -3,6 +3,7 @@ import { Link, useParams } from "react-router-dom";
 import { api } from "../services/api";
 import { useQuery } from "@tanstack/react-query";
 import Details from "../components/skeleton/Details";
+import { formatDate } from "../utils/helpers";
 import {
   ArrowRight,
   Minus,
@@ -11,6 +12,7 @@ import {
   ShoppingBag,
   X,
 } from "lucide-react";
+import { cancelOrder } from "../services/OrderServices";
 
 const OrderDetails = () => {
   const { id } = useParams();
@@ -68,7 +70,7 @@ const OrderDetails = () => {
         <div>
           <span className="font-bold">Order date : </span>
           <span className="text-gray-600 font-medium">
-            {Date(data?.data?.createdAt).toLocaleString()}
+            {formatDate(data?.data?.createdAt)}
           </span>
         </div>
       </div>
@@ -82,37 +84,32 @@ const OrderDetails = () => {
         </div>
         <div className="mt-4 flex flex-col divide-y dark:divide-darkDivider">
           {data?.data?.items?.map((item) => (
-            <>
-              <div
-                key={item?.item?._id}
-                className="flex gap-2 py-2 hover:bg-slate-50"
-              >
-                <div className="w-[25%] h-16 bg-slate-200 rounded-md">
-                  <img
-                    src={item?.item?.img}
-                    alt="item-img"
-                    className="w-full h-full object-cover rounded-md"
-                  />
+            <div key={item?._id} className="flex gap-2 py-2 hover:bg-slate-50">
+              <div className="w-[25%] h-16 bg-slate-200 rounded-md">
+                <img
+                  src={item?.item?.img}
+                  alt="item-img"
+                  className="w-full h-full object-cover rounded-md"
+                />
+              </div>
+              <div className="w-[75%]">
+                <p className="font-bold truncate">{item?.item?.itemName}</p>
+                <div className="text-sm font-bold truncate">
+                  ₹ {item?.item?.price}{" "}
+                  <span className="text-xs font-medium text-slate-700 dark:text-darkText">
+                    /{" "}
+                    {`${item?.item?.weight?.value} ${item?.item?.weight?.unit}`}
+                  </span>
                 </div>
-                <div className="w-[75%]">
-                  <p className="font-bold truncate">{item?.item?.itemName}</p>
-                  <div className="text-sm font-bold truncate">
-                    ₹ {item?.item?.price}{" "}
-                    <span className="text-xs font-medium text-slate-700 dark:text-darkText">
-                      /{" "}
-                      {`${item?.item?.weight?.value} ${item?.item?.weight?.unit}`}
-                    </span>
-                  </div>
-                  <div className="w-full inline-flex items-center justify-between">
-                    <span className="">
-                      Total :{" "}
-                      <span className="font-medium">{item?.quantity}</span>
-                    </span>
-                    <div className="font-semibold text-lg">₹ {item?.price}</div>
-                  </div>
+                <div className="w-full inline-flex items-center justify-between">
+                  <span className="">
+                    Total :{" "}
+                    <span className="font-medium">{item?.quantity}</span>
+                  </span>
+                  <div className="font-semibold text-lg">₹ {item?.price}</div>
                 </div>
               </div>
-            </>
+            </div>
           ))}
         </div>
       </div>
@@ -158,7 +155,7 @@ const OrderDetails = () => {
               <tbody>
                 {data?.data?.items?.map((item) => (
                   <tr
-                    key={item?._id}
+                    key={item?.item?._id}
                     className="border-b dark:border-[#fc8999]"
                   >
                     <td className="px-4 py-2">{item?.item?.itemName}</td>
@@ -236,25 +233,42 @@ const OrderDetails = () => {
           </div>
         </div>
       </div>
-
-      <div className="font-palanquin bg-white p-4 rounded-xl dark:bg-[#121212] dark:text-white">
-        <div className="font-montserrat inline-flex items-center gap-x-2 w-full">
-          <p className="font-semibold text-nowrap">Cancel Order</p>
-          <hr className="w-full dark:border-darkDivider" />
-        </div>
-        <div className="grid grid-flow-row grid-cols-5 items-center">
-          <div className="col-span-3 text-sm">
-            Once order is cancel it can't be recovered. Cancel order as per your
-            wish
+      {data?.data?.status === "pending" ? (
+        <div className="font-palanquin bg-white p-4 rounded-xl dark:bg-[#121212] dark:text-white">
+          <div className="font-montserrat inline-flex items-center gap-x-2 w-full">
+            <p className="font-semibold text-nowrap">Cancel Order</p>
+            <hr className="w-full dark:border-darkDivider" />
           </div>
-          <div className="ml-5 col-span-2">
-            <button className="flex font-poppins gap-1 text-rose-600 border border-rose-800 px-3 py-1 rounded-lg">
-              <X />
-              Cancel
-            </button>
+          <div className="grid grid-flow-row grid-cols-5 items-center">
+            <div className="col-span-3 text-sm">
+              Once order is cancel it can't be recovered. Cancel order as per
+              your wish
+            </div>
+            <div className="ml-5 col-span-2">
+              <button
+                onClick={async () => {
+                  await cancelOrder(data?.data?._id);
+                }}
+                className="flex font-poppins gap-1 text-rose-600 border border-rose-800 px-3 py-1 rounded-lg"
+              >
+                <X />
+                Cancel
+              </button>
+            </div>
           </div>
         </div>
-      </div>
+      ) : (
+        <div className="font-palanquin bg-white p-4 rounded-xl dark:bg-[#121212] dark:text-white">
+          <div className="font-montserrat inline-flex items-center gap-x-2 w-full">
+            <p className="font-semibold text-nowrap">Cancel Order</p>
+            <hr className="w-full dark:border-darkDivider" />
+          </div>
+          <p className="text-center text-sm text-gray-700">
+            Order cann't be cancelled at this time, as order is currently in{" "}
+            <span className="text-rose-500">{data?.data?.status}</span> state!
+          </p>
+        </div>
+      )}
     </>
   );
 };

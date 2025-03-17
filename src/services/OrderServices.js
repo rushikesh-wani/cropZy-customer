@@ -26,3 +26,17 @@ export const makeOrder = async () => {
     toast.warn(err?.response?.data?.message || "Error while placing order");
   }
 };
+
+export const cancelOrder = async (orderID) => {
+  try {
+    const res = await api.post(`/cancel-order/${orderID}`, {});
+    if (res.status === 200) {
+      toast.success("Order cancelled...");
+    }
+  } catch (err) {
+    console.error(err);
+    toast.error(
+      err?.response?.data?.err || "Something went wrong while cancelling order"
+    );
+  }
+};

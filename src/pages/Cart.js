@@ -9,7 +9,7 @@ import {
   Sparkles,
 } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { api } from "../services/api";
 import Recipe from "./Recipe";
@@ -18,6 +18,7 @@ import { getCart, useManageQty } from "../utils/Cart";
 import { makeOrder } from "../services/OrderServices";
 import { toast } from "react-toastify";
 import Modal from "../components/Modal";
+import { formatDate } from "../utils/helpers";
 
 const Cart = () => {
   const [recipeLoading, setRecipeLoading] = useState(true);
@@ -30,19 +31,30 @@ const Cart = () => {
   const navigate = useNavigate();
   const { mutate: manageQtyMutate } = useManageQty();
 
-  const cartItems = useSelector((store) => {
-    return store.cart.items;
-  });
-
+  const queryClient = useQueryClient();
   const handleIncrement = (itemId) => {
-    manageQtyMutate({ action: "incrementQty", itemId });
+    manageQtyMutate(
+      { action: "incrementQty", itemId },
+      {
+        onSuccess: () => {
+          queryClient.invalidateQueries(["userCart"]);
+        },
+      }
+    );
   };
 
   const handleDecrement = (itemId) => {
-    manageQtyMutate({ action: "decrementQty", itemId });
+    manageQtyMutate(
+      { action: "decrementQty", itemId },
+      {
+        onSuccess: () => {
+          queryClient.invalidateQueries(["userCart"]);
+        },
+      }
+    );
   };
 
-  const { data, error, isError, isPending } = useQuery({
+  const { data, error, isError, isPending, isFetching } = useQuery({
     queryKey: ["userCart"],
     queryFn: getCart,
   });
@@ -102,9 +114,9 @@ const Cart = () => {
     window.scrollTo(0, 0);
   }, []);
 
-  console.log(orderDetails);
+  console.log(data);
 
-  if (isPending) return <Details />;
+  if (isPending || isFetching) return <Details />;
   if (isError) return <p>{"Error " + error}</p>;
   return (
     <>
@@ -119,62 +131,57 @@ const Cart = () => {
             </div>
             <div className="mt-4 flex flex-col divide-y dark:divide-darkDivider">
               {data?.products?.map((item) => (
-                <>
-                  <div
-                    key={item?.item?._id}
-                    className="flex gap-2 py-2 hover:bg-slate-50"
-                  >
-                    <div className="w-[25%] h-16 bg-slate-200 rounded-md">
-                      <img
-                        src={item?.item?.img}
-                        alt="item-img"
-                        className="w-full h-full object-cover rounded-md"
-                      />
+                <div
+                  key={item?.item?._id}
+                  className="flex gap-2 py-2 hover:bg-slate-50"
+                >
+                  <div className="w-[25%] h-16 bg-slate-200 rounded-md">
+                    <img
+                      src={item?.item?.img}
+                      alt="item-img"
+                      className="w-full h-full object-cover rounded-md"
+                    />
+                  </div>
+                  <div className="w-[75%]">
+                    <p className="font-bold truncate">{item?.item?.itemName}</p>
+                    <div className="text-sm font-bold truncate">
+                      ₹ {item?.item?.price}{" "}
+                      <span className="text-xs font-medium text-slate-700 dark:text-darkText">
+                        /{" "}
+                        {`${item?.item?.weight?.value} ${item?.item?.weight?.unit}`}
+                      </span>
                     </div>
-                    <div className="w-[75%]">
-                      <p className="font-bold truncate">
-                        {item?.item?.itemName}
-                      </p>
-                      <div className="text-sm font-bold truncate">
-                        ₹ {item?.item?.price}{" "}
-                        <span className="text-xs font-medium text-slate-700 dark:text-darkText">
-                          /{" "}
-                          {`${item?.item?.weight?.value} ${item?.item?.weight?.unit}`}
-                        </span>
-                      </div>
-                      <div className="w-full inline-flex items-center justify-between">
-                        <span className="">
-                          Total :{" "}
-                          <span className="font-medium">{item?.quantity}</span>
-                        </span>
-                        <div className="min-w-16 max-w-20 text-sm flex justify-between items-center bg-rose-50 border border-rose-300 rounded-md text-rose-500 dark:bg-darkAddBtn">
-                          <button
-                            className="p-1"
-                            onClick={() => {
-                              // console.log("Add btn-clicked ", item?.item?._id);
-                              // manageQty("incrementQty", item.item._id);
-                              handleIncrement(item.item._id);
-                            }}
-                          >
-                            <Plus className="size-4" />
-                          </button>
-                          <span>{item?.quantity}</span>
-                          <button
-                            className="p-1"
-                            onClick={(e) => {
-                              // console.log("Minus btn-clicked");
-                              // manageQty("decrementQty", item.item._id);
-                              handleDecrement(item.item._id);
-                            }}
-                          >
-                            <Minus className="size-4" />
-                          </button>
-                        </div>
+                    <div className="w-full inline-flex items-center justify-between">
+                      <span className="">
+                        Total :{" "}
+                        <span className="font-medium">{item?.quantity}</span>
+                      </span>
+                      <div className="min-w-16 max-w-20 text-sm flex justify-between items-center bg-rose-50 border border-rose-300 rounded-md text-rose-500 dark:bg-darkAddBtn">
+                        <button
+                          className="p-1"
+                          onClick={() => {
+                            // console.log("Add btn-clicked ", item?.item?._id);
+                            // manageQty("incrementQty", item.item._id);
+                            handleIncrement(item.item._id);
+                          }}
+                        >
+                          <Plus className="size-4" />
+                        </button>
+                        <span>{item?.quantity}</span>
+                        <button
+                          className="p-1"
+                          onClick={(e) => {
+                            // console.log("Minus btn-clicked");
+                            // manageQty("decrementQty", item.item._id);
+                            handleDecrement(item.item._id);
+                          }}
+                        >
+                          <Minus className="size-4" />
+                        </button>
                       </div>
                     </div>
                   </div>
-                  {/* <hr className="dark:border-darkDivider" /> */}
-                </>
+                </div>
               ))}
             </div>
           </div>
@@ -242,7 +249,7 @@ const Cart = () => {
                 <button
                   onClick={() => {
                     window.scrollTo({
-                      top: 350,
+                      top: 1000,
                       behavior: "smooth",
                     });
                   }}
@@ -277,18 +284,15 @@ const Cart = () => {
               <div className="flex justify-between">
                 <div className="w-[50%]">
                   <p className="font-montserrat font-semibold text-gray-700 dark:text-darkText">
-                    Farmer Name
+                    {data?.farmer?.farmDetails?.farmName}
                   </p>
                   <p className="text-sm text-gray-500 dark:text-darkText">
-                    123 Business Street
-                  </p>
-                  <p className="text-sm text-gray-500 dark:text-darkText">
-                    City, Country, 12345
+                    {data?.farmer?.farmDetails?.farmLocation}
                   </p>
                 </div>
                 <div className="w-[50%] text-right">
                   <p className="text-sm text-gray-500 dark:text-darkText">
-                    Date: {Date(Date.now()).toLocaleString()}
+                    Date: {formatDate(Date.now())}
                   </p>
                   <p className="text-sm text-gray-500 dark:text-darkText">
                     Receipt #{Math.floor(Math.random() * 100000)}

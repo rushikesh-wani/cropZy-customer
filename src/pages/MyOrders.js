@@ -1,4 +1,10 @@
-import { CheckCheck, CircleX, Truck, X } from "lucide-react";
+import {
+  CheckCheck,
+  CircleSlash,
+  CircleX,
+  ClockAlert,
+  Truck,
+} from "lucide-react";
 import React, { useEffect, useState } from "react";
 import { api } from "../services/api";
 import Details from "../components/skeleton/Details";
@@ -35,7 +41,7 @@ const MyOrders = () => {
   if (isError) return <p>{error || "Something went wrong!"}</p>;
   return (
     <>
-      <div className="pt-2 z-50 sticky top-12 w-full backdrop-filter backdrop-blur-sm flex overflow-x-scroll space-x-4 dark:text-white">
+      <div className="pt-2 z-50 sticky top-12 w-full backdrop-filter backdrop-blur-xl flex overflow-x-scroll space-x-4 dark:text-white">
         {["All", "Pending", "Approved", "Delivered", "Rejected", "Cancel"].map(
           (status, idx) => (
             <button
@@ -135,7 +141,7 @@ const MyOrders = () => {
                       >
                         {order?.status === "pending" ? (
                           <>
-                            <X className="size-4" />
+                            <ClockAlert className="size-4" />
                             {"Pending"}
                           </>
                         ) : order?.status === "approved" ? (
@@ -150,7 +156,7 @@ const MyOrders = () => {
                           </>
                         ) : order?.status === "cancel" ? (
                           <>
-                            <Truck className="size-4" />
+                            <CircleSlash className="size-4" />
                             {"Cancelled"}
                           </>
                         ) : (
