@@ -2,6 +2,7 @@ import { ChevronRight } from "lucide-react";
 import React from "react";
 import CarousalProductCard from "./CarousalProductCard";
 import { Link } from "react-router-dom";
+import ViewMoreCard from "./ViewMoreCard";
 
 const HomeCarousal = ({ headLine, data, nav }) => {
   return (
@@ -20,9 +21,25 @@ const HomeCarousal = ({ headLine, data, nav }) => {
             scrollBehavior: "smooth",
           }}
         >
-          {data?.map((pro) => (
+          {data?.length > 10 ? (
+            <>
+              {data?.slice(0, 10)?.map((pro) => (
+                <CarousalProductCard
+                  key={pro._id}
+                  product={pro}
+                  doHover={true}
+                />
+              ))}
+              <ViewMoreCard linkTo={`/category/${data[0]?.category}`} />
+            </>
+          ) : (
+            data?.map((pro) => (
+              <CarousalProductCard key={pro._id} product={pro} doHover={true} />
+            ))
+          )}
+          {/* {data?.map((pro) => (
             <CarousalProductCard key={pro._id} product={pro} />
-          ))}
+          ))} */}
         </div>
       </div>
     </div>

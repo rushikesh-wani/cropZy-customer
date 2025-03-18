@@ -2,6 +2,7 @@ import { ChevronRight } from "lucide-react";
 import React from "react";
 import CarousalProductCard from "./CarousalProductCard";
 import { Link } from "react-router-dom";
+import ViewMoreCard from "./ViewMoreCard";
 
 const TwoRowCarousal = ({ headLine, data, nav }) => {
   return (
@@ -20,9 +21,21 @@ const TwoRowCarousal = ({ headLine, data, nav }) => {
             scrollBehavior: "smooth",
           }}
         >
-          {data?.map((product) => (
+          {data?.length > 19 ? (
+            <>
+              {data?.slice(0, 19)?.map((product) => (
+                <CarousalProductCard key={product?._id} product={product} />
+              ))}
+              <ViewMoreCard linkTo={`/category/${data[0]?.category}`} />
+            </>
+          ) : (
+            data?.map((product) => (
+              <CarousalProductCard key={product?._id} product={product} />
+            ))
+          )}
+          {/* {data?.map((product) => (
             <CarousalProductCard key={product?._id} product={product} />
-          ))}
+          ))} */}
         </div>
       </div>
     </div>

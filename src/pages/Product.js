@@ -1,11 +1,10 @@
 import { ChevronLeft } from "lucide-react";
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import CarousalProductCard from "../components/CarousalProductCard";
 import { getItemDetails } from "../services/HomeServices";
 import ProductDetails from "../components/skeleton/ProductDetails";
 import ItemCard from "../components/skeleton/ItemCard";
-import { addItemToCart } from "../utils/Cart";
+import { addItemToCart } from "../services/cartServices";
 const Product = () => {
   const { itemId } = useParams();
   const [productData, setProductData] = useState(null);

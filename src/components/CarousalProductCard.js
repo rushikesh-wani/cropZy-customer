@@ -1,11 +1,15 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { addItemToCart } from "../utils/Cart";
+import { addItemToCart } from "../services/cartServices";
 
-const CarousalProductCard = ({ product }) => {
+const CarousalProductCard = ({ product, doHover }) => {
   return (
     <Link to={`/${product?._id}`}>
-      <div className="w-32 h-fit rounded-lg md:w-44 md:hover:scale-110 hover:duration-300">
+      <div
+        className={`w-32 h-fit rounded-lg md:w-44 ${
+          doHover && "md:hover:scale-110 hover:duration-300"
+        }`}
+      >
         <div className="w-full h-24 bg-slate-100 rounded-lg border md:h-28">
           <img
             loading="lazy"

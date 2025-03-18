@@ -8,17 +8,17 @@ import {
   Receipt,
   Sparkles,
 } from "lucide-react";
-import { useDispatch, useSelector } from "react-redux";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { api } from "../services/api";
 import Recipe from "./Recipe";
 import Details from "../components/skeleton/Details";
-import { getCart, useManageQty } from "../utils/Cart";
+import { getCart, useManageQty } from "../services/cartServices";
 import { makeOrder } from "../services/OrderServices";
 import { toast } from "react-toastify";
 import Modal from "../components/Modal";
 import { formatDate } from "../utils/helpers";
+import { clearCart } from "../services/cartServices";
 
 const Cart = () => {
   const [recipeLoading, setRecipeLoading] = useState(true);
@@ -156,23 +156,19 @@ const Cart = () => {
                         Total :{" "}
                         <span className="font-medium">{item?.quantity}</span>
                       </span>
-                      <div className="min-w-16 max-w-20 text-sm flex justify-between items-center bg-rose-50 border border-rose-300 rounded-md text-rose-500 dark:bg-darkAddBtn">
+                      <div className="min-w-20 max-w-24 text-sm flex justify-between items-center bg-rose-50 border border-rose-300 rounded-md text-rose-500 dark:bg-darkAddBtn">
                         <button
-                          className="p-1"
+                          className="p-2 rounded-sm hover:bg-rose-500 hover:text-white"
                           onClick={() => {
-                            // console.log("Add btn-clicked ", item?.item?._id);
-                            // manageQty("incrementQty", item.item._id);
                             handleIncrement(item.item._id);
                           }}
                         >
                           <Plus className="size-4" />
                         </button>
-                        <span>{item?.quantity}</span>
+                        <span className="mx-2">{item?.quantity}</span>
                         <button
-                          className="p-1"
+                          className="p-2 rounded-sm hover:bg-rose-500 hover:text-white"
                           onClick={(e) => {
-                            // console.log("Minus btn-clicked");
-                            // manageQty("decrementQty", item.item._id);
                             handleDecrement(item.item._id);
                           }}
                         >
@@ -183,6 +179,17 @@ const Cart = () => {
                   </div>
                 </div>
               ))}
+            </div>
+            <div className="text-end mt-1">
+              <button
+                onClick={async () => {
+                  await clearCart();
+                  queryClient.invalidateQueries(["userCart"]);
+                }}
+                className="text-rose-600 px-2 py-1 rounded-lg hover:bg-rose-300/50 "
+              >
+                Clear Cart
+              </button>
             </div>
           </div>
           <div className="font-palanquin bg-white p-4 rounded-xl dark:bg-[#121212] dark:text-white">

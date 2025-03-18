@@ -17,6 +17,9 @@ import Theme from "../components/Theme";
 import Recipe from "../pages/Recipe";
 import Signup from "../pages/Signup";
 import OrderDetails from "../pages/OrderDetails";
+import OrderHistory from "../pages/OrderHistory";
+import CancelledOrder from "../pages/CancelledOrder";
+import ProfileDetails from "../pages/ProfileDetails";
 
 const appRouter = createBrowserRouter([
   {
@@ -106,6 +109,33 @@ const appRouter = createBrowserRouter([
         ],
 
         handle: { nav: "My Orders" },
+      },
+      {
+        path: "/order-history",
+        element: (
+          <ProtectedRoute>
+            <OrderHistory />
+          </ProtectedRoute>
+        ),
+        handle: { nav: "Order History" },
+      },
+      {
+        path: "/order-cancelled",
+        element: (
+          <ProtectedRoute>
+            <CancelledOrder />
+          </ProtectedRoute>
+        ),
+        handle: { nav: "Cancelled Order" },
+      },
+      {
+        path: "/profile/user",
+        element: (
+          <ProtectedRoute>
+            <ProfileDetails />
+          </ProtectedRoute>
+        ),
+        handle: { nav: "User Profile" },
       },
       {
         path: "/recipe",

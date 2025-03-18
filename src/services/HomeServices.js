@@ -1,6 +1,5 @@
 import { toast } from "react-toastify";
 import { api } from "./api";
-import { addData } from "../store/HomeDataSlice";
 
 export const getUserHomeData = async () => {
   try {

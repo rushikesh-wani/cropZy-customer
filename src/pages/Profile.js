@@ -72,7 +72,7 @@ const Profile = () => {
       </div>
 
       <div className="font-palanquin bg-white p-4 rounded-xl dark:bg-darkCard dark:text-white">
-        <Link to={"/profile"}>
+        <Link to={"/profile/user"}>
           <div className="px-1 py-2 w-full inline-flex items-center gap-2 hover:bg-violet-50 hover:text-violet-800 dark:hover:bg-violet-600/20 dark:hover:text-white">
             <UserCircle />
             My Profile
@@ -102,14 +102,14 @@ const Profile = () => {
           </div>
         </Link>
         <hr />
-        <Link to={"/"}>
+        <Link to={"/order-history"}>
           <div className="px-1 py-2 w-full inline-flex items-center gap-2 hover:bg-violet-50 hover:text-violet-800 dark:hover:bg-violet-600/20 dark:hover:text-white">
             <History />
             Orders History
           </div>
         </Link>
         <hr />
-        <Link to={"/"}>
+        <Link to={"/order-cancelled"}>
           <div className="px-1 py-2 w-full inline-flex items-center gap-2 hover:bg-violet-50 hover:text-violet-800 dark:hover:bg-violet-600/20 dark:hover:text-white">
             <CircleOff />
             Cancelled orders
